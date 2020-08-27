@@ -1,6 +1,8 @@
 class Node:
-  def __init__(self, name=None, floor=0, dept=None):
+  def __init__(self, name, x, y, floor=0, dept=None):
     self.name = name
+    self.x = x
+    self.y = y
     self.floor = floor
     self.dept = dept
 
