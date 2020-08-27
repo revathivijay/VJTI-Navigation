@@ -1,28 +1,34 @@
-class Node:
-  def __init__(self, name, x, y, floor=0, dept=None):
-    self.name = name
-    self.x = x
-    self.y = y
-    self.floor = floor
-    self.dept = dept
+import json 
+from Node import Node
 
-# Constraint: Each cell must have at most one node.
-n= 300 # 600m/2 not fixed
-m= 75 # 150m/2 not fixed
+# Initialize Map
+def initialize_map(filename): 
+    f = open(filename) 
+    data = json.load(f) 
+    nodes = []
+    for _,node in data.items(): 
+      temp_node = Node(
+        number = node["number"],
+        name = node["name"],
+        x = node["x"],
+        y = node["y"],
+        node_type = node["type"],
+        floor = node["floor"],
+        building = node["building"]
+      )
+      nodes.append(temp_node)
+    return nodes
+  
 
-arr = [Node() for i in range(m) for j in range(n)]
+if __name__ == "__main__":
+    dump_file = 'nodes.json'
+    nodes = initialize_map(dump_file)
+    # Initialize Source/Destination Nodes
+    # Call Dijikstra/A* to get sequence of nodes
+    # Call Directions Function 
+    # return directions output
 
-# Create array with req nodes/corridors/blah
 
-
-currNode = Node()
-#initialize node with current location
-
-
-# Receive input from Alexa about where user wants to go
-dest = None
-
-# Apply A* to get closest dist.
 
 
 
