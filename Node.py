@@ -1,6 +1,6 @@
 class Node():
   def __init__(self, number, name, x, y, node_type, building, floor=0):
-    self.number = number
+    self.number = int(number) - 1
     self.name = name
     self.x = x
     self.y = y
@@ -9,5 +9,5 @@ class Node():
     self.floor = floor
 
   def __repr__(self):
-    return f"Node '{self.number}': '{self.name}'"
-    # return f"{self.name}"
+    # return f"Node {self.number}: '{self.name}'"
+    return f"{self.name}"
