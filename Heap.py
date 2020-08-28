@@ -50,7 +50,7 @@ class Heap():
     # node from heap
     def extractMin(self):
 
-        # Return NULL wif heap is empty
+        # Return NULL if heap is empty
         if self.isEmpty() == True:
             return
 
@@ -75,7 +75,7 @@ class Heap():
         return True if self.size == 0 else False
 
     def decreaseKey(self, v, dist):
-        print("V: ", v, " Dist: ", dist)
+        # print("V: ", v, " Dist: ", dist)
         # Get the index of v in  heap array
 
         i = self.pos[v]
