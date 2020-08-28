@@ -3,6 +3,7 @@ import sys
 from Heap import Heap
 import csv
 import json
+import re
 from Node import Node
 from math import sqrt
 
@@ -10,10 +11,10 @@ from math import sqrt
 def initialize_map(filename):
     f = open(filename)
     data = json.load(f)
-    nodes = []
-    for _, node in data.items():
+    nodes = {}
+    for key, node in data.items():
         temp_node = Node(
-            number=node["number"],
+            number=node["number"], ## dont change this to -1 
             name=node["name"],
             x=int(node["x"]),
             y=int(node["y"]),
@@ -21,8 +22,9 @@ def initialize_map(filename):
             floor=int(node["floor"]),
             building=node["building"]
         )
-        nodes.append(temp_node)
+        nodes[int(key)-1] = temp_node
     return nodes
+
 
 class Graph():
 
@@ -88,17 +90,29 @@ class Graph():
 
 ## driver code to test
 if __name__=='__main__':
+    source = 0
+    dest = 5
+
+    ##TODO: code to redirect to nearest staircase - pseudo code written
+    # if nodes[dest].floor==1:
+    #     for node in adj_list of dest
+    #         if re.find('staircase') in nodes[dest].name:
+    #             dest = that node
+
     nodes = initialize_map('nodes.json')
+    print(nodes)
+    print("Source: ", source, " ", nodes[source].name)
+    print("Destination: ", dest, " ", nodes[dest].name)
     graph = Graph(34, nodes)
     graph.addAllEdges('edges.csv')
-    distance, path = graph.dijkstra(1, 7)
+    distance, path = graph.dijkstra(source, dest)
     print("Distance: ", distance)
     print("Path: ", path)
-    op_path = "" ## revathi: building op path as string -- change to list later 
+    op_path = "" ## revathi: building op path as string -- change to list later
     for node in path:
         node_name = nodes[node].name
         if(node_name==""):
-            continue
+            op_path += " minor node --> "
         else:
             op_path = op_path + str(node_name) + " --> "
     print("Output path: ", op_path)
