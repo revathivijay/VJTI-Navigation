@@ -10,4 +10,4 @@ class Node():
 
   def __repr__(self):
     return f"Node '{self.number}': '{self.name}'"
-
+    # return f"{self.name}"
