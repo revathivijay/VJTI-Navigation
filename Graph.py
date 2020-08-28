@@ -14,7 +14,7 @@ def initialize_map(filename):
     nodes = {}
     for key, node in data.items():
         temp_node = Node(
-            number=node["number"], ## dont change this to -1 
+            number=node["number"], ## dont change this to -1
             name=node["name"],
             x=int(node["x"]),
             y=int(node["y"]),
@@ -50,13 +50,30 @@ class Graph():
             for row in csv_reader:
                 self.addEdge(int(row['Node '])-1, int(row['Adjacents'])-1)
 
+    def getPath(self, parent, j, path):
+        if parent[j] == -1 :
+            return
+        self.getPath(parent , parent[j], path)
+        # print (j, "\t", self.nodes[j].name)
+        path.append(j)
+
+
+    def getSolution(self, dist, parent, source, dest):
+        # print("Vertex \t\tDistance from Source\tPath")
+        path = []
+        path.append(source)
+        self.getPath(parent, dest, path)
+        print()
+        return path
+
     def dijkstra(self, src, dest):
         V = self.V
-
         dist = []
         minHeap = Heap()
         directions = [] ## for directions - revathi
-        path = [] ## for actual path - revathi
+        parents = [-1]*(len(self.nodes)) ## for path - revathi
+        path = []
+        path.append(src)
         for v in range(V):
             dist.append(sys.maxsize)
             minHeap.array.append( minHeap.newMinHeapNode(v, dist[v]))
@@ -73,25 +90,23 @@ class Graph():
             newHeapNode = minHeap.extractMin()
 
             u = newHeapNode[0]
-            path.append(u)
-            if u==dest:
-                return round(dist[u], 2), path
 
             for pCrawl in self.graph[(u)]:
                 v = pCrawl[0]
                 if minHeap.isInMinHeap(v) and dist[u] != sys.maxsize and pCrawl[1] + dist[u] < dist[v]:
                         dist[v] = pCrawl[1] + dist[u]
+                        parents[v] = u
                         minHeap.decreaseKey(v, dist[v])
-        print("Path: ", path)
-        print(self.graph[u])
-        return dist[dest]
+        path = self.getSolution(dist, parents, source, dest)
+        return round(dist[dest], 2), path
 
     #TODO: add directions switch case
 
 ## driver code to test
 if __name__=='__main__':
-    source = 0
-    dest = 5
+
+    source = 19
+    dest = 0
 
     ##TODO: code to redirect to nearest staircase - pseudo code written
     # if nodes[dest].floor==1:
@@ -101,18 +116,18 @@ if __name__=='__main__':
 
     nodes = initialize_map('nodes.json')
     print(nodes)
-    print("Source: ", source, " ", nodes[source].name)
-    print("Destination: ", dest, " ", nodes[dest].name)
+
     graph = Graph(34, nodes)
     graph.addAllEdges('edges.csv')
     distance, path = graph.dijkstra(source, dest)
-    print("Distance: ", distance)
+
+    print("Source: ", source, " ", nodes[source].name)
+    print("Destination: ", dest, " ", nodes[dest].name)
     print("Path: ", path)
-    op_path = "" ## revathi: building op path as string -- change to list later
-    for node in path:
-        node_name = nodes[node].name
-        if(node_name==""):
-            op_path += " minor node --> "
+    for i in range(len(path)):
+        if nodes[path[i]].name=="":
+            continue
+        if i!=len(path)-1:
+            print(nodes[path[i]].name, end=" -- > ")
         else:
-            op_path = op_path + str(node_name) + " --> "
-    print("Output path: ", op_path)
+            print(nodes[path[i]].name)
