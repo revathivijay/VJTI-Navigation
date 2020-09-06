@@ -24,7 +24,7 @@ def create_nodes(input_file, output_file):
     with open(input_file, 'r') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         for row in csv_reader:
-            id = row['number']
+            id = row['Node number']
             data[id] = row
     ## dump dictionary data to json file
     with open(output_file, 'w') as json_file:
@@ -32,4 +32,4 @@ def create_nodes(input_file, output_file):
 
 ## driver code
 if __name__=='__main__':
-    create_nodes('College Locations With Node Number.csv', 'nodes.json')
+    create_nodes('College Locations .csv', 'nodes.json')

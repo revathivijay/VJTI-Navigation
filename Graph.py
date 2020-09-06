@@ -24,13 +24,13 @@ def initialize_map(filename):
     nodes = {}
     for key, node in data.items():
         temp_node = Node(
-            number=node["number"], ## dont change this to -1
-            name=node["name"],
-            x=int(node["x"]),
-            y=int(node["y"]),
-            node_type=node["type"],
-            floor=int(node["floor"]),
-            building=node["building"]
+            number=node["Node number"], ## dont change this to -1
+            name=node["Node Name"],
+            x=int(node["x_pos"]),
+            y=int(node["y_pos"]),
+            node_type=node["Type "],
+            floor=int(node["Floor"]),
+            building=node["Building"]
         )
         nodes[int(key)-1] = temp_node
     return nodes
@@ -44,7 +44,7 @@ class Graph():
         self.nodes = nodes
 
     def calculateDistance(self, src, dest):
-        return sqrt(pow(nodes[src].x - nodes[dest].x, 2)+pow(nodes[src].y-nodes[dest].y, 2))
+        return sqrt(pow(self.nodes[src].x - self.nodes[dest].x, 2)+pow(self.nodes[src].y-self.nodes[dest].y, 2))
 
     def addEdge(self, src, dest):
         weight = self.calculateDistance(src, dest)
@@ -58,7 +58,7 @@ class Graph():
         with open(input_file, 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file)
             for row in csv_reader:
-                self.addEdge(int(row['Node '])-1, int(row['Adjacents'])-1)
+                self.addEdge(int(row['Nodes']), int(row['Adjacents']))
 
     def getPath(self, parent, j, path):
         if parent[j] == -1 :
@@ -76,8 +76,9 @@ class Graph():
         print()
         return path
 
-    def getDirections(self, path):
+    def getDirections(self, path, dest):
         directions = []
+        directions_text = ""
         # print("In directions: ", path)
         for i in range(1, len(path)):
             ## case 1: for first node - only parent is considered
@@ -89,34 +90,83 @@ class Graph():
                 elif self.nodes[curr].x < self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
                     directions.append('Left')
                 elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y > self.nodes[prev].y:
-                    directions.append('Up')
+                    directions.append('Straight')
                 elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
-                    directions.append('Down')
-            else:
-                x_curr, y_curr = self.nodes[path[i]].x, self.nodes[path[i]].y
-                x_prev, y_prev = self.nodes[path[i-1]].x, self.nodes[path[i-1]].y
-                x_prev_prev, y_prev_prev = self.nodes[path[i-2]].x, self.nodes[path[i-2]].y
-                # print("current: ", f'{x_curr}, {y_curr}')
-                # print("Prev: ", f'{x_prev}, {y_prev}')
-                # print("Prev prev: ", f'{x_prev_prev}, {y_prev_prev}')
-                if y_prev==y_curr==y_prev_prev and ((x_curr > x_prev and x_prev > x_prev_prev) or (x_curr < x_prev and x_prev < x_prev_prev)):
-                    directions.append('Straight')
-                elif x_prev==x_curr==x_prev_prev and ((y_curr > y_prev and y_prev > y_prev_prev) or (y_curr < y_prev and y_prev < y_prev_prev)):
-                    directions.append('Straight')
-                elif abs(x_curr-x_prev)<=5 and abs(x_prev-x_prev_prev)<=5 and (abs(y_prev_prev-y_prev)<=5 and y_prev > y_curr):
-                    directions.append("Right")
-                elif abs(x_curr-x_prev)<=5 and x_prev > x_prev_prev and (abs(y_prev_prev-y_prev)<=5 and y_prev < y_curr):
-                    directions.append("Left")
-                elif abs(x_curr-x_prev)<=5 and x_prev < x_prev_prev and (abs(y_prev_prev-y_prev)<=5 and y_prev > y_curr):
-                    directions.append("Left")
-                elif abs(x_curr-x_prev)<=5 and x_prev < x_prev_prev and (abs(y_prev_prev-y_prev)<=5 and y_prev < y_curr):
-                    directions.append("Right")
-                elif x_curr > x_prev and abs(x_prev-x_prev_prev)<=5 and (abs(y_prev-y_curr)<=5 and y_prev > y_curr):
-                    directions.append("Left")
-                elif x_curr < x_prev and abs(x_prev-x_prev_prev)<=5 and (abs(y_prev-y_curr) and y_prev > y_curr):
-                    directions.append("Right")
+                    directions.append('Back')
+                else:
+                    directions.append("check em")
+                directions_text = "First turn {} and keep walking".format(directions[-1])
+                if(self.nodes[curr].name!=""):
+                    directions_text+= " till you reach " + self.nodes[curr].name+"."
+                else:
+                    directions_text+="."
 
-        return directions
+            else:
+                x1 = self.nodes[path[i-2]].x            # x1,y1 -> x2,y2
+                y1 = self.nodes[path[i-2]].y
+                x2 = self.nodes[path[i-1]].x
+                y2 = self.nodes[path[i-1]].y
+                x3 = self.nodes[path[i]].x
+                y3 = self.nodes[path[i]].y
+                if(x2>x1 and y1==y2):
+                    if(y3>y2 and x2==x3):
+                        directions.append('Left')
+                    elif(y2>y3 and x2==x3):
+                        directions.append('Right')
+                    elif(x3>x2 and y2==y3):
+                        directions.append('Straight')
+                    elif (x3 < x2 and y2 == y3):
+                        directions.append('Back')
+                    else:
+                        directions.append('check em x2x1')
+
+                elif (x2 < x1 and y1 == y2):
+                    if (y3 > y2 and x2 == x3):
+                        directions.append('Right')
+                    elif (y2 > y3 and x2 == x3):
+                        directions.append('Left')
+                    elif (x3 > x2 and y2 == y3):
+                        directions.append('Back')
+                    elif (x3 < x2 and y2 == y3):
+                        directions.append('Straight')
+                    else:
+                        directions.append('check em x1x2')
+
+                elif (x2 == x1 and y1 < y2):
+                    if (x3 > x2 and y2 == y3):
+                        directions.append('Right')
+                    elif (x2 > x3 and y2 == y3):
+                        directions.append('Left')
+                    elif (y3 < y2 and x2 == x3):
+                        directions.append('Back')
+                    elif (y3 > y2 and x2 == x3):
+                        directions.append('Straight')
+                    else:
+                        directions.append('check em y2y1')
+
+                elif (x2 == x1 and y1 > y2):
+                    if (x3 > x2 and y2 == y3):
+                        directions.append('Left')
+                    elif (x2 > x3 and y2 == y3):
+                        directions.append('Right')
+                    elif (y3 < y2 and x2 == x3):
+                        directions.append('Straight')
+                    elif (y3 > y2 and x2 == x3):
+                        directions.append('Back')
+                    else:
+                        directions.append('check em y1y2')
+
+                if(directions[-1]=='Straight') and directions[-2]!='Straight':
+                    directions_text+=" Continue straight."
+                else:
+                    if(self.nodes[path[i-1]].name!=''):
+                        directions_text+=" Now at {} turn {}.".format(self.nodes[path[i-1]].name, directions[-1])
+                    else:
+                        directions_text+=" Take the next "+ directions[-1] + "."
+            if i==len(path)-1:
+               directions_text+=" You have now arrived at "+self.nodes[dest].name+". "
+
+        return directions, directions_text
 
 
     def dijkstra(self, src, dest):
@@ -150,19 +200,19 @@ class Graph():
                         dist[v] = pCrawl[1] + dist[u]
                         parents[v] = u
                         minHeap.decreaseKey(v, dist[v])
-        path = self.getSolution(dist, parents, source, dest)
-        directions = self.getDirections(path)
-        return round(dist[dest], 2), path, directions
+        path = self.getSolution(dist, parents, src, dest)
+        directions, directions_text = self.getDirections(path, dest)
+        return round(dist[dest], 2), path, directions, directions_text
 
     #TODO: add directions switch case
 
 
 
 ## driver code to test
-if __name__=='__main__':
+def getPath():
 
-    source = 0
-    dest = 18 #20, 19, 27, 30
+    source = 1
+    dest = 12 #20, 19, 27, 30
 
     #TODO: code to redirect to nearest staircase - pseudo code written
     # if nodes[dest].floor==1:
@@ -173,13 +223,13 @@ if __name__=='__main__':
     nodes = initialize_map('nodes.json')
     # print(nodes)
 
-    graph = Graph(34, nodes)
+    graph = Graph(25, nodes)
     graph.addAllEdges('edges.csv')
-    distance, path, directions = graph.dijkstra(source, dest)
+    distance, path, directions, directions_text = graph.dijkstra(source, dest)
 
     print("Source: ", nodes[source].name)
     print("Destination: ", nodes[dest].name)
-    # print("Directions: ", directions)
+    print("Directions: ", directions)
     print("Path: ", path)
     for i in range(len(path)):
         if nodes[path[i]].name=="":
@@ -188,5 +238,12 @@ if __name__=='__main__':
             print(nodes[path[i]].name, end=" -- > ")
         else:
             print(nodes[path[i]].name)
+
+
+    print("The directions are: "+directions_text)
+    return path
+
+
     # for i in range(len(path)):
     #     print(f"x: {nodes[path[i]].x}, y: {nodes[path[i]].y}")
+getPath()
