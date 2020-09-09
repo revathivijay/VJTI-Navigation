@@ -97,7 +97,10 @@ class Graph():
                     directions.append('Back')
                 else:
                     directions.append("check em")
-                directions_text = "First turn {} and keep walking".format(directions[-1])
+                if(directions[-1]!='Straight'):
+                    directions_text = "First turn {} and keep walking".format(directions[-1])
+                else:
+                    directions_text = "Walk straight"
                 if(self.nodes[curr].name!=""):
                     directions_text+= " till you reach " + self.nodes[curr].name+"."
                 else:
@@ -158,8 +161,9 @@ class Graph():
                     else:
                         directions.append('check em y1y2')
 
-                if(directions[-1]=='Straight') and directions[-2]!='Straight':
-                    directions_text+=" Continue straight."
+                if(directions[-1]=='Straight'):
+                    if directions[-2]!='Straight':
+                        directions_text+=" Continue straight."
                 else:
                     if(self.nodes[path[i-1]].name!=''):
                         directions_text+=" Now at {} turn {}.".format(self.nodes[path[i-1]].name, directions[-1])
@@ -175,8 +179,8 @@ class Graph():
         V = self.V
         dist = []
         minHeap = Heap()
-        directions = [] ## for directions - revathi
-        parents = [-1]*(len(self.nodes)) ## for path - revathi
+        directions = []
+        parents = [-1]*(len(self.nodes))
         path = []
         path.append(src)
         for v in range(V):
@@ -190,7 +194,6 @@ class Graph():
 
         minHeap.size = V
 
-        #TODO: modify to show proper route -- done revathi
         while minHeap.isEmpty() == False:
             newHeapNode = minHeap.extractMin()
 
@@ -206,45 +209,3 @@ class Graph():
         directions, directions_text = self.getDirections(path, dest)
         return round(dist[dest], 2), path, directions, directions_text
 
-    #TODO: add directions switch case
-
-
-
-## driver code to test
-def getPath():
-
-    source = 1
-    dest = 12 #20, 19, 27, 30
-
-    #TODO: code to redirect to nearest staircase - pseudo code written
-    # if nodes[dest].floor==1:
-    #     for node in adj_list of dest
-    #         if re.find('staircase') in nodes[dest].name:
-    #             dest = that node
-
-    nodes,map_node = initialize_map('nodes.json')
-    print(map_node)
-
-    graph = Graph(25, nodes)
-    graph.addAllEdges('edges.csv')
-    distance, path, directions, directions_text = graph.dijkstra(source, dest)
-
-    print("Source: ", nodes[source].name)
-    print("Destination: ", nodes[dest].name)
-    print("Directions: ", directions)
-    print("Path: ", path)
-    for i in range(len(path)):
-        if nodes[path[i]].name=="":
-            print(" turning/junction ", end='')
-        if i!=len(path)-1:
-            print(nodes[path[i]].name, end=" -- > ")
-        else:
-            print(nodes[path[i]].name)
-
-
-    print("The directions are: "+directions_text)
-    return path
-
-
-    # for i in range(len(path)):
-    #     print(f"x: {nodes[path[i]].x}, y: {nodes[path[i]].y}")
