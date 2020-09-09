@@ -95,7 +95,10 @@ class Graph():
                     directions.append('Back')
                 else:
                     directions.append("check em")
-                directions_text = "First turn {} and keep walking".format(directions[-1])
+                if(directions[-1]!='Straight'):
+                    directions_text = "First turn {} and keep walking".format(directions[-1])
+                else:
+                    directions_text = "Walk straight"
                 if(self.nodes[curr].name!=""):
                     directions_text+= " till you reach " + self.nodes[curr].name+"."
                 else:
@@ -156,8 +159,9 @@ class Graph():
                     else:
                         directions.append('check em y1y2')
 
-                if(directions[-1]=='Straight') and directions[-2]!='Straight':
-                    directions_text+=" Continue straight."
+                if(directions[-1]=='Straight'):
+                    if directions[-2]!='Straight':
+                        directions_text+=" Continue straight."
                 else:
                     if(self.nodes[path[i-1]].name!=''):
                         directions_text+=" Now at {} turn {}.".format(self.nodes[path[i-1]].name, directions[-1])
