@@ -224,19 +224,18 @@ graph.addAllEdges('edges.csv')
 def getPath(destination,source):
     src_number = map_node[source]
     if destination:
-        print(src_number)
         dest_number = map_node[destination]
         floor_navigation = ""
         if dest_number == 23 :
             dest_number = 1
             floor_navigation = " Take the stairs to reach the first floor. Turn left. Walk straight. You have now arrived at Director's Office."
         elif dest_number == 11:
-            dest_number = 13
+            dest_number = 10
             floor_navigation = " Take the stairs to reach the first floor. Turn left.You have now arrived at Library."
         distance, path, directions, directions_text = graph.dijkstra(src_number, dest_number)
         directions_text = directions_text + floor_navigation
         return directions_text
     return ""
 
-print(getPath("Library","Statue"))
+print(getPath("Library","Staircase main bldg/statue"))
 
