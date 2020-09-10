@@ -1,0 +1,12 @@
+class Node():
+  def __init__(self, number, name, x, y, node_type, building, floor=0):
+    self.number = int(number) - 1
+    self.name = name
+    self.x = x
+    self.y = y
+    self.type = node_type
+    self.building = building
+    self.floor = floor
+
+  def __repr__(self):
+    return f"{self.name}"

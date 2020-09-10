@@ -1,0 +1,242 @@
+{
+    "1": {
+        "Node number": "1",
+        "Node Name": "Main bldg entrance",
+        "x_pos": "15",
+        "y_pos": "0",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "2": {
+        "Node number": "2",
+        "Node Name": "Staircase main bldg/statue",
+        "x_pos": "15",
+        "y_pos": "3",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "3": {
+        "Node number": "3",
+        "Node Name": "Dep1",
+        "x_pos": "17",
+        "y_pos": "3",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "4": {
+        "Node number": "4",
+        "Node Name": "Lab3",
+        "x_pos": "20",
+        "y_pos": "3",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "5": {
+        "Node number": "5",
+        "Node Name": "",
+        "x_pos": "23",
+        "y_pos": "3",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "6": {
+        "Node number": "6",
+        "Node Name": "Comps dept",
+        "x_pos": "23",
+        "y_pos": "7",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "7": {
+        "Node number": "7",
+        "Node Name": "",
+        "x_pos": "21",
+        "y_pos": "7",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "8": {
+        "Node number": "8",
+        "Node Name": "Al004",
+        "x_pos": "21",
+        "y_pos": "8",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "9": {
+        "Node number": "9",
+        "Node Name": "",
+        "x_pos": "18",
+        "y_pos": "7",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "10": {
+        "Node number": "10",
+        "Node Name": "CCF1",
+        "x_pos": "18",
+        "y_pos": "10",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "11": {
+        "Node number": "11",
+        "Node Name": "library staircase",
+        "x_pos": "18",
+        "y_pos": "14",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "12": {
+        "Node number": "12",
+        "Node Name": "Library",
+        "x_pos": "20",
+        "y_pos": "14",
+        "Type ": "",
+        "Floor": "1",
+        "Building": "",
+        "Map Number": ""
+    },
+    "13": {
+        "Node number": "13",
+        "Node Name": "Quad steps",
+        "x_pos": "14",
+        "y_pos": "14",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "14": {
+        "Node number": "14",
+        "Node Name": "Left staircase/minor",
+        "x_pos": "11",
+        "y_pos": "14",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "15": {
+        "Node number": "15",
+        "Node Name": "Canteen",
+        "x_pos": "11",
+        "y_pos": "10",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "16": {
+        "Node number": "16",
+        "Node Name": "quad",
+        "x_pos": "15",
+        "y_pos": "10",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "17": {
+        "Node number": "17",
+        "Node Name": "Stage",
+        "x_pos": "15",
+        "y_pos": "7",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "18": {
+        "Node number": "18",
+        "Node Name": "",
+        "x_pos": "11",
+        "y_pos": "7",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "19": {
+        "Node number": "19",
+        "Node Name": "Quad entrance ",
+        "x_pos": "11",
+        "y_pos": "5",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "20": {
+        "Node number": "20",
+        "Node Name": "",
+        "x_pos": "11",
+        "y_pos": "3",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "21": {
+        "Node number": "21",
+        "Node Name": "Audi",
+        "x_pos": "9",
+        "y_pos": "3",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "22": {
+        "Node number": "22",
+        "Node Name": "",
+        "x_pos": "5",
+        "y_pos": "0",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "23": {
+        "Node number": "23",
+        "Node Name": "BCT",
+        "x_pos": "2",
+        "y_pos": "0",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
+    },
+    "24": {
+        "Node number": "24",
+        "Node Name": "Director office",
+        "x_pos": "4",
+        "y_pos": "3",
+        "Type ": "",
+        "Floor": "1",
+        "Building": "",
+        "Map Number": ""
+    }
+}
