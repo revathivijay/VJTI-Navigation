@@ -17,7 +17,6 @@ import cv2
 14: , 15: Stage , 16: , 17: Audi Entrance, 18: Stage Washroom, 19: Canteen Quad Entrance,
 20: Quad , 21: Quad Steps, 22: , 23: , 24: , 25: , 26: CCF1, 27: Library,
 28: Library Staircase, 29: COE, 30: , 31: Electrical Dept/Staircase, 32: Statue, 33: Quad Entrance}
-
 """
 from collections import defaultdict
 import sys
@@ -35,7 +34,6 @@ from time import sleep
 14: , 15: Stage , 16: , 17: Audi Entrance, 18: Stage Washroom, 19: Canteen Quad Entrance,
 20: Quad , 21: Quad Steps, 22: , 23: , 24: , 25: , 26: CCF1, 27: Library,
 28: Library Staircase, 29: COE, 30: , 31: Electrical Dept/Staircase, 32: Statue, 33: Quad Entrance}
-
 """
 
 ## for viusalizing
@@ -174,7 +172,7 @@ class Graph():
                 if(x2>x1 and y1==y2):
                     if(y3>y2 and x2==x3):
                         directions.append('Left')
-                    elif(y2>y3 and x2==x3A):
+                    elif(y2>y3 and x2==x3):
                         directions.append('Right')
                     elif(x3>x2 and y2==y3):
                         directions.append('Straight')
@@ -285,7 +283,6 @@ def getPath(destination,source):
             dest_number = 10
             floor_navigation = " Take the stairs to reach the first floor. Turn left.You have now arrived at Library."
         distance, path, directions, directions_text = graph.dijkstra(src_number, dest_number)
-        print(path)
         directions_text = directions_text + floor_navigation
         im = cv2.imread('MAP.jpeg')
         im_resized = cv2.resize(im, (610, 454), interpolation=cv2.INTER_LINEAR) ##do not change size
@@ -319,4 +316,9 @@ def getPath(destination,source):
         return directions_text
     return ""
 
-print(getPath("Library","Staircase main bldg/statue"))
+sleep(5)
+getPath("Comps dept","Staircase main bldg/statue")
+sleep(2)
+getPath("Library","Staircase main bldg/statue")
+sleep(2)
+getPath("Lab3","Canteen")
