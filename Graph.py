@@ -287,30 +287,28 @@ def getPath(destination,source):
         im = cv2.imread('MAP.jpeg')
         im_resized = cv2.resize(im, (610, 454), interpolation=cv2.INTER_LINEAR) ##do not change size
         line_thickness = 3
-        color = (0, 0, 0)
+
+        ## color in opencv -- BGR
+        path_color = (0, 0, 0)
+        src_color = (13,64,0)
+        dest_color = (255,0,0)
+        circle_thickness = 12
 
         ## legends
-        cv2.drawMarker(im_resized, (25, 25),(0,0,255), markerType=cv2.MARKER_TILTED_CROSS, markerSize=20, thickness=2, line_type=cv2.LINE_AA)
-        cv2.putText(im_resized, f'{source} (you are here)', (50,27), cv2.FONT_HERSHEY_SIMPLEX , 0.7, color, 2, cv2.LINE_AA)
+        cv2.circle(im_resized, (25, 25), 10, src_color, thickness=circle_thickness)
+        cv2.putText(im_resized, f'{source} (you are here)', (50,27), cv2.FONT_HERSHEY_SIMPLEX , 0.7, path_color, 2, cv2.LINE_AA)
 
-        cv2.drawMarker(im_resized, (25, 67),(255,0,0), markerType=cv2.MARKER_STAR, markerSize=20, thickness=2, line_type=cv2.LINE_AA)
-        cv2.putText(im_resized, f'{destination} (destination)', (50,71), cv2.FONT_HERSHEY_SIMPLEX , 0.7, color, 2, cv2.LINE_AA)
-        # cv2.drawMarker(im_resized, (pixel_mapping[dest_number][0], pixel_mapping[dest_number][1]),(255,0,0), markerType=cv2.MARKER_STAR, markerSize=25, thickness=2, line_type=cv2.LINE_AA)
+        cv2.circle(im_resized, (25,67), 10, dest_color, thickness=circle_thickness)
+        cv2.putText(im_resized, f'{destination} (destination)', (50,71), cv2.FONT_HERSHEY_SIMPLEX , 0.7, path_color, 2, cv2.LINE_AA)
 
         ## source and dest markers
-        cv2.drawMarker(im_resized, (pixel_mapping[src_number][0], pixel_mapping[src_number][1]),(0,0,255), markerType=cv2.MARKER_TILTED_CROSS, markerSize=20, thickness=2, line_type=cv2.LINE_AA)
-        cv2.drawMarker(im_resized, (pixel_mapping[dest_number][0], pixel_mapping[dest_number][1]),(255,0,0), markerType=cv2.MARKER_STAR, markerSize=20, thickness=2, line_type=cv2.LINE_AA)
+        cv2.circle(im_resized, (pixel_mapping[src_number][0], pixel_mapping[src_number][1]), 10, src_color, thickness=circle_thickness)
+        cv2.circle(im_resized, (pixel_mapping[dest_number][0], pixel_mapping[dest_number][1]), 10, dest_color, thickness=circle_thickness)
+
         for i in range(len(path)-1):
             p1 = pixel_mapping[path[i]]
             p2 = pixel_mapping[path[i+1]]
-            if not i!=len(path)-2:
-                # cv2.line(im_resized, p1, p2, color=color, thickness=line_thickness)
-                cv2.arrowedLine(im_resized, p1, p2, color=color, thickness=line_thickness, tipLength=0.2)
-                pass
-            else:
-                cv2.drawMarker(im_resized, (pixel_mapping[path[i+1]][0], pixel_mapping[path[i+1]][1]),(255,0,0), markerType=cv2.MARKER_SQUARE, markerSize=15, thickness=2, line_type=cv2.LINE_AA)
-                cv2.line(im_resized, p1, p2, color=color, thickness=line_thickness)
-
+            cv2.arrowedLine(im_resized, p1, p2, color=path_color, thickness=line_thickness, tipLength=0.2)
         plt.imshow(cv2.cvtColor(im_resized, cv2.COLOR_BGR2RGB))
         plt.show()
         return directions_text
