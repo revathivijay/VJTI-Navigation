@@ -7,6 +7,9 @@ import re
 from Node import Node
 from math import sqrt
 from time import sleep
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import cv2
 
 """
 {0: Main Gate , 1: , 2: Main Building Entrace, 3: , 4: Main Building Staircase, 5: Director's Office,
@@ -34,6 +37,34 @@ from time import sleep
 28: Library Staircase, 29: COE, 30: , 31: Electrical Dept/Staircase, 32: Statue, 33: Quad Entrance}
 
 """
+
+## for viusalizing
+pixel_mapping = {
+    0:(340,444),
+    1:(340,380),
+    2:(397,380),
+    3:(466,380),
+    4:(534,380),
+    5:(534,287),
+    6:(490,287),
+    7:(490,264),
+    8:(421,287),
+    9:(421,221),
+    10:(421,127),
+    11:(466,127),
+    12:(330,127),
+    13:(263,127),
+    14:(263,219),
+    15:(350,219),
+    16:(250,283),
+    17:(263,286),
+    18:(263,333),
+    19:(263,380),
+    20:(215,380),
+    21:(126,444),
+    22:(54,444),
+    23:(101,390)
+}
 
 
 def initialize_map(filename):
@@ -143,7 +174,7 @@ class Graph():
                 if(x2>x1 and y1==y2):
                     if(y3>y2 and x2==x3):
                         directions.append('Left')
-                    elif(y2>y3 and x2==x3):
+                    elif(y2>y3 and x2==x3A
                         directions.append('Right')
                     elif(x3>x2 and y2==y3):
                         directions.append('Straight')
@@ -237,6 +268,7 @@ class Graph():
         return round(dist[dest], 2), path, directions, directions_text
 
 
+
 nodes,map_node = initialize_map('nodes.json')
 graph = Graph(25, nodes)
 graph.addAllEdges('edges.csv')
@@ -254,6 +286,16 @@ def getPath(destination,source):
             floor_navigation = " Take the stairs to reach the first floor. Turn left.You have now arrived at Library."
         distance, path, directions, directions_text = graph.dijkstra(src_number, dest_number)
         directions_text = directions_text + floor_navigation
+        im = cv2.imread('MAP.jpeg')
+        im_resized = cv2.resize(im, (610, 454), interpolation=cv2.INTER_LINEAR) ##do not change size
+        line_thickness = 5
+        color = (0, 0, 0)
+        for i in range(len(path)-1):
+            p1 = pixel_mapping[path[i]]
+            p2 = pixel_mapping[path[i+1]]
+            cv2.line(im_resized, p1, p2, color=color, thickness=line_thickness)
+        plt.imshow(cv2.cvtColor(im_resized, cv2.COLOR_BGR2RGB))
+        plt.show()
         return directions_text
     return ""
 
