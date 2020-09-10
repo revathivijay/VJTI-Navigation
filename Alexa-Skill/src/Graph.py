@@ -1,10 +1,10 @@
 from collections import defaultdict
 import sys
-from src.Heap import Heap
+from Heap import Heap
 import csv
 import json
 import re
-from src.Node import Node
+from Node import Node
 from math import sqrt
 from time import sleep
 
@@ -37,6 +37,13 @@ def initialize_map(filename):
         map_node[node["Node Name"]] = int(node["Node number"])-1
     return nodes,map_node
 
+def get_node_mapping(filename):
+    with open(filename, 'r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        map_nodes = {}
+        for row in csv_reader:
+            map_nodes[row['Node']]  = int(row['Node Number'])-1
+    return map_nodes
 
 class Graph():
 
@@ -208,4 +215,28 @@ class Graph():
         path = self.getSolution(dist, parents, src, dest)
         directions, directions_text = self.getDirections(path, dest)
         return round(dist[dest], 2), path, directions, directions_text
+
+
+nodes,map_node = initialize_map('nodes.json')
+graph = Graph(25, nodes)
+graph.addAllEdges('edges.csv')
+
+def getPath(destination,source):
+    src_number = map_node[source]
+    if destination:
+        print(src_number)
+        dest_number = map_node[destination]
+        floor_navigation = ""
+        if dest_number == 23 :
+            dest_number = 1
+            floor_navigation = " Take the stairs to reach the first floor. Turn left. Walk straight. You have now arrived at Director's Office."
+        elif dest_number == 11:
+            dest_number = 13
+            floor_navigation = " Take the stairs to reach the first floor. Turn left.You have now arrived at Library."
+        distance, path, directions, directions_text = graph.dijkstra(src_number, dest_number)
+        directions_text = directions_text + floor_navigation
+        return directions_text
+    return ""
+
+print(getPath("Library","Statue"))
 

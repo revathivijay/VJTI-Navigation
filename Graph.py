@@ -16,12 +16,31 @@ from time import sleep
 28: Library Staircase, 29: COE, 30: , 31: Electrical Dept/Staircase, 32: Statue, 33: Quad Entrance}
 
 """
+from collections import defaultdict
+import sys
+from Heap import Heap
+import csv
+import json
+import re
+from Node import Node
+from math import sqrt
+from time import sleep
+
+"""
+{0: Main Gate , 1: , 2: Main Building Entrace, 3: , 4: Main Building Staircase, 5: Director's Office,
+6: Lab 3, 7: Dep1 , 8: Dep2 , 9: , 10: Computer Department, 11: Study Space , 12: , 13: AL004 ,
+14: , 15: Stage , 16: , 17: Audi Entrance, 18: Stage Washroom, 19: Canteen Quad Entrance,
+20: Quad , 21: Quad Steps, 22: , 23: , 24: , 25: , 26: CCF1, 27: Library,
+28: Library Staircase, 29: COE, 30: , 31: Electrical Dept/Staircase, 32: Statue, 33: Quad Entrance}
+
+"""
 
 
 def initialize_map(filename):
     f = open(filename)
     data = json.load(f)
     nodes = {}
+    map_node = {}
     for key, node in data.items():
         temp_node = Node(
             number=node["Node number"], ## dont change this to -1
@@ -33,8 +52,18 @@ def initialize_map(filename):
             building=node["Building"]
         )
         nodes[int(key)-1] = temp_node
-    return nodes
+        map_node[node["Node Name"]] = int(node["Node number"])-1
+    return nodes,map_node
 
+"""
+def get_node_mapping(filename):
+    with open(filename, 'r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        map_nodes = {}
+        for row in csv_reader:
+            map_nodes[row['Node']]  = int(row['Node Number'])-1
+    return map_nodes
+"""
 
 class Graph():
 
@@ -177,8 +206,8 @@ class Graph():
         V = self.V
         dist = []
         minHeap = Heap()
-        directions = [] ## for directions - revathi
-        parents = [-1]*(len(self.nodes)) ## for path - revathi
+        directions = []
+        parents = [-1]*(len(self.nodes))
         path = []
         path.append(src)
         for v in range(V):
@@ -192,7 +221,6 @@ class Graph():
 
         minHeap.size = V
 
-        #TODO: modify to show proper route -- done revathi
         while minHeap.isEmpty() == False:
             newHeapNode = minHeap.extractMin()
 
@@ -208,54 +236,25 @@ class Graph():
         directions, directions_text = self.getDirections(path, dest)
         return round(dist[dest], 2), path, directions, directions_text
 
-    #TODO: add directions switch case
 
+nodes,map_node = initialize_map('nodes.json')
+graph = Graph(25, nodes)
+graph.addAllEdges('edges.csv')
 
+def getPath(destination,source):
+    src_number = map_node[source]
+    if destination:
+        dest_number = map_node[destination]
+        floor_navigation = ""
+        if dest_number == 23 :
+            dest_number = 1
+            floor_navigation = " Take the stairs to reach the first floor. Turn left. Walk straight. You have now arrived at Director's Office."
+        elif dest_number == 11:
+            dest_number = 13
+            floor_navigation = " Take the stairs to reach the first floor. Turn left.You have now arrived at Library."
+        distance, path, directions, directions_text = graph.dijkstra(src_number, dest_number)
+        directions_text = directions_text + floor_navigation
+        return directions_text
+    return ""
 
-## driver code to test
-def getPath():
-
-    source = 1
-    dest = 12 #20, 19, 27, 30
-
-    #TODO: code to redirect to nearest staircase - pseudo code written
-    # if nodes[dest].floor==1:
-    #     for node in adj_list of dest
-    #         if re.find('staircase') in nodes[dest].name:
-    #             dest = that node
-
-    nodes = initialize_map('nodes.json')
-    # print(nodes)
-
-    graph = Graph(25, nodes)
-    graph.addAllEdges('edges.csv')
-    distance, path, directions, directions_text = graph.dijkstra(source, dest)
-
-    floor_navigation = ""
-    if dest_number == 23 :
-        dest_number = 1
-        floor_navigation = " Take the stairs to reach the first floor. Turn left. Walk straight. You have now arrived at Director's Office."
-    elif dest_number == 11:
-        dest_number = 13
-        floor_navigation = " Take the stairs to reach the first floor. Turn left.You have now arrived at Library."
-
-    print("Source: ", nodes[source].name)
-    print("Destination: ", nodes[dest].name)
-    print("Directions: ", directions)
-    print("Path: ", path)
-    for i in range(len(path)):
-        if nodes[path[i]].name=="":
-            print(" turning/junction ", end='')
-        if i!=len(path)-1:
-            print(nodes[path[i]].name, end=" -- > ")
-        else:
-            print(nodes[path[i]].name)
-
-
-    print("The directions are: "+directions_text)
-    return path
-
-
-    # for i in range(len(path)):
-    #     print(f"x: {nodes[path[i]].x}, y: {nodes[path[i]].y}")
-getPath()
+print(getPath("Library","Staircase main bldg/statue"))

@@ -1,8 +1,9 @@
 #------------------------------Part1--------------------------------
 # In this part we import necessary graph files and initialize our graph
-from src.Graph import Graph,initialize_map
+from src.Graph import Graph,initialize_map#,get_node_mapping
 
 nodes,map_node = initialize_map('src/nodes.json')
+#map_node = get_node_mapping('src/node_mapping.csv')
 graph = Graph(25, nodes)
 graph.addAllEdges('src/edges.csv')
 
@@ -76,10 +77,11 @@ def direction(event):
         
 def set_source(event):
     name=event['request']['intent']['slots']['source']['resolutions']['resolutionsPerAuthority'][0]['values'][0]['value']['name']
+    uttered_name = event['request']['intent']['slots']['source']['value']
     if name in map_node.keys():
         global SOURCE
         SOURCE = name
-        speech_msg = "Successfully added " + name + " as Source location"
+        speech_msg = "Successfully added " + uttered_name + " as Source location"
         reprompt_MSG = "Where do you want to go?"
         return output_json_builder_with_reprompt_and_card(speech_msg, reprompt_MSG, False)
     else:
