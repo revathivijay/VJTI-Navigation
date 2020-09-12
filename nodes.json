@@ -238,5 +238,15 @@
         "Floor": "1",
         "Building": "",
         "Map Number": ""
+    },
+    "25": {
+        "Node number": "25",
+        "Node Name": "BEE Lab",
+        "x_pos": "23",
+        "y_pos": "14",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": ""
     }
 }

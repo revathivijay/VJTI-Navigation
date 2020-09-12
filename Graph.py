@@ -44,7 +44,8 @@ pixel_mapping = {
     20:(215,380),
     21:(126,444),
     22:(54,444),
-    23:(101,390)
+    23:(101,390),
+    24:(534,124),
 }
 
 
@@ -255,6 +256,7 @@ graph = Graph(25, nodes)
 graph.addAllEdges('edges.csv')
 
 def getPath(destination,source):
+    print(source + " -->" + destination)
     src_number = map_node[source]
     if destination:
         dest_number = map_node[destination]
@@ -298,16 +300,18 @@ def getPath(destination,source):
         plt.imshow(cv2.cvtColor(im_resized, cv2.COLOR_BGR2RGB))
         plt.show()
         cv2.imwrite("display_image.jpg", im_resized)
+        print(distance)
         return directions_text
     return ""
-getPath("Library","Staircase main bldg/statue")
-
+getPath("Comps dept","Staircase main bldg/statue")
+getPath("BEE Lab","Comps dept")
+getPath("library staircase","BEE Lab")
+getPath("library staircase","Staircase main bldg/statue")
 """
-#Demo Code
-sleep(5)
 getPath("Comps dept","Staircase main bldg/statue")
 sleep(2)
 getPath("Library","Staircase main bldg/statue")
 sleep(2)
 getPath("Lab3","Canteen")
 """
+
