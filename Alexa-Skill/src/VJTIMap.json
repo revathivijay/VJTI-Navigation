@@ -1,0 +1,38 @@
+{
+    "type": "Alexa.Presentation.APL.RenderDocument",
+    "token": "mapToken",
+    "document": {
+        "type": "APL",
+        "version": "1.4",
+        "settings": {},
+        "theme": "light",
+        "import": [],
+        "resources": [],
+        "styles": {},
+        "onMount": [],
+        "graphics": {},
+        "commands": {},
+        "layouts": {},
+        "mainTemplate": {
+            "parameters": [
+                "payload"
+            ],
+            "items": [
+                {
+                    "type": "Container",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "height": "100%",
+                            "width": "100%",
+                            "source": "https://vjtimumbai.in/wp-content/uploads/2020/07/vjti_map-1.jpg"
+                        }
+                    ],
+                    "height": "100%",
+                    "width": "100%"
+                }
+            ]
+        }
+    },
+    "datasources": {}
+}

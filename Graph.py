@@ -18,23 +18,6 @@ import cv2
 20: Quad , 21: Quad Steps, 22: , 23: , 24: , 25: , 26: CCF1, 27: Library,
 28: Library Staircase, 29: COE, 30: , 31: Electrical Dept/Staircase, 32: Statue, 33: Quad Entrance}
 """
-from collections import defaultdict
-import sys
-from Heap import Heap
-import csv
-import json
-import re
-from Node import Node
-from math import sqrt
-from time import sleep
-
-"""
-{0: Main Gate , 1: , 2: Main Building Entrace, 3: , 4: Main Building Staircase, 5: Director's Office,
-6: Lab 3, 7: Dep1 , 8: Dep2 , 9: , 10: Computer Department, 11: Study Space , 12: , 13: AL004 ,
-14: , 15: Stage , 16: , 17: Audi Entrance, 18: Stage Washroom, 19: Canteen Quad Entrance,
-20: Quad , 21: Quad Steps, 22: , 23: , 24: , 25: , 26: CCF1, 27: Library,
-28: Library Staircase, 29: COE, 30: , 31: Electrical Dept/Staircase, 32: Statue, 33: Quad Entrance}
-"""
 
 ## for viusalizing
 pixel_mapping = {
@@ -311,12 +294,17 @@ def getPath(destination,source):
             cv2.arrowedLine(im_resized, p1, p2, color=path_color, thickness=line_thickness, tipLength=0.2)
         plt.imshow(cv2.cvtColor(im_resized, cv2.COLOR_BGR2RGB))
         plt.show()
+        cv2.imwrite("display_image.jpg", im_resized) 
         return directions_text
     return ""
+getPath("Library","Staircase main bldg/statue")
 
+""" 
+#Demo Code
 sleep(5)
 getPath("Comps dept","Staircase main bldg/statue")
 sleep(2)
 getPath("Library","Staircase main bldg/statue")
 sleep(2)
 getPath("Lab3","Canteen")
+"""

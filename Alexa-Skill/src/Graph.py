@@ -7,6 +7,9 @@ import re
 from Node import Node
 from math import sqrt
 from time import sleep
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import cv2
 
 """
 {0: Main Gate , 1: , 2: Main Building Entrace, 3: , 4: Main Building Staircase, 5: Director's Office,
@@ -14,8 +17,35 @@ from time import sleep
 14: , 15: Stage , 16: , 17: Audi Entrance, 18: Stage Washroom, 19: Canteen Quad Entrance,
 20: Quad , 21: Quad Steps, 22: , 23: , 24: , 25: , 26: CCF1, 27: Library,
 28: Library Staircase, 29: COE, 30: , 31: Electrical Dept/Staircase, 32: Statue, 33: Quad Entrance}
-
 """
+
+## for viusalizing
+pixel_mapping = {
+    0:(340,444),
+    1:(340,380),
+    2:(397,380),
+    3:(466,380),
+    4:(534,380),
+    5:(534,287),
+    6:(490,287),
+    7:(490,264),
+    8:(421,287),
+    9:(421,221),
+    10:(421,127),
+    11:(466,127),
+    12:(330,127),
+    13:(263,127),
+    14:(263,219),
+    15:(350,219),
+    16:(250,283),
+    17:(263,286),
+    18:(263,333),
+    19:(263,380),
+    20:(215,380),
+    21:(126,444),
+    22:(54,444),
+    23:(101,390)
+}
 
 
 def initialize_map(filename):
@@ -37,6 +67,7 @@ def initialize_map(filename):
         map_node[node["Node Name"]] = int(node["Node number"])-1
     return nodes,map_node
 
+"""
 def get_node_mapping(filename):
     with open(filename, 'r') as csv_file:
         csv_reader = csv.DictReader(csv_file)
@@ -44,6 +75,7 @@ def get_node_mapping(filename):
         for row in csv_reader:
             map_nodes[row['Node']]  = int(row['Node Number'])-1
     return map_nodes
+"""
 
 class Graph():
 
@@ -217,6 +249,7 @@ class Graph():
         return round(dist[dest], 2), path, directions, directions_text
 
 
+
 nodes,map_node = initialize_map('nodes.json')
 graph = Graph(25, nodes)
 graph.addAllEdges('edges.csv')
@@ -234,8 +267,42 @@ def getPath(destination,source):
             floor_navigation = " Take the stairs to reach the first floor. Turn left.You have now arrived at Library."
         distance, path, directions, directions_text = graph.dijkstra(src_number, dest_number)
         directions_text = directions_text + floor_navigation
+        im = cv2.imread('MAP.jpeg')
+        im_resized = cv2.resize(im, (610, 454), interpolation=cv2.INTER_LINEAR) ##do not change size
+        line_thickness = 3
+
+        ## color in opencv -- BGR
+        path_color = (0, 0, 0)
+        src_color = (13,64,0)
+        dest_color = (255,0,0)
+        circle_thickness = 12
+
+        ## legends
+        cv2.circle(im_resized, (25, 25), 10, src_color, thickness=circle_thickness)
+        cv2.putText(im_resized, f'{source} (you are here)', (50,27), cv2.FONT_HERSHEY_SIMPLEX , 0.7, path_color, 2, cv2.LINE_AA)
+
+        cv2.circle(im_resized, (25,67), 10, dest_color, thickness=circle_thickness)
+        cv2.putText(im_resized, f'{destination} (destination)', (50,71), cv2.FONT_HERSHEY_SIMPLEX , 0.7, path_color, 2, cv2.LINE_AA)
+
+        ## source and dest markers
+        cv2.circle(im_resized, (pixel_mapping[src_number][0], pixel_mapping[src_number][1]), 10, src_color, thickness=circle_thickness)
+        cv2.circle(im_resized, (pixel_mapping[dest_number][0], pixel_mapping[dest_number][1]), 10, dest_color, thickness=circle_thickness)
+
+        for i in range(len(path)-1):
+            p1 = pixel_mapping[path[i]]
+            p2 = pixel_mapping[path[i+1]]
+            cv2.arrowedLine(im_resized, p1, p2, color=path_color, thickness=line_thickness, tipLength=0.2)
+        plt.imshow(cv2.cvtColor(im_resized, cv2.COLOR_BGR2RGB))
+        plt.show()
+        cv2.imwrite("Alexa-Skill/src/display_image.jpg", im_resized) 
         return directions_text
     return ""
-
-print(getPath("Library","Staircase main bldg/statue"))
-
+getPath("Library","Staircase main bldg/statue")
+"""
+sleep(5)
+getPath("Comps dept","Staircase main bldg/statue")
+sleep(2)
+getPath("Library","Staircase main bldg/statue")
+sleep(2)
+getPath("Lab3","Canteen")
+"""
