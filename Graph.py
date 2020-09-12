@@ -26,10 +26,10 @@ pixel_mapping = {
     2:(397,380),
     3:(466,380),
     4:(534,380),
-    5:(534,287),
-    6:(490,287),
+    5:(534,283),
+    6:(490,283),
     7:(490,264),
-    8:(421,287),
+    8:(421,283),
     9:(421,221),
     10:(421,127),
     11:(466,127),
@@ -37,8 +37,8 @@ pixel_mapping = {
     13:(263,127),
     14:(263,219),
     15:(350,219),
-    16:(250,283),
-    17:(263,286),
+    16:(263,283),
+    17:(263,283),
     18:(263,333),
     19:(263,380),
     20:(215,380),
@@ -291,15 +291,18 @@ def getPath(destination,source):
         for i in range(len(path)-1):
             p1 = pixel_mapping[path[i]]
             p2 = pixel_mapping[path[i+1]]
-            cv2.arrowedLine(im_resized, p1, p2, color=path_color, thickness=line_thickness, tipLength=0.2)
+            len_line = abs(p1[0]-p2[0]) + abs(p1[1]-p2[1])
+            if len_line==0:
+                len_line=1
+            cv2.arrowedLine(im_resized, p1, p2, color=path_color, thickness=line_thickness, tipLength=13/len_line)
         plt.imshow(cv2.cvtColor(im_resized, cv2.COLOR_BGR2RGB))
         plt.show()
-        cv2.imwrite("display_image.jpg", im_resized) 
+        cv2.imwrite("display_image.jpg", im_resized)
         return directions_text
     return ""
 getPath("Library","Staircase main bldg/statue")
 
-""" 
+"""
 #Demo Code
 sleep(5)
 getPath("Comps dept","Staircase main bldg/statue")
