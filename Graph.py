@@ -7,6 +7,7 @@ import re
 from Node import Node
 from math import sqrt
 from time import sleep
+from google_drive_util import create_file
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import cv2
@@ -68,15 +69,14 @@ def initialize_map(filename):
         map_node[node["Node Name"]] = int(node["Node number"])-1
     return nodes,map_node
 
-"""
-def get_node_mapping(filename):
-    with open(filename, 'r') as csv_file:
-        csv_reader = csv.DictReader(csv_file)
-        map_nodes = {}
-        for row in csv_reader:
-            map_nodes[row['Node']]  = int(row['Node Number'])-1
-    return map_nodes
-"""
+def get_image_mapping(filename):
+    f = open(filename)
+    data = json.load(f)
+    images = {}
+    for key, value in data.items():
+        images[key] = value
+    return images
+
 
 class Graph():
 
@@ -255,6 +255,7 @@ nodes,map_node = initialize_map('nodes.json')
 graph = Graph(25, nodes)
 graph.addAllEdges('edges.csv')
 
+
 def getPath(destination,source):
     print(source + " -->" + destination)
     src_number = map_node[source]
@@ -300,18 +301,79 @@ def getPath(destination,source):
         plt.imshow(cv2.cvtColor(im_resized, cv2.COLOR_BGR2RGB))
         plt.show()
         cv2.imwrite("display_image.jpg", im_resized)
+        filename_on_drive = str(src_number) + "_" + str(dest_number) + ".jpg"
+        id = create_file(filename="display_image.jpg",filename_on_drive=filename_on_drive)
+        data[filename_on_drive] = id
         print(distance)
         return directions_text
     return ""
+
+""" Library Path Test
 getPath("Comps dept","Staircase main bldg/statue")
 getPath("BEE Lab","Comps dept")
 getPath("library staircase","BEE Lab")
 getPath("library staircase","Staircase main bldg/statue")
 """
-getPath("Comps dept","Staircase main bldg/statue")
-sleep(2)
-getPath("Library","Staircase main bldg/statue")
-sleep(2)
-getPath("Lab3","Canteen")
-"""
 
+# getPath("Comps dept","Staircase main bldg/statue")
+# sleep(2)
+# getPath("Library","Staircase main bldg/statue")
+# sleep(2)
+# getPath("Lab3","Canteen")
+
+# with open("image_file_mapping.json", 'w') as json_file:
+#     json_file.write(json.dumps(data, indent=4))
+
+#print(get_image_mapping('image_file_mapping.json'))
+
+def uploadImage(src_number,dest_number):
+
+    if dest_number:
+        distance, path, directions, directions_text = graph.dijkstra(src_number, dest_number)
+        im = cv2.imread('MAP.jpeg')
+        im_resized = cv2.resize(im, (610, 454), interpolation=cv2.INTER_LINEAR) ##do not change size
+        line_thickness = 3
+
+        ## color in opencv -- BGR
+        path_color = (0, 0, 0)
+        src_color = (13,64,0)
+        dest_color = (255,0,0)
+        circle_thickness = 12
+
+        ## legends
+        cv2.circle(im_resized, (25, 25), 10, src_color, thickness=circle_thickness)
+        cv2.putText(im_resized, f'{nodes[src_number].name} (you are here)', (50,27), cv2.FONT_HERSHEY_SIMPLEX , 0.7, path_color, 2, cv2.LINE_AA)
+
+        cv2.circle(im_resized, (25,67), 10, dest_color, thickness=circle_thickness)
+        cv2.putText(im_resized, f'{nodes[dest_number].name} (destination)', (50,71), cv2.FONT_HERSHEY_SIMPLEX , 0.7, path_color, 2, cv2.LINE_AA)
+
+        ## source and dest markers
+        cv2.circle(im_resized, (pixel_mapping[src_number][0], pixel_mapping[src_number][1]), 10, src_color, thickness=circle_thickness)
+        cv2.circle(im_resized, (pixel_mapping[dest_number][0], pixel_mapping[dest_number][1]), 10, dest_color, thickness=circle_thickness)
+
+        for i in range(len(path)-1):
+            p1 = pixel_mapping[path[i]]
+            p2 = pixel_mapping[path[i+1]]
+            len_line = abs(p1[0]-p2[0]) + abs(p1[1]-p2[1])
+            if len_line==0:
+                len_line=1
+            cv2.arrowedLine(im_resized, p1, p2, color=path_color, thickness=line_thickness, tipLength=13/len_line)
+        #plt.imshow(cv2.cvtColor(im_resized, cv2.COLOR_BGR2RGB))
+        #plt.show()
+        cv2.imwrite("display_image.jpg", im_resized)
+        filename_on_drive =  str(src_number) + "_" + str(dest_number) + ".jpg"
+        id = create_file(filename="display_image.jpg",filename_on_drive=filename_on_drive)
+        return id,filename_on_drive
+
+## Add images to drive
+## vidhi - Added images with source 1 
+def populateImages():
+    data = {}
+    for i in range(0,25)
+        for j in range(0,25):
+            if nodes[i].name !="" and i!=j:
+                id,filename_on_drive = uploadImage(i,j)
+                data[filename_on_drive] = id
+
+    with open("image_file_mapping.json", 'wb') as json_file:
+        json_file.write(json.dumps(data, indent=4))

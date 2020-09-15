@@ -1,9 +1,9 @@
 #------------------------------Part1--------------------------------
 # In this part we import necessary graph files and initialize our graph
-from src.Graph import Graph,initialize_map#,get_node_mapping
+from src.Graph import Graph,initialize_map, get_image_mapping
 
 nodes,map_node = initialize_map('src/nodes.json')
-#map_node = get_node_mapping('src/node_mapping.csv')
+images = get_image_mapping('src/image_file_mapping.json')
 graph = Graph(25, nodes)
 graph.addAllEdges('src/edges.csv')
 
@@ -29,11 +29,9 @@ def on_start():
     print("Session Started.")
 
 def on_launch(event):
-    onlunch_MSG = "Welcome to VJTI! Where do you want to go?"
+    onlaunch_MSG = "Welcome to VJTI! Where do you want to go?" 
     reprompt_MSG = "Where do you want to go?"
-    card_TEXT = ""
-    card_TITLE = ""
-    return output_json_builder_with_reprompt_and_card(onlunch_MSG, reprompt_MSG, False)
+    return output_json_builder_with_reprompt_and_card(onlaunch_MSG, reprompt_MSG, False)
 
 def on_end():
     print("Session Ended.")
@@ -59,12 +57,16 @@ def intent_scheme(event):
 # intent handler functions
 def direction(event):
     name=event['request']['intent']['slots']['destination']['resolutions']['resolutionsPerAuthority'][0]['values'][0]['value']['name']
+    uttered_name = event['request']['intent']['slots']['destination']['value']
+    isAPL = supportsAPL(event)
     global SOURCE
     if SOURCE:
         if name in map_node.keys():
-            speech_msg = "Fetching directions for " + name + ":  " + getPath(destination=name,source=SOURCE)
+            directions,src_number,dest_number = getPath(destination=name,source=SOURCE)
+            image = str(src_number) + "_" + str(dest_number) + ".jpg"
+            speech_msg = "Fetching directions for " + uttered_name + ":  " + directions
             reprompt_MSG = "Did you want directions to some other place, please say which one?"
-            return output_json_builder_with_reprompt_and_card(speech_msg, reprompt_MSG, False)
+            return output_json_builder_with_reprompt_and_card(speech_msg, reprompt_MSG, False, isAPL, image)
         else:
             wrongname_MSG = "You haven't given a valid location. Say Help for more details."
             reprompt_MSG = "Where do you want to go"
@@ -110,6 +112,17 @@ def fallback_call(event):
 #------------------------------Part4--------------------------------
 # The response of our Lambda function should be in a json format. 
 
+def supportsAPL(event):
+    if event['context'] and event['context']['System'] and event['context']['System']['device'] :
+        supportedInterfaces = event['context']['System']['device']['supportedInterfaces']
+        if supportedInterfaces and ( 'Alexa.Presentation.APL' in supportedInterfaces.keys() ):
+            aplInterface = supportedInterfaces['Alexa.Presentation.APL']
+            if aplInterface != {} and aplInterface != None:
+
+                    return True
+    return False
+    
+
 def getPath(destination,source):
     src_number = map_node[source]
     if destination:
@@ -119,11 +132,11 @@ def getPath(destination,source):
             dest_number = 1
             floor_navigation = " Take the stairs to reach the first floor. Turn left. Walk straight. You have now arrived at Director's Office."
         elif dest_number == 11:
-            dest_number = 13
+            dest_number = 10
             floor_navigation = " Take the stairs to reach the first floor. Turn left.You have now arrived at Library."
         distance, path, directions, directions_text = graph.dijkstra(src_number, dest_number)
         directions_text = directions_text + floor_navigation
-        return directions_text
+        return directions_text,src_number,dest_number
     return ""
 
 def plain_text_builder(text_body):
@@ -138,15 +151,59 @@ def reprompt_builder(repr_text):
     return reprompt_dict
 
 
-def response_field_builder_with_reprompt_and_card(outputSpeach_text, reprompt_text, value):
+def response_field_builder_with_reprompt_and_card(outputSpeach_text, reprompt_text, value, image_url = None):
     speech_dict = {}
     speech_dict['outputSpeech'] = plain_text_builder(outputSpeach_text)
     speech_dict['reprompt'] = reprompt_builder(reprompt_text)
+    if image_url:
+        speech_dict['directives'] = [{
+        "type": "Alexa.Presentation.APL.RenderDocument",
+        "token": "mapToken",
+        "document": {
+            "type": "APL",
+            "version": "1.4",
+            "settings": {},
+            "theme": "light",
+            "import": [],
+            "resources": [],
+            "styles": {},
+            "onMount": [],
+            "graphics": {},
+            "commands": {},
+            "layouts": {},
+            "mainTemplate": {
+                "parameters": [
+                    "payload"
+                ],
+                "items": [
+                    {
+                        "type": "Container",
+                        "items": [
+                            {
+                                "type": "Image",
+                                "height": "100%",
+                                "width": "100%",
+                                "source": image_url
+                            }
+                        ],
+                        "height": "100%",
+                        "width": "100%"
+                    }
+                ]
+            }
+        },
+        "datasources": {}
+        }
+        ]
     speech_dict['shouldEndSession'] = value
     return speech_dict
 
-def output_json_builder_with_reprompt_and_card(outputSpeach_text,reprompt_text, value):
+def output_json_builder_with_reprompt_and_card(outputSpeach_text,reprompt_text, value, isAPL=False, image=None):
     response_dict = {}
     response_dict['version'] = '1.0'
-    response_dict['response'] = response_field_builder_with_reprompt_and_card(outputSpeach_text, reprompt_text, value)
+    if isAPL and image:
+        image_url = "https://drive.google.com/uc?export=view&id=" + images[image]
+        response_dict['response'] = response_field_builder_with_reprompt_and_card(outputSpeach_text, reprompt_text, value, image_url)
+    else:
+        response_dict['response'] = response_field_builder_with_reprompt_and_card(outputSpeach_text, reprompt_text, value)
     return response_dict
