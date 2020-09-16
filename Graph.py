@@ -21,31 +21,31 @@ import cv2
 
 ## for viusalizing
 pixel_mapping = {
-    0:(340,444),
-    1:(340,380),
-    2:(397,380),
-    3:(466,380),
-    4:(534,380),
-    5:(534,283),
-    6:(490,283),
-    7:(490,264),
-    8:(421,283),
-    9:(421,221),
-    10:(421,127),
-    11:(466,127),
-    12:(330,127),
-    13:(263,127),
-    14:(263,219),
-    15:(350,219),
-    16:(263,283),
-    17:(263,283),
-    18:(263,333),
-    19:(263,380),
-    20:(215,380),
-    21:(126,444),
-    22:(54,444),
-    23:(101,390),
-    24:(534,124),
+    0:(337,448),
+    1:(337,403),
+    2:(395,403),
+    3:(471,403),
+    4:(529,403),
+    5:(529,283),
+    6:(491,283),
+    7:(491,262),
+    8:(426,283),
+    9:(426,213),
+    10:(426,128),
+    11:(460,128),
+    12:(338,128),
+    13:(236,127),
+    14:(236,216),
+    15:(337,216),
+    16:(337,283),
+    17:(236,283),
+    18:(236,325),
+    19:(236,403),
+    20:(198,403),
+    21:(122,448),
+    22:(56,448),
+    23:(58,403),
+    24:(529,128),
 }
 
 
@@ -269,7 +269,7 @@ def getPath(destination,source):
             floor_navigation = " Take the stairs to reach the first floor. Turn left.You have now arrived at Library."
         distance, path, directions, directions_text = graph.dijkstra(src_number, dest_number)
         directions_text = directions_text + floor_navigation
-        im = cv2.imread('MAP.jpeg')
+        im = cv2.imread('map-final-final.jpg')
         im_resized = cv2.resize(im, (610, 454), interpolation=cv2.INTER_LINEAR) ##do not change size
         line_thickness = 3
 
