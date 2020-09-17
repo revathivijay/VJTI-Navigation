@@ -11,6 +11,8 @@ from google_drive_util import create_file
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import cv2
+from googletrans import Translator
+translator = Translator()
 
 """
 {0: Main Gate , 1: , 2: Main Building Entrace, 3: , 4: Main Building Staircase, 5: Director's Office,
@@ -301,10 +303,10 @@ def getPath(destination,source):
         plt.imshow(cv2.cvtColor(im_resized, cv2.COLOR_BGR2RGB))
         plt.show()
         cv2.imwrite("display_image.jpg", im_resized)
-        filename_on_drive = str(src_number) + "_" + str(dest_number) + ".jpg"
-        id = create_file(filename="display_image.jpg",filename_on_drive=filename_on_drive)
-        data[filename_on_drive] = id
-        print(distance)
+        #filename_on_drive = str(src_number) + "_" + str(dest_number) + ".jpg"
+        #id = create_file(filename="display_image.jpg",filename_on_drive=filename_on_drive)
+        #data[filename_on_drive] = id
+        #print(distance)
         return directions_text
     return ""
 
@@ -315,7 +317,16 @@ getPath("library staircase","BEE Lab")
 getPath("library staircase","Staircase main bldg/statue")
 """
 
-# getPath("Comps dept","Staircase main bldg/statue")
+"""
+Hindi Skill Code
+text = getPath("Library","Staircase main bldg/statue")
+print(text)
+text = text.replace("Take the next Left","Take the next left turn")
+text = text.replace("Take the next Right","Take the next right turn")
+print(text)
+result = translator.translate(text,src='en', dest='hi')
+print(result.text)
+"""
 # sleep(2)
 # getPath("Library","Staircase main bldg/statue")
 # sleep(2)
@@ -369,7 +380,7 @@ def uploadImage(src_number,dest_number):
 ## vidhi - Added images with source 1 
 def populateImages():
     data = {}
-    for i in range(0,25)
+    for i in range(0,25):
         for j in range(0,25):
             if nodes[i].name !="" and i!=j:
                 id,filename_on_drive = uploadImage(i,j)
