@@ -23,31 +23,31 @@ import PIL
 
 ## for viusalizing
 pixel_mapping = {
-    0:(337,448),
-    1:(337,409),
-    2:(395,409),
-    3:(471,409),
-    4:(540,409),
-    5:(540,267),
-    6:(491,276),
-    7:(491,262),
-    8:(426,276),
-    9:(426,216),
-    10:(426,128),
-    11:(460,128),
-    12:(338,128),
-    13:(240,127),
-    14:(240,216),
-    15:(337,216),
-    16:(337,276),
-    17:(240,276),
-    18:(240,325),
-    19:(240,409),
-    20:(198,409),
-    21:(122,448),
-    22:(56,448),
-    23:(58,409),
-    24:(540,128),
+    0: (337,448),
+    1: (337,409),
+    2: (395,409),
+    3: (471,409),
+    4: (540,409),
+    5: (540,267),
+    6: (491,276),
+    7: (491,262),
+    8: (426,276),
+    9: (426,216),
+    10: (426,128),
+    11: (460,128),
+    12: (338,128),
+    13: (240,127),
+    14: (240,216),
+    15: (337,216),
+    16: (337,276),
+    17: (240,276),
+    18: (240,325),
+    19: (240,409),
+    20: (198,409),
+    21: (122,448),
+    22: (58,448),
+    23: (58,409),
+    24: (540,128),
 }
 
 
@@ -278,52 +278,12 @@ def getPath(destination,source):
         img = img.resize((610,454))
         MAX_SIZE = (24, 24) ## for thumbnail
 
-        # adding source marker
-
-        src_img = PIL.Image.open('dest.png')
-        src_img.thumbnail((30,30))
-        paste_src_x = pixel_mapping[src_number][0] - 9
-        paste_src_y = pixel_mapping[src_number][1] - 24
-        img.paste(src_img, (paste_src_x, paste_src_y))
-        # plt.imshow(img)
-        # plt.show()
-
-        # adding destination marker
-        dest_img = PIL.Image.open('src.png')
-        dest_img.thumbnail(MAX_SIZE)
-        paste_dest_x = pixel_mapping[dest_number][0] - 9
-        paste_dest_y = pixel_mapping[dest_number][1] - 31
-        img.paste(dest_img, (paste_dest_x, paste_dest_y))
-        # plt.imshow(img)
-        # plt.show()
-
         ## for path
         img = np.array(img)
+
         ## color in opencv -- BGR
         path_color = (0, 0, 0)
         line_thickness = 2
-        src_color = (20,255,0)
-        dest_color = (255,0,0)
-        circle_thickness = 5
-        circle_radius = 5
-
-        ## legends
-        # cv2.circle(im_resized, (25, 25), 10, src_color, thickness=circle_thickness)
-        # cv2.putText(im_resized, f'{source} (you are here)', (50,27), cv2.FONT_HERSHEY_SIMPLEX , 0.7, path_color, 2, cv2.LINE_AA)
-        #
-        # cv2.circle(im_resized, (25,67), 10, dest_color, thickness=circle_thickness)
-        # cv2.putText(im_resized, f'{destination} (destination)', (50,71), cv2.FONT_HERSHEY_SIMPLEX , 0.7, path_color, 2, cv2.LINE_AA)
-
-        ## testing
-        # for i in range(len(pixel_mapping)):
-        #     cv2.circle(im_resized, (pixel_mapping[i][0], pixel_mapping[i][1]), circle_radius,
-        #                src_color, thickness=circle_thickness)
-        #     cv2.putText(im_resized, f'{i}', (pixel_mapping[i][0], pixel_mapping[i][1]), cv2.FONT_HERSHEY_SIMPLEX , 0.7, path_color, 2, cv2.LINE_AA)
-
-        ## source and dest markers
-        # cv2.circle(im_resized, (pixel_mapping[src_number][0], pixel_mapping[src_number][1]), circle_radius, src_color, thickness=circle_thickness)
-        # cv2.circle(im_resized, (pixel_mapping[dest_number][0], pixel_mapping[dest_number][1]), circle_radius, dest_color, thickness=circle_thickness)
-        # im2 = im_resized.copy()
 
         for i in range(len(path)-1):
             p1 = pixel_mapping[path[i]]
@@ -331,10 +291,38 @@ def getPath(destination,source):
             len_line = abs(p1[0]-p2[0]) + abs(p1[1]-p2[1])
             if len_line==0:
                 len_line=1
-            cv2.arrowedLine(img, p1, p2, color=path_color, thickness=line_thickness, tipLength=13/len_line)
+
+            if i==len(path)-2:
+                # arrow in middle
+                mid_point = ((p1[0] + p2[0])//2, (p1[1] + p2[1])//2)
+                ## two lines
+                cv2.arrowedLine(img, p1, mid_point, color=path_color, thickness=line_thickness, tipLength=13 * 2/ len_line)
+                cv2.line(img, mid_point, p2, path_color, thickness=line_thickness, lineType=cv2.LINE_AA)
+            else:
+                cv2.arrowedLine(img, p1, p2, color=path_color, thickness=line_thickness, tipLength=13 / len_line)
         # plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-        plt.imshow(img)
+        img_temp = PIL.Image.fromarray(img)
+
+        # adding source marker
+        src_img = PIL.Image.open('dest.png')
+        src_img.thumbnail((28,28))
+        w, h = src_img.size
+        paste_src_x = pixel_mapping[src_number][0] - w // 2
+        paste_src_y = pixel_mapping[src_number][1] - h + 2
+        img_temp.paste(src_img, (paste_src_x, paste_src_y))
+
+        # adding destination marker
+        dest_img = PIL.Image.open('src.png')
+        dest_img.thumbnail(MAX_SIZE)
+        w, h = dest_img.size
+        paste_dest_x = pixel_mapping[dest_number][0] - w // 2
+        paste_dest_y = pixel_mapping[dest_number][1] - h + 2
+        img_temp.paste(dest_img, (paste_dest_x, paste_dest_y))
+
+        # display image
+        plt.imshow(img_temp)
         plt.show()
+
         cv2.imwrite("display_image.jpg", img)
         print(distance)
         return directions_text
