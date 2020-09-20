@@ -159,11 +159,28 @@ class Graph():
                 y3 = self.nodes[path[i]].y
 
                 # Very special case of mech building passage which is slant.
-                if path[i - 1] in range(33, 40) and path[i] in range(34, 41):
+                if (path[i - 1] in range(33, 40) and path[i] in range(34, 41)) or (path[i-1] in range(48,52) and path[i] in range(48,52)):
                     if (path[i - 1] == 33):
                         directions.append('Slight right')
                     else:
                         directions.append('Straight')
+
+                elif nodes[path[i-1]].name=='staircase' and nodes[path[i]].name == 'staircase' and nodes[path[i]].floor != nodes[path[i-1]].floor:
+                    floor = ""
+                    if(nodes[path[i]].floor==1):
+                        floor = "first"
+                    elif nodes[path[i]].floor==2:
+                        floor = "second"
+                    elif nodes[path[i]].floor==3:
+                        floor = "third"
+                    elif nodes[path[i]].floor==0:
+                        floor = "ground"
+                    directions_text += f' Now, use the staircase to go to the {floor} floor.'
+                    continue
+
+                elif nodes[path[i - 2]].name == 'staircase' and nodes[path[i-1]].name == 'staircase' and nodes[path[i-1]].floor != nodes[path[i - 2]].floor:
+                    directions_text += " Walk straight."
+                    continue
 
                 elif(x2>x1 and y1==y2):
                     if(y3>y2 and x2==x3):
@@ -215,10 +232,6 @@ class Graph():
 
                 else:
                     directions.append('Check em else')
-
-
-
-
 
                 if(directions[-1]=='Straight'):
                     if directions[-2]!='Straight':
@@ -344,7 +357,7 @@ def getPath(destination,source):
 
 
 nodes,map_node = initialize_map('nodes.json')
-graph = Graph(40, nodes)
+graph = Graph(len(nodes), nodes)
 graph.addAllEdges('edges-temp.csv')
 
 # getPath("Comps dept","Staircase main bldg/statue")
@@ -360,7 +373,10 @@ graph.addAllEdges('edges-temp.csv')
 # TESTCASES FOR MAP #3
 # print(getPath( "Xerox Center","Mech Gate"))
 # print(getPath("Inside workshop #1", "Mech Building Entrance"))
-print(getPath( "DL002", "Mech Gate"))
+#print(getPath( "DL002", "Mech Gate"))
+
+# TESTCASES FOR MAP #4
+print(getPath("Main Seminar Hall", "Mech Gate"))
 
 """
 getPath("Comps dept","Staircase main bldg/statue")

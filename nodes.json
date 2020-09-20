@@ -221,7 +221,7 @@
     },
     "23": {
         "Node number": "23",
-        "Node Name": "Staircase",
+        "Node Name": "staircase",
         "x_pos": "71",
         "y_pos": "486",
         "Type ": "",
@@ -341,7 +341,7 @@
     },
     "35": {
         "Node number": "35",
-        "Node Name": "Staircase",
+        "Node Name": "staircase",
         "x_pos": "494",
         "y_pos": "474",
         "Type ": "",
