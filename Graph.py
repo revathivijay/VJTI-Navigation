@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import cv2
 import PIL
+from PIL import Image
 
 """
 {0: Main Gate , 1: , 2: Main Building Entrace, 3: , 4: Main Building Staircase, 5: Director's Office,
@@ -65,7 +66,7 @@ def initialize_map(filename):
             node_type=node["Type "],
             floor=int(node["Floor"]),
             building=node["Building"],
-            map = node["Map Number"]
+            map = int(node["Map Number"])
         )
         nodes[int(key)-1] = temp_node
         map_node[node["Node Name"]] = int(node["Node number"])-1
@@ -89,7 +90,7 @@ class Graph():
         self.nodes = nodes
 
     def calculateDistance(self, src, dest):
-        return sqrt(pow(self.nodes[src].x - self.nodes[dest].x, 2)+pow(self.nodes[src].y-self.nodes[dest].y, 2))
+        return sqrt(pow(self.nodes[src].x - self.nodes[dest].x + abs(self.nodes[src].map - self.nodes[dest].map)*639, 2)+pow(self.nodes[src].y-self.nodes[dest].y + abs(self.nodes[src].map - self.nodes[dest].map)*540, 2))
 
     def addEdge(self, src, dest):
         weight = self.calculateDistance(src, dest)
@@ -242,7 +243,10 @@ class Graph():
                     else:
                         directions_text+=" Take the next "+ directions[-1] + "."
             if i==len(path)-1:
-               directions_text+=" You have now arrived at "+self.nodes[dest].name+". "
+                if('washroom' in self.nodes[dest].name):
+                    directions_text+=" You have reached the washroom."
+                else:
+                    directions_text+=f"You have arrived at {nodes[path[i]].name}"
 
         return directions, directions_text
 
@@ -282,38 +286,72 @@ class Graph():
         return round(dist[dest], 2), path, directions, directions_text
 
 
+# This function is created to find washroom closest washroom
+def findDestination(src, dest, gender):
+    #Repromt to ask girls/boys washroom
+    all_dests = []
+    dist = []
+    if(dest=="washroom"):
+        for i in range(len(nodes)):
+            if "washroom" in nodes[i].name and gender in nodes[i].name:
+                all_dests.append(nodes[i])
+                dist.append(graph.calculateDistance(map_node[src], nodes[i].number))
+    else:
+        for i in range(len(nodes)):
+            if dest in nodes[i].name :
+                all_dests.append(nodes[i])
+                dist.append(graph.calculateDistance(map_node[src], nodes[i].number))
 
-def getPath(destination,source):
-    print(source + " -->" + destination)
+    dest = all_dests[dist.index(min(dist))]
+    return dest.number
+
+
+
+def getPath(destination,source, gender="null"):
+    print(source + " -->" + str(destination))
     src_number = map_node[source]
-    if destination:
-        dest_number = map_node[destination]
-        floor_navigation = ""
-        # if dest_number == 23 :
-        #     dest_number = 1
-        #     floor_navigation = " Take the stairs to reach the first floor. Turn left. Walk straight. You have now arrived at Director's Office."
-        # elif dest_number == 11:
-        #     dest_number = 10
-        #     floor_navigation = " Take the stairs to reach the first floor. Turn left.You have now arrived at Library."
+    dest_number = findDestination(source, destination, gender)
+    if dest_number:
         distance, path, directions, directions_text = graph.dijkstra(src_number, dest_number)
-        directions_text = directions_text + floor_navigation
-        im = cv2.imread('new-ss/FINISHED/1.PNG')
-        im_resized = cv2.resize(im, (610, 454), interpolation=cv2.INTER_LINEAR) ##do not change size
 
-        img = PIL.Image.open('new-ss/FINISHED/3-MECH-0.PNG')
-        #img = img.resize((610,454))
         MAX_SIZE = (24, 24) ## for thumbnail
-
-        ## for path
-        img = np.array(img)
-
-        ## color in opencv -- BGR
         path_color = (255, 0, 0, 255)
         line_thickness = 2
-        cv2.flip(im, 1)
+
+        img = PIL.Image.open(f'new-ss/FINISHED/{nodes[src_number].map}-{nodes[src_number].floor}.PNG')
+        img = np.array(img)
+        img_temp = PIL.Image.fromarray(img)
+        curr_map = nodes[src_number].map
+        curr_floor = nodes[src_number].floor
+        counter = 0
+
         for i in range(len(path)-1):
+
             p1 = nodes[path[i]]
             p2 = nodes[path[i+1]]
+            if(i==0):
+                src_img = PIL.Image.open('dest.png')
+                src_img.thumbnail((28, 28))
+                w, h = src_img.size
+                paste_src_x = nodes[src_number].x - w // 2
+                paste_src_y = nodes[src_number].y - h + 2
+                img_temp.paste(src_img, (paste_src_x, paste_src_y))
+                img = np.array(img_temp)
+
+
+
+            if (curr_map!=p1.map or curr_floor!=p1.floor):
+                plt.imshow(img_temp)
+                plt.show()
+                counter+=1
+                cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", img)
+                counter+=1
+                curr_map = p1.map
+                curr_floor = p1.floor
+                img = PIL.Image.open(f'new-ss/FINISHED/{curr_map}-{curr_floor}.PNG')
+                img = np.array(img)
+                img_temp = PIL.Image.fromarray(img)
+
             len_line = abs(p1.x-p2.x) + abs(p1.y-p2.y)
 
             if len_line==0:
@@ -325,32 +363,31 @@ def getPath(destination,source):
                 ## two lines
                 cv2.arrowedLine(img, (p1.x, p1.y), mid_point, color=path_color, thickness=line_thickness, tipLength=13 * 2/ len_line)
                 cv2.line(img, mid_point, (p2.x, p2.y), path_color, thickness=line_thickness, lineType=cv2.LINE_AA)
-            else:
+                dest_img = PIL.Image.open('src.png')
+                dest_img.thumbnail(MAX_SIZE)
+                w, h = dest_img.size
+                paste_dest_x = nodes[dest_number].x - w // 2
+                paste_dest_y = nodes[dest_number].y - h + 2
+                img_temp.paste(dest_img, (paste_dest_x, paste_dest_y))
+            elif(p2.map==p1.map and p2.floor==p1.floor):
                 cv2.arrowedLine(img, (p1.x, p1.y), (p2.x, p2.y), color=path_color, thickness=line_thickness, tipLength=13 / len_line)
         # plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-        img_temp = PIL.Image.fromarray(img)
 
-        # adding source marker
-        src_img = PIL.Image.open('dest.png')
-        src_img.thumbnail((28,28))
+        src_img = PIL.Image.open('src.png')
+        src_img.thumbnail((28, 28))
         w, h = src_img.size
         paste_src_x = nodes[src_number].x - w // 2
         paste_src_y = nodes[src_number].y - h + 2
         img_temp.paste(src_img, (paste_src_x, paste_src_y))
+        img = np.array(img_temp)
 
         # adding destination marker
-        dest_img = PIL.Image.open('src.png')
-        dest_img.thumbnail(MAX_SIZE)
-        w, h = dest_img.size
-        paste_dest_x = nodes[dest_number].x - w // 2
-        paste_dest_y = nodes[dest_number].y  - h + 2
-        img_temp.paste(dest_img, (paste_dest_x, paste_dest_y))
 
         # display image
         plt.imshow(img_temp)
         plt.show()
 
-        cv2.imwrite("display_image.jpg", img)
+        cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", img)
         print(distance)
         return directions_text
     return ""
@@ -360,13 +397,26 @@ nodes,map_node = initialize_map('nodes.json')
 graph = Graph(len(nodes), nodes)
 graph.addAllEdges('edges-temp.csv')
 
-# getPath("Comps dept","Staircase main bldg/statue")
-# getPath("BEE Lab","Comps dept")
+
+# img = Image.open('new-ss/FINISHED/2-1.PNG')
+# plt.imshow(img)
+# for i in range(len(nodes)):
+#     for j in graph.graph[i]:
+#         v = j[0]
+#         if(nodes[i].map==2 and nodes[v].map ==2 and nodes[i].floor==0 and nodes[v].floor==0):
+#             plt.plot(nodes[i].x, nodes[i].y, 'o')
+#             plt.plot(nodes[v].x, nodes[v].y, 'o')
+#             plt.plot([nodes[i].x, nodes[v].x], [nodes[i].y, nodes[v].y])
+#             plt.text(nodes[i].x + 10, nodes[i].y, i+ 1)
+#
+# plt.show()
+
+# TESTCASES FOR MAP #2
+print(getPath("BCT Lab","statue"))
 # getPath("library staircase","BEE Lab")
-# getPath("library staircase","Staircase main bldg/statue")
 
 # TESTCASES FOR MAP #1
-# print(getPath( "Girls hostel", "Football Field"))
+#print(getPath( "Girls hostel", "Football Field"))
 # print(getPath("Girls hostel", "Boys hostel 1"))
 # print(getPath("Boys hostel 2", "Cricket Ground"))
 
@@ -376,7 +426,13 @@ graph.addAllEdges('edges-temp.csv')
 #print(getPath( "DL002", "Mech Gate"))
 
 # TESTCASES FOR MAP #4
-print(getPath("Main Seminar Hall", "Mech Gate"))
+#print(getPath("Main Seminar Hall", "Mech Gate"))
+
+# TESTCASES FOR WASHROOM
+#print(getPath("Girls hostel", "canteen"))
+
+# TESTCASES FOR MULTIPLE MAPS
+print(getPath("Cricket Ground", "Main Seminar Hall"))
 
 """
 getPath("Comps dept","Staircase main bldg/statue")
@@ -385,6 +441,10 @@ getPath("Library","Staircase main bldg/statue")
 sleep(2)
 getPath("Lab3","Canteen")
 """
+
+
+
+
 
 
 
