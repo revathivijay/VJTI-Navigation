@@ -177,11 +177,26 @@ class Graph():
                     elif nodes[path[i]].floor==0:
                         floor = "ground"
                     directions_text += f' Now, use the staircase to go to the {floor} floor.'
+
+                    if i == len(path) - 1:
+                        if ('washroom' in self.nodes[dest].name):
+                            directions_text += " You have reached the washroom."
+                        else:
+                            directions_text += f"You have arrived at {nodes[path[i]].name}"
                     continue
 
                 elif nodes[path[i - 2]].name == 'staircase' and nodes[path[i-1]].name == 'staircase' and nodes[path[i-1]].floor != nodes[path[i - 2]].floor:
                     directions_text += " Walk straight."
+                    if i == len(path) - 1:
+                        if ('washroom' in self.nodes[dest].name):
+                            directions_text += " You have reached the washroom."
+                        else:
+                            directions_text += f"You have arrived at {nodes[path[i]].name}"
                     continue
+
+                # Special Case
+                elif path[i-2]==0 or path[i-1] == 0 or path[i-2]==90 or path[i-1]==90:
+                    directions.append("Straight")
 
                 elif(x2>x1 and y1==y2):
                     if(y3>y2 and x2==x3):
@@ -242,11 +257,13 @@ class Graph():
                         directions_text+=" Now at {} turn {}.".format(self.nodes[path[i-1]].name, directions[-1])
                     else:
                         directions_text+=" Take the next "+ directions[-1] + "."
-            if i==len(path)-1:
-                if('washroom' in self.nodes[dest].name):
-                    directions_text+=" You have reached the washroom."
-                else:
-                    directions_text+=f"You have arrived at {nodes[path[i]].name}"
+
+                if i == len(path) - 1:
+                    if ('washroom' in self.nodes[dest].name):
+                        directions_text += " You have reached the washroom."
+                    else:
+                        directions_text += f"You have arrived at {nodes[path[i]].name}"
+
 
         return directions, directions_text
 
@@ -361,11 +378,12 @@ def getPath(destination,source, gender="null"):
 
             if i==len(path)-2:
                 # arrow in middle
-                mid_point = ((p1.x + p2.x)//2, (p1.y + p2.y)//2)
+                mid_point = ((p1.x + p2.x) // 2, (p1.y + p2.y) // 2)
                 ## two lines
-                cv2.arrowedLine(img, (p1.x, p1.y), mid_point, color=path_color, thickness=line_thickness, tipLength=13 * 2/ len_line)
+                cv2.arrowedLine(img, (p1.x, p1.y), mid_point, color=path_color, thickness=line_thickness,
+                                tipLength=13 * 2 / len_line)
                 cv2.line(img, mid_point, (p2.x, p2.y), path_color, thickness=line_thickness, lineType=cv2.LINE_AA)
-                if src_map!=dest_map or src_floor!=dest_floor:
+                if src_map != dest_map or src_floor != dest_floor:
                     img_temp = PIL.Image.fromarray(img)
                     dest_img = PIL.Image.open('src.png')
                     dest_img.thumbnail(MAX_SIZE)
@@ -407,6 +425,7 @@ def getPath(destination,source, gender="null"):
         plt.show()
         cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
         print(distance)
+        print(f"all-dest/{src_number}-{dest_number}-{counter}.jpg")
         return directions_text
     return ""
 
@@ -416,7 +435,7 @@ graph = Graph(len(nodes), nodes)
 graph.addAllEdges('edges-temp.csv')
 
 
-# img = Image.open('new-ss/FINISHED/2-1.PNG')
+# img = Image.open('new-ss/FINISHED/2-0.PNG')
 # plt.imshow(img)
 # for i in range(len(nodes)):
 #     for j in graph.graph[i]:
@@ -429,36 +448,44 @@ graph.addAllEdges('edges-temp.csv')
 #
 # plt.show()
 
-# TESTCASES FOR MAP #2
-# print(getPath("BCT Lab","statue"))
-# getPath("Library","Comps dept")
 
 # TESTCASES FOR MAP #1
-#print(getPath( "Girls hostel", "Football Field"))
+# print(getPath( "Girls hostel", "Football Field"))
 # print(getPath("Girls hostel", "Boys hostel 1"))
 # print(getPath("Boys hostel 2", "Cricket Ground"))
+
+# TESTCASES FOR MAP #2 ground floor
+# print(getPath("BCT Lab","statue"))
+# print(getPath("canteen","main gate"))
+# print(getPath("Quad steps", "main gate"))
+
+
+# TESTCASES FOR MAP#2 FLOOR #0 #1
+# print(getPath("director office", "main gate"))
+# print(getPath("Library", "main gate"))
 
 # TESTCASES FOR MAP #3
 # print(getPath( "Xerox Center","Mech Gate"))
 # print(getPath("Inside workshop #1", "Mech Building Entrance"))
-#print(getPath( "DL002", "Mech Gate"))
+# print(getPath( "DL002", "Mech Gate"))
 
 # TESTCASES FOR MAP #4
-# print(getPath("Main Seminar Hall", "Mech Gate"))
+# print(getPath("washroom","Main Seminar Hall",  "girls"))
 
 # TESTCASES FOR WASHROOM
 # print(getPath("Girls hostel", "canteen"))
+# print(getPath("washroom","Girls hostel",  "girls"))
 
 # TESTCASES FOR MULTIPLE MAPS
-# print(getPath("Cricket Ground", "Main Seminar Hall"))
+# print(getPath("Cricket Ground", "Main Seminar Hall")) #All maps
+print(getPath("Cricket Ground", "statue")) #2 maps
+print(getPath("statue","Cricket Ground")) #2 maps
 
-"""
-getPath("Comps dept","Staircase main bldg/statue")
-sleep(2)
-getPath("Library","Staircase main bldg/statue")
-sleep(2)
-getPath("Lab3","Canteen")
-"""
+# TESTCASES FOR MECH BUILD FLOOR #0 #1
+# print(getPath("Main Seminar Hall", "Mech Gate"))
+# print(getPath("TPO", "Mech Gate"))
+
+
 
 
 

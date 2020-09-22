@@ -21,7 +21,7 @@ Node number,Node Name,x_pos,y_pos,Type ,Floor,Building,Map Number
 20,,109,486,,0,,3
 21,,109,467,,0,,3
 22,,109,435,,0,,3
-23,Staircase,71,486,,0,,3
+23,staircase,71,486,,0,,3
 24,Xerox Center,71,467,,0,,3
 25,boys washroom,71,435,,0,,3
 26,,152,435,,0,,3
@@ -70,14 +70,14 @@ Node number,Node Name,x_pos,y_pos,Type ,Floor,Building,Map Number
 69,,189,333,,0,,2
 70,Quad steps,189,369,,0,,2
 71,Stage,189,255,,0,,2
-72,,266,203,,0,,2
+72,,267,203,,0,,2
 73,girls washroom,202,203,,0,,2
 74,,368,405,,0,,2
-75,,368,332,,0,,2
-76,canteen ,323,332,,0,,2
+75,,368,333,,0,,2
+76,canteen ,323,333,,0,,2
 77,,368,147,,0,,2
-78,,266,170,,0,,2
-79,,266,147,,0,,2
+78,,267,170,,0,,2
+79,,267,147,,0,,2
 80,,431,100,,0,,2
 81,BCT Lab,431,145,,0,,2
 82,,112,255,,0,,2
@@ -90,5 +90,5 @@ Node number,Node Name,x_pos,y_pos,Type ,Floor,Building,Map Number
 89,staircase,112,360,,1,,2
 90,staircase,184,175,,1,,2
 91,,0,100,,0,,2
-92,staircase,97,361,,0,,2
+92,staircase,112,360,,0,,2
 93,,637,100,,0,,2
