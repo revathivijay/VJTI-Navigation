@@ -166,15 +166,15 @@ class Graph():
                     else:
                         directions.append('Straight')
 
-                elif nodes[path[i-1]].name=='staircase' and nodes[path[i]].name == 'staircase' and nodes[path[i]].floor != nodes[path[i-1]].floor:
+                elif self.nodes[path[i-1]].name=='staircase' and self.nodes[path[i]].name == 'staircase' and self.nodes[path[i]].floor != self.nodes[path[i-1]].floor:
                     floor = ""
-                    if(nodes[path[i]].floor==1):
+                    if(self.nodes[path[i]].floor==1):
                         floor = "first"
-                    elif nodes[path[i]].floor==2:
+                    elif self.nodes[path[i]].floor==2:
                         floor = "second"
-                    elif nodes[path[i]].floor==3:
+                    elif self.nodes[path[i]].floor==3:
                         floor = "third"
-                    elif nodes[path[i]].floor==0:
+                    elif self.nodes[path[i]].floor==0:
                         floor = "ground"
                     directions_text += f' Now, use the staircase to go to the {floor} floor.'
 
@@ -185,13 +185,13 @@ class Graph():
                             directions_text += f"You have arrived at {nodes[path[i]].name}"
                     continue
 
-                elif nodes[path[i - 2]].name == 'staircase' and nodes[path[i-1]].name == 'staircase' and nodes[path[i-1]].floor != nodes[path[i - 2]].floor:
+                elif self.nodes[path[i - 2]].name == 'staircase' and self.nodes[path[i-1]].name == 'staircase' and self.nodes[path[i-1]].floor != self.nodes[path[i - 2]].floor:
                     directions_text += " Walk straight."
                     if i == len(path) - 1:
                         if ('washroom' in self.nodes[dest].name):
                             directions_text += " You have reached the washroom."
                         else:
-                            directions_text += f"You have arrived at {nodes[path[i]].name}"
+                            directions_text += f"You have arrived at {self.nodes[path[i]].name}"
                     continue
 
                 # Special Case
@@ -262,7 +262,7 @@ class Graph():
                     if ('washroom' in self.nodes[dest].name):
                         directions_text += " You have reached the washroom."
                     else:
-                        directions_text += f"You have arrived at {nodes[path[i]].name}"
+                        directions_text += f"You have arrived at {self.nodes[path[i]].name}"
 
 
         return directions, directions_text
@@ -321,7 +321,6 @@ def findDestination(src, dest, gender):
 
     dest = all_dests[dist.index(min(dist))]
     return dest.number
-
 
 
 def getPath(destination,source, gender="null"):
@@ -456,7 +455,7 @@ graph.addAllEdges('edges-temp.csv')
 
 # TESTCASES FOR MAP #2 ground floor
 # print(getPath("BCT Lab","statue"))
-# print(getPath("canteen","main gate"))
+# print(getPath("AL 004","main gate"))
 # print(getPath("Quad steps", "main gate"))
 
 
@@ -474,17 +473,17 @@ graph.addAllEdges('edges-temp.csv')
 
 # TESTCASES FOR WASHROOM
 # print(getPath("Girls hostel", "canteen"))
-# print(getPath("washroom","Girls hostel",  "girls"))
+
+print(getPath("washroom","statue",  "girls"))
 
 # TESTCASES FOR MULTIPLE MAPS
 # print(getPath("Cricket Ground", "Main Seminar Hall")) #All maps
-print(getPath("Cricket Ground", "statue")) #2 maps
-print(getPath("statue","Cricket Ground")) #2 maps
+# print(getPath("Cricket Ground", "statue")) #2 maps
+# print(getPath("statue","Cricket Ground")) #2 maps
 
 # TESTCASES FOR MECH BUILD FLOOR #0 #1
 # print(getPath("Main Seminar Hall", "Mech Gate"))
 # print(getPath("TPO", "Mech Gate"))
-
 
 
 
