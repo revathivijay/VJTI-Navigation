@@ -129,19 +129,49 @@ class Graph():
         for i in range(1, len(path)):
             ## case 1: for first node - only parent is considered
             if i==1:
-                curr = path[i]
-                prev = path[i-1]
-                if self.nodes[curr].x > self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
-                    directions.append('Right')
-                elif self.nodes[curr].x < self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
-                    directions.append('Left')
-                elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y > self.nodes[prev].y:
-                    directions.append('Straight')
-                elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
-                    directions.append('Back')
-                else:
+                if path[0]== 16: #Mech Gate
+                    curr = path[i]
+                    prev = path[i - 1]
+                    if self.nodes[curr].x > self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Right')
+                    elif self.nodes[curr].x < self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Left')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y > self.nodes[prev].y:
+                        directions.append('Back')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
+                        directions.append('Straight')
+                    else:
+                        directions.append("check em")
+                elif path[0]==5:  # Girls Hostel
+                    curr = path[i]
+                    prev = path[i - 1]
+                    if self.nodes[curr].x > self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Straight')
+                    elif self.nodes[curr].x < self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Back')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y > self.nodes[prev].y:
+                        directions.append('Right')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
+                        directions.append('Left')
+                    else:
+                        directions.append("check em")
 
-                    directions.append("check em")
+                else: #Main Gate and default case (shouldnt be called for default!)
+                    curr = path[i]
+                    prev = path[i-1]
+                    if self.nodes[curr].x > self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Right')
+                    elif self.nodes[curr].x < self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Left')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y > self.nodes[prev].y:
+                        directions.append('Straight')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
+                        directions.append('Back')
+                    else:
+                        directions.append("check em")
+
+
+
                 if(directions[-1]!='Straight'):
                     directions_text = "First turn {} and keep walking".format(directions[-1])
                 else:
@@ -478,12 +508,13 @@ graph.addAllEdges('edges-temp.csv')
 
 # TESTCASES FOR MULTIPLE MAPS
 # print(getPath("Cricket Ground", "Main Seminar Hall")) #All maps
-print(getPath("Cricket Ground", "statue")) #2 maps
-print(getPath("statue","Cricket Ground")) #2 maps
+# print(getPath("Cricket Ground", "statue")) #2 maps
+# print(getPath("main gate","Cricket Ground")) #2 maps
 
 # TESTCASES FOR MECH BUILD FLOOR #0 #1
 # print(getPath("Main Seminar Hall", "Mech Gate"))
 # print(getPath("TPO", "Mech Gate"))
+
 
 
 
