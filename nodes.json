@@ -1,7 +1,7 @@
 {
     "1": {
         "Node number": "1",
-        "Node Name": "beg",
+        "Node Name": "",
         "x_pos": "715",
         "y_pos": "23",
         "Type ": "",
@@ -261,7 +261,7 @@
     },
     "27": {
         "Node number": "27",
-        "Node Name": "Inside workshop #1",
+        "Node Name": "workshop #1",
         "x_pos": "152",
         "y_pos": "452",
         "Type ": "",
@@ -661,7 +661,7 @@
     },
     "67": {
         "Node number": "67",
-        "Node Name": "CCF",
+        "Node Name": "CCF 1",
         "x_pos": "112",
         "y_pos": "333",
         "Type ": "",
@@ -924,6 +924,46 @@
         "Node Name": "",
         "x_pos": "637",
         "y_pos": "100",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": "2"
+    },
+    "94": {
+        "Node number": "94",
+        "Node Name": "dep2",
+        "x_pos": "236",
+        "y_pos": "147",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": "2"
+    },
+    "95": {
+        "Node number": "95",
+        "Node Name": "Audi",
+        "x_pos": "295",
+        "y_pos": "147",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": "2"
+    },
+    "96": {
+        "Node number": "96",
+        "Node Name": "BEE Lab",
+        "x_pos": "10",
+        "y_pos": "375",
+        "Type ": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": "2"
+    },
+    "97": {
+        "Node number": "97",
+        "Node Name": "AL 004",
+        "x_pos": "58",
+        "y_pos": "255",
         "Type ": "",
         "Floor": "0",
         "Building": "",

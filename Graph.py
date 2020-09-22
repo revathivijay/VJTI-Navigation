@@ -465,18 +465,18 @@ graph = Graph(len(nodes), nodes)
 graph.addAllEdges('edges.csv')
 
 
-# img = Image.open('new-ss/FINISHED/2-0.PNG')
-# plt.imshow(img)
-# for i in range(len(nodes)):
-#     for j in graph.graph[i]:
-#         v = j[0]
-#         if(nodes[i].map==2 and nodes[v].map ==2 and nodes[i].floor==0 and nodes[v].floor==0):
-#             plt.plot(nodes[i].x, nodes[i].y, 'o')
-#             plt.plot(nodes[v].x, nodes[v].y, 'o')
-#             plt.plot([nodes[i].x, nodes[v].x], [nodes[i].y, nodes[v].y])
-#             plt.text(nodes[i].x + 10, nodes[i].y, i+ 1)
-#
-# plt.show()
+img = Image.open('new-ss/FINISHED/2-0.PNG')
+plt.imshow(img)
+for i in range(len(nodes)):
+    for j in graph.graph[i]:
+        v = j[0]
+        if(nodes[i].map==2 and nodes[v].map ==2 and nodes[i].floor==0 and nodes[v].floor==0):
+            plt.plot(nodes[i].x, nodes[i].y, 'o')
+            plt.plot(nodes[v].x, nodes[v].y, 'o')
+            plt.plot([nodes[i].x, nodes[v].x], [nodes[i].y, nodes[v].y])
+            plt.text(nodes[i].x + 10, nodes[i].y, i+ 1)
+
+plt.show()
 
 
 # TESTCASES FOR MAP #1
@@ -507,8 +507,8 @@ graph.addAllEdges('edges.csv')
 # print(getPath("washroom","Girls hostel",  "girls"))
 
 # TESTCASES FOR MULTIPLE MAPS
-print(getPath("Cricket Ground", "Main Seminar Hall")) #All maps
-# print(getPath("Cricket Ground", "statue")) #2 maps
+# print(getPath("Cricket Ground", "Main Seminar Hall")) #All maps
+print(getPath("Cricket Ground", "statue")) #2 maps
 # print(getPath("main gate","Cricket Ground")) #2 maps
 
 # TESTCASES FOR MECH BUILD FLOOR #0 #1

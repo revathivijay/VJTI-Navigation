@@ -1,5 +1,5 @@
 Node number,Node Name,x_pos,y_pos,Type ,Floor,Building,Map Number
-1,beg,715,23,,0,,1
+1,,715,23,,0,,1
 2,,616,23,,0,,1
 3,,616,200,,0,,1
 4,Football Field,602,200,,0,,1
@@ -25,7 +25,7 @@ Node number,Node Name,x_pos,y_pos,Type ,Floor,Building,Map Number
 24,Xerox Center,71,467,,0,,3
 25,boys washroom,71,435,,0,,3
 26,,152,435,,0,,3
-27,Inside workshop #1,152,452,,0,,3
+27,workshop #1,152,452,,0,,3
 28,,240,458,,0,,3
 29,,240,435,,0,,3
 30,workshop #2,240,416,,0,,3
@@ -65,7 +65,7 @@ Node number,Node Name,x_pos,y_pos,Type ,Floor,Building,Map Number
 64,,112,405,,0,,2
 65,,267,405,,0,,2
 66,COE,68,405,,0,,2
-67,CCF,112,333,,0,,2
+67,CCF 1,112,333,,0,,2
 68,canteen,267,333,,0,,2
 69,,189,333,,0,,2
 70,Quad steps,189,369,,0,,2
@@ -92,3 +92,7 @@ Node number,Node Name,x_pos,y_pos,Type ,Floor,Building,Map Number
 91,,0,100,,0,,2
 92,staircase,112,360,,0,,2
 93,,637,100,,0,,2
+94,dep2,236,147,,0,,2
+95,Audi,295,147,,0,,2
+96,BEE Lab,10,375,,0,,2
+97,AL 004,58,255,,0,,2
