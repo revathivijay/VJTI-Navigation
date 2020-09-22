@@ -15,7 +15,7 @@ from googletrans import Translator
 translator = Translator()
 import numpy as np
 import PIL
-
+import requests
 """
 {0: Main Gate , 1: , 2: Main Building Entrace, 3: , 4: Main Building Staircase, 5: Director's Office,
 6: Lab 3, 7: Dep1 , 8: Dep2 , 9: , 10: Computer Department, 11: Study Space , 12: , 13: AL004 ,
@@ -334,8 +334,9 @@ def getPath(destination,source):
         print(distance)
         return directions_text
     return ""
+getPath("Canteen","Staircase main bldg/statue")
+getPath("Audi","Comps dept")
 
-getPath("Comps dept","Staircase main bldg/statue")
 """ Library Path Test
 getPath("Comps dept","Staircase main bldg/statue")
 getPath("BEE Lab","Comps dept")
@@ -414,3 +415,5 @@ def populateImages():
 
     with open("image_file_mapping.json", 'wb') as json_file:
         json_file.write(json.dumps(data, indent=4))
+
+print(requests.head('https://drive.google.com/uc?export=view&id=1F5uazb9JEJCEIo6qjhZdmxPZnZlZ9jXcnkwejfiejfl').status_code)
