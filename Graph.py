@@ -315,7 +315,7 @@ def getPath(destination,source, gender="null"):
         distance, path, directions, directions_text = graph.dijkstra(src_number, dest_number)
 
         MAX_SIZE = (24, 24) ## for thumbnail
-        path_color = (255, 0, 0, 255)
+        path_color = (0, 0, 0, 255) ##black path
         line_thickness = 2
 
         img = PIL.Image.open(f'new-ss/FINISHED/{nodes[src_number].map}-{nodes[src_number].floor}.PNG')
@@ -324,12 +324,16 @@ def getPath(destination,source, gender="null"):
         curr_map = nodes[src_number].map
         curr_floor = nodes[src_number].floor
         counter = 0
+        src_map = nodes[src_number].map
+        dest_map = nodes[dest_number].map
+        src_floor = nodes[src_number].floor
+        dest_floor = nodes[dest_number].floor
 
         for i in range(len(path)-1):
-
             p1 = nodes[path[i]]
             p2 = nodes[path[i+1]]
-            if(i==0):
+
+            if i==0 and (src_map!=dest_map or src_floor!=dest_floor):
                 src_img = PIL.Image.open('dest.png')
                 src_img.thumbnail((28, 28))
                 w, h = src_img.size
@@ -338,13 +342,11 @@ def getPath(destination,source, gender="null"):
                 img_temp.paste(src_img, (paste_src_x, paste_src_y))
                 img = np.array(img_temp)
 
-
-
             if (curr_map!=p1.map or curr_floor!=p1.floor):
-                plt.imshow(img_temp)
+                img = np.array(img_temp)
+                plt.imshow(img)
                 plt.show()
-                counter+=1
-                cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", img)
+                cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
                 counter+=1
                 curr_map = p1.map
                 curr_floor = p1.floor
@@ -363,31 +365,47 @@ def getPath(destination,source, gender="null"):
                 ## two lines
                 cv2.arrowedLine(img, (p1.x, p1.y), mid_point, color=path_color, thickness=line_thickness, tipLength=13 * 2/ len_line)
                 cv2.line(img, mid_point, (p2.x, p2.y), path_color, thickness=line_thickness, lineType=cv2.LINE_AA)
-                dest_img = PIL.Image.open('src.png')
-                dest_img.thumbnail(MAX_SIZE)
-                w, h = dest_img.size
-                paste_dest_x = nodes[dest_number].x - w // 2
-                paste_dest_y = nodes[dest_number].y - h + 2
-                img_temp.paste(dest_img, (paste_dest_x, paste_dest_y))
+                if src_map!=dest_map or src_floor!=dest_floor:
+                    img_temp = PIL.Image.fromarray(img)
+                    dest_img = PIL.Image.open('src.png')
+                    dest_img.thumbnail(MAX_SIZE)
+                    w, h = dest_img.size
+                    paste_dest_x = nodes[dest_number].x - w // 2
+                    paste_dest_y = nodes[dest_number].y - h + 2
+                    img_temp.paste(dest_img, (paste_dest_x, paste_dest_y))
+                    img = np.array(img_temp)
             elif(p2.map==p1.map and p2.floor==p1.floor):
                 cv2.arrowedLine(img, (p1.x, p1.y), (p2.x, p2.y), color=path_color, thickness=line_thickness, tipLength=13 / len_line)
-        # plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+                img_temp = PIL.Image.fromarray(img)
 
-        src_img = PIL.Image.open('src.png')
-        src_img.thumbnail((28, 28))
-        w, h = src_img.size
-        paste_src_x = nodes[src_number].x - w // 2
-        paste_src_y = nodes[src_number].y - h + 2
-        img_temp.paste(src_img, (paste_src_x, paste_src_y))
-        img = np.array(img_temp)
+        ## if both dest and source are on same map
+        if src_map==dest_map and src_floor==dest_floor:
+            img_temp = PIL.Image.fromarray(img)
+            ## adding source marker
+            src_img = PIL.Image.open('dest.png')
+            src_img.thumbnail((28, 28))
+            w, h = src_img.size
+            paste_src_x = nodes[src_number].x - w // 2
+            paste_src_y = nodes[src_number].y - h + 2
+            img_temp.paste(src_img, (paste_src_x, paste_src_y))
 
-        # adding destination marker
+            # adding destination marker
+            dest_img = PIL.Image.open('src.png')
+            dest_img.thumbnail(MAX_SIZE)
+            w, h = dest_img.size
+            paste_dest_x = nodes[dest_number].x - w // 2
+            paste_dest_y = nodes[dest_number].y - h + 2
+            img_temp.paste(dest_img, (paste_dest_x, paste_dest_y))
+
+
+
+        print(src_number, " ", dest_number, " ", counter)
 
         # display image
-        plt.imshow(img_temp)
+        img = np.array(img_temp)
+        plt.imshow(img)
         plt.show()
-
-        cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", img)
+        cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
         print(distance)
         return directions_text
     return ""
@@ -412,8 +430,8 @@ graph.addAllEdges('edges-temp.csv')
 # plt.show()
 
 # TESTCASES FOR MAP #2
-print(getPath("BCT Lab","statue"))
-# getPath("library staircase","BEE Lab")
+# print(getPath("BCT Lab","statue"))
+# getPath("Library","Comps dept")
 
 # TESTCASES FOR MAP #1
 #print(getPath( "Girls hostel", "Football Field"))
@@ -426,13 +444,13 @@ print(getPath("BCT Lab","statue"))
 #print(getPath( "DL002", "Mech Gate"))
 
 # TESTCASES FOR MAP #4
-#print(getPath("Main Seminar Hall", "Mech Gate"))
+# print(getPath("Main Seminar Hall", "Mech Gate"))
 
 # TESTCASES FOR WASHROOM
-#print(getPath("Girls hostel", "canteen"))
+# print(getPath("Girls hostel", "canteen"))
 
 # TESTCASES FOR MULTIPLE MAPS
-print(getPath("Cricket Ground", "Main Seminar Hall"))
+# print(getPath("Cricket Ground", "Main Seminar Hall"))
 
 """
 getPath("Comps dept","Staircase main bldg/statue")
