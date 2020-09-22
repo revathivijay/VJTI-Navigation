@@ -129,19 +129,49 @@ class Graph():
         for i in range(1, len(path)):
             ## case 1: for first node - only parent is considered
             if i==1:
-                curr = path[i]
-                prev = path[i-1]
-                if self.nodes[curr].x > self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
-                    directions.append('Right')
-                elif self.nodes[curr].x < self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
-                    directions.append('Left')
-                elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y > self.nodes[prev].y:
-                    directions.append('Straight')
-                elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
-                    directions.append('Back')
-                else:
+                if path[0]== 16: #Mech Gate
+                    curr = path[i]
+                    prev = path[i - 1]
+                    if self.nodes[curr].x > self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Right')
+                    elif self.nodes[curr].x < self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Left')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y > self.nodes[prev].y:
+                        directions.append('Back')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
+                        directions.append('Straight')
+                    else:
+                        directions.append("check em")
+                elif path[0]==5:  # Girls Hostel
+                    curr = path[i]
+                    prev = path[i - 1]
+                    if self.nodes[curr].x > self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Straight')
+                    elif self.nodes[curr].x < self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Back')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y > self.nodes[prev].y:
+                        directions.append('Right')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
+                        directions.append('Left')
+                    else:
+                        directions.append("check em")
 
-                    directions.append("check em")
+                else: #Main Gate and default case (shouldnt be called for default!)
+                    curr = path[i]
+                    prev = path[i-1]
+                    if self.nodes[curr].x > self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Right')
+                    elif self.nodes[curr].x < self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Left')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y > self.nodes[prev].y:
+                        directions.append('Straight')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
+                        directions.append('Back')
+                    else:
+                        directions.append("check em")
+
+
+
                 if(directions[-1]!='Straight'):
                     directions_text = "First turn {} and keep walking".format(directions[-1])
                 else:
@@ -194,8 +224,8 @@ class Graph():
                             directions_text += f"You have arrived at {self.nodes[path[i]].name}"
                     continue
 
-                # Special Case
-                elif path[i-2]==0 or path[i-1] == 0 or path[i-2]==90 or path[i-1]==90:
+                # Map Connectors
+                elif path[i-2]==0 or path[i-1] == 0 or path[i-2]==90 or path[i-1]==90 or path[i-2]==92 or path[i-1]==92 or path[i-2]==13 or path[i-1]==13:
                     directions.append("Straight")
 
                 elif(x2>x1 and y1==y2):
@@ -431,21 +461,21 @@ def getPath(destination,source, gender="null"):
 
 nodes,map_node = initialize_map('nodes.json')
 graph = Graph(len(nodes), nodes)
-graph.addAllEdges('edges-temp.csv')
+graph.addAllEdges('edges.csv')
 
 
-# img = Image.open('new-ss/FINISHED/2-0.PNG')
-# plt.imshow(img)
-# for i in range(len(nodes)):
-#     for j in graph.graph[i]:
-#         v = j[0]
-#         if(nodes[i].map==2 and nodes[v].map ==2 and nodes[i].floor==0 and nodes[v].floor==0):
-#             plt.plot(nodes[i].x, nodes[i].y, 'o')
-#             plt.plot(nodes[v].x, nodes[v].y, 'o')
-#             plt.plot([nodes[i].x, nodes[v].x], [nodes[i].y, nodes[v].y])
-#             plt.text(nodes[i].x + 10, nodes[i].y, i+ 1)
-#
-# plt.show()
+img = Image.open('new-ss/FINISHED/2-0.PNG')
+plt.imshow(img)
+for i in range(len(nodes)):
+    for j in graph.graph[i]:
+        v = j[0]
+        if(nodes[i].map==2 and nodes[v].map ==2 and nodes[i].floor==0 and nodes[v].floor==0):
+            plt.plot(nodes[i].x, nodes[i].y, 'o')
+            plt.plot(nodes[v].x, nodes[v].y, 'o')
+            plt.plot([nodes[i].x, nodes[v].x], [nodes[i].y, nodes[v].y])
+            plt.text(nodes[i].x + 10, nodes[i].y, i+ 1)
+
+plt.show()
 
 
 # TESTCASES FOR MAP #1
@@ -478,18 +508,9 @@ print(getPath("washroom","statue",  "girls"))
 
 # TESTCASES FOR MULTIPLE MAPS
 # print(getPath("Cricket Ground", "Main Seminar Hall")) #All maps
-# print(getPath("Cricket Ground", "statue")) #2 maps
-# print(getPath("statue","Cricket Ground")) #2 maps
+print(getPath("Cricket Ground", "statue")) #2 maps
+# print(getPath("main gate","Cricket Ground")) #2 maps
 
 # TESTCASES FOR MECH BUILD FLOOR #0 #1
 # print(getPath("Main Seminar Hall", "Mech Gate"))
 # print(getPath("TPO", "Mech Gate"))
-
-
-
-
-
-
-
-
-
