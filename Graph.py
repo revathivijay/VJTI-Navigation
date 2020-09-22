@@ -462,7 +462,7 @@ def getPath(destination,source, gender="null"):
 
 nodes,map_node = initialize_map('nodes.json')
 graph = Graph(len(nodes), nodes)
-graph.addAllEdges('edges-temp.csv')
+graph.addAllEdges('edges.csv')
 
 
 # img = Image.open('new-ss/FINISHED/2-0.PNG')
