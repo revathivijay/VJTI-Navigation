@@ -15,7 +15,12 @@ from googletrans import Translator
 translator = Translator()
 import numpy as np
 import PIL
+<<<<<<< HEAD
 import requests
+=======
+from PIL import Image
+
+>>>>>>> master
 """
 {0: Main Gate , 1: , 2: Main Building Entrace, 3: , 4: Main Building Staircase, 5: Director's Office,
 6: Lab 3, 7: Dep1 , 8: Dep2 , 9: , 10: Computer Department, 11: Study Space , 12: , 13: AL004 ,
@@ -25,34 +30,34 @@ import requests
 """
 
 ## for viusalizing
-pixel_mapping = {
-    0: (337,448),
-    1: (337,409),
-    2: (395,409),
-    3: (471,409),
-    4: (540,409),
-    5: (540,267),
-    6: (491,276),
-    7: (491,262),
-    8: (426,276),
-    9: (426,216),
-    10: (426,128),
-    11: (460,128),
-    12: (338,128),
-    13: (240,127),
-    14: (240,216),
-    15: (337,216),
-    16: (337,276),
-    17: (240,276),
-    18: (240,325),
-    19: (240,409),
-    20: (198,409),
-    21: (122,448),
-    22: (58,448),
-    23: (58,409),
-    24: (540,128),
-}
-
+# pixel_mapping = {
+#     0: (337,448),
+#     1: (337,409),
+#     2: (395,409),
+#     3: (471,409),
+#     4: (540,409),
+#     5: (540,267),
+#     6: (491,276),
+#     7: (491,262),
+#     8: (426,276),
+#     9: (426,216),
+#     10: (426,128),
+#     11: (460,128),
+#     12: (338,128),
+#     13: (240,127),
+#     14: (240,216),
+#     15: (337,216),
+#     16: (337,276),
+#     17: (240,276),
+#     18: (240,325),
+#     19: (240,409),
+#     20: (198,409),
+#     21: (122,448),
+#     22: (58,448),
+#     23: (58,409),
+#     24: (540,128),
+# }
+#
 
 def initialize_map(filename):
     f = open(filename)
@@ -67,7 +72,8 @@ def initialize_map(filename):
             y=int(node["y_pos"]),
             node_type=node["Type "],
             floor=int(node["Floor"]),
-            building=node["Building"]
+            building=node["Building"],
+            map = int(node["Map Number"])
         )
         nodes[int(key)-1] = temp_node
         map_node[node["Node Name"]] = int(node["Node number"])-1
@@ -90,7 +96,7 @@ class Graph():
         self.nodes = nodes
 
     def calculateDistance(self, src, dest):
-        return sqrt(pow(self.nodes[src].x - self.nodes[dest].x, 2)+pow(self.nodes[src].y-self.nodes[dest].y, 2))
+        return sqrt(pow(self.nodes[src].x - self.nodes[dest].x + abs(self.nodes[src].map - self.nodes[dest].map)*639, 2)+pow(self.nodes[src].y-self.nodes[dest].y + abs(self.nodes[src].map - self.nodes[dest].map)*540, 2))
 
     def addEdge(self, src, dest):
         weight = self.calculateDistance(src, dest)
@@ -104,7 +110,7 @@ class Graph():
         with open(input_file, 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file)
             for row in csv_reader:
-                self.addEdge(int(row['Nodes']), int(row['Adjacents']))
+                self.addEdge(int(row['Nodes'])-1, int(row['Adjacents'])-1)
 
     def getPath(self, parent, j, path):
         if parent[j] == -1 :
@@ -129,18 +135,49 @@ class Graph():
         for i in range(1, len(path)):
             ## case 1: for first node - only parent is considered
             if i==1:
-                curr = path[i]
-                prev = path[i-1]
-                if self.nodes[curr].x > self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
-                    directions.append('Right')
-                elif self.nodes[curr].x < self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
-                    directions.append('Left')
-                elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y > self.nodes[prev].y:
-                    directions.append('Straight')
-                elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
-                    directions.append('Back')
-                else:
-                    directions.append("check em")
+                if path[0]== 16: #Mech Gate
+                    curr = path[i]
+                    prev = path[i - 1]
+                    if self.nodes[curr].x > self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Right')
+                    elif self.nodes[curr].x < self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Left')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y > self.nodes[prev].y:
+                        directions.append('Back')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
+                        directions.append('Straight')
+                    else:
+                        directions.append("check em")
+                elif path[0]==5:  # Girls Hostel
+                    curr = path[i]
+                    prev = path[i - 1]
+                    if self.nodes[curr].x > self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Straight')
+                    elif self.nodes[curr].x < self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Back')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y > self.nodes[prev].y:
+                        directions.append('Right')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
+                        directions.append('Left')
+                    else:
+                        directions.append("check em")
+
+                else: #Main Gate and default case (shouldnt be called for default!)
+                    curr = path[i]
+                    prev = path[i-1]
+                    if self.nodes[curr].x > self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Right')
+                    elif self.nodes[curr].x < self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Left')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y > self.nodes[prev].y:
+                        directions.append('Straight')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
+                        directions.append('Back')
+                    else:
+                        directions.append("check em")
+
+
+
                 if(directions[-1]!='Straight'):
                     directions_text = "First turn {} and keep walking".format(directions[-1])
                 else:
@@ -157,11 +194,51 @@ class Graph():
                 y2 = self.nodes[path[i-1]].y
                 x3 = self.nodes[path[i]].x
                 y3 = self.nodes[path[i]].y
-                if(x2>x1 and y1==y2):
+
+                # Very special case of mech building passage which is slant.
+                if (path[i - 1] in range(33, 40) and path[i] in range(34, 41)) or (path[i-1] in range(48,52) and path[i] in range(48,52)):
+                    if (path[i - 1] == 33):
+                        directions.append('Slight right')
+                    else:
+                        directions.append('Straight')
+
+                elif self.nodes[path[i-1]].name=='staircase' and self.nodes[path[i]].name == 'staircase' and self.nodes[path[i]].floor != self.nodes[path[i-1]].floor:
+                    floor = ""
+                    if(self.nodes[path[i]].floor==1):
+                        floor = "first"
+                    elif self.nodes[path[i]].floor==2:
+                        floor = "second"
+                    elif self.nodes[path[i]].floor==3:
+                        floor = "third"
+                    elif self.nodes[path[i]].floor==0:
+                        floor = "ground"
+                    directions_text += f' Now, use the staircase to go to the {floor} floor.'
+
+                    if i == len(path) - 1:
+                        if ('washroom' in self.nodes[dest].name):
+                            directions_text += " You have reached the washroom."
+                        else:
+                            directions_text += f"You have arrived at {nodes[path[i]].name}"
+                    continue
+
+                elif self.nodes[path[i - 2]].name == 'staircase' and self.nodes[path[i-1]].name == 'staircase' and self.nodes[path[i-1]].floor != self.nodes[path[i - 2]].floor:
+                    directions_text += " Walk straight."
+                    if i == len(path) - 1:
+                        if ('washroom' in self.nodes[dest].name):
+                            directions_text += " You have reached the washroom."
+                        else:
+                            directions_text += f"You have arrived at {self.nodes[path[i]].name}"
+                    continue
+
+                # Map Connectors
+                elif path[i-2]==0 or path[i-1] == 0 or path[i-2]==90 or path[i-1]==90 or path[i-2]==92 or path[i-1]==92 or path[i-2]==13 or path[i-1]==13:
+                    directions.append("Straight")
+
+                elif(x2>x1 and y1==y2):
                     if(y3>y2 and x2==x3):
-                        directions.append('Left')
-                    elif(y2>y3 and x2==x3):
                         directions.append('Right')
+                    elif(y2>y3 and x2==x3):
+                        directions.append('Left')
                     elif(x3>x2 and y2==y3):
                         directions.append('Straight')
                     elif (x3 < x2 and y2 == y3):
@@ -171,9 +248,9 @@ class Graph():
 
                 elif (x2 < x1 and y1 == y2):
                     if (y3 > y2 and x2 == x3):
-                        directions.append('Right')
-                    elif (y2 > y3 and x2 == x3):
                         directions.append('Left')
+                    elif (y2 > y3 and x2 == x3):
+                        directions.append('Right')
                     elif (x3 > x2 and y2 == y3):
                         directions.append('Back')
                     elif (x3 < x2 and y2 == y3):
@@ -183,9 +260,9 @@ class Graph():
 
                 elif (x2 == x1 and y1 < y2):
                     if (x3 > x2 and y2 == y3):
-                        directions.append('Right')
-                    elif (x2 > x3 and y2 == y3):
                         directions.append('Left')
+                    elif (x2 > x3 and y2 == y3):
+                        directions.append('Right')
                     elif (y3 < y2 and x2 == x3):
                         directions.append('Back')
                     elif (y3 > y2 and x2 == x3):
@@ -195,15 +272,18 @@ class Graph():
 
                 elif (x2 == x1 and y1 > y2):
                     if (x3 > x2 and y2 == y3):
-                        directions.append('Left')
-                    elif (x2 > x3 and y2 == y3):
                         directions.append('Right')
+                    elif (x2 > x3 and y2 == y3):
+                        directions.append('Left')
                     elif (y3 < y2 and x2 == x3):
                         directions.append('Straight')
                     elif (y3 > y2 and x2 == x3):
                         directions.append('Back')
                     else:
                         directions.append('check em y1y2')
+
+                else:
+                    directions.append('Check em else')
 
                 if(directions[-1]=='Straight'):
                     if directions[-2]!='Straight':
@@ -213,8 +293,13 @@ class Graph():
                         directions_text+=" Now at {} turn {}.".format(self.nodes[path[i-1]].name, directions[-1])
                     else:
                         directions_text+=" Take the next "+ directions[-1] + "."
-            if i==len(path)-1:
-               directions_text+=" You have now arrived at "+self.nodes[dest].name+". "
+
+                if i == len(path) - 1:
+                    if ('washroom' in self.nodes[dest].name):
+                        directions_text += " You have reached the washroom."
+                    else:
+                        directions_text += f"You have arrived at {self.nodes[path[i]].name}"
+
 
         return directions, directions_text
 
@@ -254,6 +339,7 @@ class Graph():
         return round(dist[dest], 2), path, directions, directions_text
 
 
+<<<<<<< HEAD
 
 nodes,map_node = initialize_map('nodes.json')
 graph = Graph(25, nodes)
@@ -262,78 +348,142 @@ graph.addAllEdges('edges.csv')
 
 def getPath(destination,source):
     print(source + " -->" + destination)
+=======
+# This function is created to find washroom closest washroom
+def findDestination(src, dest, gender):
+    #Repromt to ask girls/boys washroom
+    all_dests = []
+    dist = []
+    if(dest=="washroom"):
+        for i in range(len(nodes)):
+            if "washroom" in nodes[i].name and gender in nodes[i].name:
+                all_dests.append(nodes[i])
+                dist.append(graph.calculateDistance(map_node[src], nodes[i].number))
+    else:
+        for i in range(len(nodes)):
+            if dest in nodes[i].name :
+                all_dests.append(nodes[i])
+                dist.append(graph.calculateDistance(map_node[src], nodes[i].number))
+
+    dest = all_dests[dist.index(min(dist))]
+    return dest.number
+
+
+def getPath(destination,source, gender="null"):
+    print(source + " -->" + str(destination))
+>>>>>>> master
     src_number = map_node[source]
-    if destination:
-        dest_number = map_node[destination]
-        floor_navigation = ""
-        if dest_number == 23 :
-            dest_number = 1
-            floor_navigation = " Take the stairs to reach the first floor. Turn left. Walk straight. You have now arrived at Director's Office."
-        elif dest_number == 11:
-            dest_number = 10
-            floor_navigation = " Take the stairs to reach the first floor. Turn left.You have now arrived at Library."
+    dest_number = findDestination(source, destination, gender)
+    if dest_number:
         distance, path, directions, directions_text = graph.dijkstra(src_number, dest_number)
-        directions_text = directions_text + floor_navigation
-        im = cv2.imread('map-final-final.jpg')
-        im_resized = cv2.resize(im, (610, 454), interpolation=cv2.INTER_LINEAR) ##do not change size
 
-        img = PIL.Image.open('map-final3.jpg')
-        img = img.resize((610,454))
         MAX_SIZE = (24, 24) ## for thumbnail
-
-        ## for path
-        img = np.array(img)
-
-        ## color in opencv -- BGR
-        path_color = (0, 0, 0)
+        path_color = (0, 0, 0, 255) ##black path
         line_thickness = 2
 
+        img = PIL.Image.open(f'new-ss/FINISHED/{nodes[src_number].map}-{nodes[src_number].floor}.PNG')
+        img = np.array(img)
+        img_temp = PIL.Image.fromarray(img)
+        curr_map = nodes[src_number].map
+        curr_floor = nodes[src_number].floor
+        counter = 0
+        src_map = nodes[src_number].map
+        dest_map = nodes[dest_number].map
+        src_floor = nodes[src_number].floor
+        dest_floor = nodes[dest_number].floor
+
         for i in range(len(path)-1):
-            p1 = pixel_mapping[path[i]]
-            p2 = pixel_mapping[path[i+1]]
-            len_line = abs(p1[0]-p2[0]) + abs(p1[1]-p2[1])
+            p1 = nodes[path[i]]
+            p2 = nodes[path[i+1]]
+
+            if i==0 and (src_map!=dest_map or src_floor!=dest_floor):
+                src_img = PIL.Image.open('dest.png')
+                src_img.thumbnail((28, 28))
+                w, h = src_img.size
+                paste_src_x = nodes[src_number].x - w // 2
+                paste_src_y = nodes[src_number].y - h + 2
+                img_temp.paste(src_img, (paste_src_x, paste_src_y))
+                img = np.array(img_temp)
+
+            if (curr_map!=p1.map or curr_floor!=p1.floor):
+                img = np.array(img_temp)
+                plt.imshow(img)
+                plt.show()
+                cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+                counter+=1
+                curr_map = p1.map
+                curr_floor = p1.floor
+                img = PIL.Image.open(f'new-ss/FINISHED/{curr_map}-{curr_floor}.PNG')
+                img = np.array(img)
+                img_temp = PIL.Image.fromarray(img)
+
+            len_line = abs(p1.x-p2.x) + abs(p1.y-p2.y)
+
             if len_line==0:
                 len_line=1
 
             if i==len(path)-2:
                 # arrow in middle
-                mid_point = ((p1[0] + p2[0])//2, (p1[1] + p2[1])//2)
+                mid_point = ((p1.x + p2.x) // 2, (p1.y + p2.y) // 2)
                 ## two lines
-                cv2.arrowedLine(img, p1, mid_point, color=path_color, thickness=line_thickness, tipLength=13 * 2/ len_line)
-                cv2.line(img, mid_point, p2, path_color, thickness=line_thickness, lineType=cv2.LINE_AA)
-            else:
-                cv2.arrowedLine(img, p1, p2, color=path_color, thickness=line_thickness, tipLength=13 / len_line)
-        # plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-        img_temp = PIL.Image.fromarray(img)
+                cv2.arrowedLine(img, (p1.x, p1.y), mid_point, color=path_color, thickness=line_thickness,
+                                tipLength=13 * 2 / len_line)
+                cv2.line(img, mid_point, (p2.x, p2.y), path_color, thickness=line_thickness, lineType=cv2.LINE_AA)
+                if src_map != dest_map or src_floor != dest_floor:
+                    img_temp = PIL.Image.fromarray(img)
+                    dest_img = PIL.Image.open('src.png')
+                    dest_img.thumbnail(MAX_SIZE)
+                    w, h = dest_img.size
+                    paste_dest_x = nodes[dest_number].x - w // 2
+                    paste_dest_y = nodes[dest_number].y - h + 2
+                    img_temp.paste(dest_img, (paste_dest_x, paste_dest_y))
+                    img = np.array(img_temp)
+            elif(p2.map==p1.map and p2.floor==p1.floor):
+                cv2.arrowedLine(img, (p1.x, p1.y), (p2.x, p2.y), color=path_color, thickness=line_thickness, tipLength=13 / len_line)
+                img_temp = PIL.Image.fromarray(img)
 
-        # adding source marker
-        src_img = PIL.Image.open('dest.png')
-        src_img.thumbnail((28,28))
-        w, h = src_img.size
-        paste_src_x = pixel_mapping[src_number][0] - w // 2
-        paste_src_y = pixel_mapping[src_number][1] - h + 2
-        img_temp.paste(src_img, (paste_src_x, paste_src_y))
+        ## if both dest and source are on same map
+        if src_map==dest_map and src_floor==dest_floor:
+            img_temp = PIL.Image.fromarray(img)
+            ## adding source marker
+            src_img = PIL.Image.open('dest.png')
+            src_img.thumbnail((28, 28))
+            w, h = src_img.size
+            paste_src_x = nodes[src_number].x - w // 2
+            paste_src_y = nodes[src_number].y - h + 2
+            img_temp.paste(src_img, (paste_src_x, paste_src_y))
 
-        # adding destination marker
-        dest_img = PIL.Image.open('src.png')
-        dest_img.thumbnail(MAX_SIZE)
-        w, h = dest_img.size
-        paste_dest_x = pixel_mapping[dest_number][0] - w // 2
-        paste_dest_y = pixel_mapping[dest_number][1] - h + 2
-        img_temp.paste(dest_img, (paste_dest_x, paste_dest_y))
+            # adding destination marker
+            dest_img = PIL.Image.open('src.png')
+            dest_img.thumbnail(MAX_SIZE)
+            w, h = dest_img.size
+            paste_dest_x = nodes[dest_number].x - w // 2
+            paste_dest_y = nodes[dest_number].y - h + 2
+            img_temp.paste(dest_img, (paste_dest_x, paste_dest_y))
+
+
+
+        print(src_number, " ", dest_number, " ", counter)
 
         # display image
-        plt.imshow(img_temp)
+        img = np.array(img_temp)
+        plt.imshow(img)
         plt.show()
+<<<<<<< HEAD
         #filename_on_drive = str(src_number) + "_" + str(dest_number) + ".jpg"
         #id = create_file(filename="display_image.jpg",filename_on_drive=filename_on_drive)
         #data[filename_on_drive] = id
         #print(distance)
 
         cv2.imwrite("display_image.jpg", img)
+=======
+        cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+>>>>>>> master
         print(distance)
+        print(f"all-dest/{src_number}-{dest_number}-{counter}.jpg")
         return directions_text
     return ""
+<<<<<<< HEAD
 getPath("Canteen","Staircase main bldg/statue")
 getPath("Audi","Comps dept")
 
@@ -417,3 +567,62 @@ def populateImages():
         json_file.write(json.dumps(data, indent=4))
 
 print(requests.head('https://drive.google.com/uc?export=view&id=1F5uazb9JEJCEIo6qjhZdmxPZnZlZ9jXcnkwejfiejfl').status_code)
+=======
+
+
+nodes,map_node = initialize_map('nodes.json')
+graph = Graph(len(nodes), nodes)
+graph.addAllEdges('edges.csv')
+
+
+img = Image.open('new-ss/FINISHED/2-0.PNG')
+plt.imshow(img)
+for i in range(len(nodes)):
+    for j in graph.graph[i]:
+        v = j[0]
+        if(nodes[i].map==2 and nodes[v].map ==2 and nodes[i].floor==0 and nodes[v].floor==0):
+            plt.plot(nodes[i].x, nodes[i].y, 'o')
+            plt.plot(nodes[v].x, nodes[v].y, 'o')
+            plt.plot([nodes[i].x, nodes[v].x], [nodes[i].y, nodes[v].y])
+            plt.text(nodes[i].x + 10, nodes[i].y, i+ 1)
+
+plt.show()
+
+
+# TESTCASES FOR MAP #1
+# print(getPath( "Girls hostel", "Football Field"))
+# print(getPath("Girls hostel", "Boys hostel 1"))
+# print(getPath("Boys hostel 2", "Cricket Ground"))
+
+# TESTCASES FOR MAP #2 ground floor
+# print(getPath("BCT Lab","statue"))
+# print(getPath("AL 004","main gate"))
+# print(getPath("Quad steps", "main gate"))
+
+
+# TESTCASES FOR MAP#2 FLOOR #0 #1
+# print(getPath("director office", "main gate"))
+# print(getPath("Library", "main gate"))
+
+# TESTCASES FOR MAP #3
+# print(getPath( "Xerox Center","Mech Gate"))
+# print(getPath("Inside workshop #1", "Mech Building Entrance"))
+# print(getPath( "DL002", "Mech Gate"))
+
+# TESTCASES FOR MAP #4
+# print(getPath("washroom","Main Seminar Hall",  "girls"))
+
+# TESTCASES FOR WASHROOM
+# print(getPath("Girls hostel", "canteen"))
+
+print(getPath("washroom","statue",  "girls"))
+
+# TESTCASES FOR MULTIPLE MAPS
+# print(getPath("Cricket Ground", "Main Seminar Hall")) #All maps
+print(getPath("Cricket Ground", "statue")) #2 maps
+# print(getPath("main gate","Cricket Ground")) #2 maps
+
+# TESTCASES FOR MECH BUILD FLOOR #0 #1
+# print(getPath("Main Seminar Hall", "Mech Gate"))
+# print(getPath("TPO", "Mech Gate"))
+>>>>>>> master
