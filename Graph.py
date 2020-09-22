@@ -224,8 +224,8 @@ class Graph():
                             directions_text += f"You have arrived at {nodes[path[i]].name}"
                     continue
 
-                # Special Case
-                elif path[i-2]==0 or path[i-1] == 0 or path[i-2]==90 or path[i-1]==90:
+                # Map Connectors
+                elif path[i-2]==0 or path[i-1] == 0 or path[i-2]==90 or path[i-1]==90 or path[i-2]==92 or path[i-1]==92 or path[i-2]==13 or path[i-1]==13:
                     directions.append("Straight")
 
                 elif(x2>x1 and y1==y2):
@@ -507,7 +507,7 @@ graph.addAllEdges('edges.csv')
 # print(getPath("washroom","Girls hostel",  "girls"))
 
 # TESTCASES FOR MULTIPLE MAPS
-# print(getPath("Cricket Ground", "Main Seminar Hall")) #All maps
+print(getPath("Cricket Ground", "Main Seminar Hall")) #All maps
 # print(getPath("Cricket Ground", "statue")) #2 maps
 # print(getPath("main gate","Cricket Ground")) #2 maps
 
