@@ -364,7 +364,7 @@ def getPath(destination,source, gender="null"):
         path_color = (0, 0, 0, 255) ##black path
         line_thickness = 2
 
-        img = PIL.Image.open(f'new-ss/FINISHED/{nodes[src_number].map}-{nodes[src_number].floor}.PNG')
+        img = PIL.Image.open(f'resized-new/{nodes[src_number].map}-{nodes[src_number].floor}.jpg')
         img = np.array(img)
         img_temp = PIL.Image.fromarray(img)
         curr_map = nodes[src_number].map
@@ -396,7 +396,7 @@ def getPath(destination,source, gender="null"):
                 counter+=1
                 curr_map = p1.map
                 curr_floor = p1.floor
-                img = PIL.Image.open(f'new-ss/FINISHED/{curr_map}-{curr_floor}.PNG')
+                img = PIL.Image.open(f'resized-new/{curr_map}-{curr_floor}.jpg')
                 img = np.array(img)
                 img_temp = PIL.Image.fromarray(img)
 
@@ -464,12 +464,12 @@ graph = Graph(len(nodes), nodes)
 graph.addAllEdges('edges.csv')
 
 
-img = Image.open('new-ss/FINISHED/2-0.PNG')
+img = Image.open('resized-new/2-1.jpg')
 plt.imshow(img)
 for i in range(len(nodes)):
     for j in graph.graph[i]:
         v = j[0]
-        if(nodes[i].map==2 and nodes[v].map ==2 and nodes[i].floor==0 and nodes[v].floor==0):
+        if(nodes[i].map==2 and nodes[v].map ==2 and nodes[i].floor==1 and nodes[v].floor==1):
             plt.plot(nodes[i].x, nodes[i].y, 'o')
             plt.plot(nodes[v].x, nodes[v].y, 'o')
             plt.plot([nodes[i].x, nodes[v].x], [nodes[i].y, nodes[v].y])
@@ -504,13 +504,13 @@ plt.show()
 # TESTCASES FOR WASHROOM
 # print(getPath("Girls hostel", "canteen"))
 
-print(getPath("washroom","statue",  "girls"))
+#print(getPath("washroom","statue",  "girls"))
 
 # TESTCASES FOR MULTIPLE MAPS
 # print(getPath("Cricket Ground", "Main Seminar Hall")) #All maps
-print(getPath("Cricket Ground", "statue")) #2 maps
+#print(getPath("Cricket Ground", "statue")) #2 maps
 # print(getPath("main gate","Cricket Ground")) #2 maps
 
 # TESTCASES FOR MECH BUILD FLOOR #0 #1
-# print(getPath("Main Seminar Hall", "Mech Gate"))
+print(getPath("Main Seminar Hall", "Mech Gate"))
 # print(getPath("TPO", "Mech Gate"))
