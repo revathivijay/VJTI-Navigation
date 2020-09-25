@@ -2,7 +2,7 @@ import PIL
 import numpy as np
 import cv2
 
-def save_image(output_images, count, src_number, dest_number):
+def save_image(output_images, count, src_number, dest_number, case_2=True):
     if count == 1:
         ref = PIL.Image.open(f'resized-new/reference1.jpg')
         _, h = ref.size
@@ -16,8 +16,12 @@ def save_image(output_images, count, src_number, dest_number):
         cv2.imwrite(f'final-output-images/{src_number}-{dest_number}.jpg', im_final)
     elif count == 2:
         ref = PIL.Image.open(f'resized-new/reference2.jpg')
-        im1 = cv2.imread(output_images[0])
-        im2 = cv2.imread(output_images[1])
+        if case_2: ##src is 2-0 and dest is 2-1
+            im1 = cv2.imread(output_images[0])
+            im2 = cv2.imread(output_images[1])
+        else:
+            im1 = cv2.imread(output_images[1])
+            im2 =cv2.imread(output_images[0])
         im_h = cv2.hconcat([im1, im2])
         ref = np.array(ref)
         ref = cv2.cvtColor(ref, cv2.COLOR_BGR2RGB)
