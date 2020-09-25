@@ -24,36 +24,33 @@ from save_image import save_image
 """
 
 ## for viusalizing
-pixel_mapping = {
-    0: (337,448),
-    1: (337,409),
-    2: (395,409),
-    3: (471,409),
-    4: (540,409),
-    5: (540,267),
-    6: (491,276),
-    7: (491,262),
-    8: (426,276),
-    9: (426,216),
-    10: (426,128),
-    11: (460,128),
-    12: (338,128),
-    13: (240,127),
-    14: (240,216),
-    15: (337,216),
-    16: (337,276),
-    17: (240,276),
-    18: (240,325),
-    19: (240,409),
-    20: (198,409),
-    21: (122,448),
-    22: (58,448),
-    23: (58,409),
-    24: (540,128),
-}
-
-main_building_nodes = ["Lab3", "Main bldg entrance", "Staircase main bldg/statue", "Dep1", "Dep2", "Comps dept",
-                        "Al004", "CCF1", "Library", "Director's office", "Quad Steps", "Quad", "Canteen", "quad", "stage", "Audi", "BCT Lab"]
+# pixel_mapping = {
+#     0: (337,448),
+#     1: (337,409),
+#     2: (395,409),
+#     3: (471,409),
+#     4: (540,409),
+#     5: (540,267),
+#     6: (491,276),
+#     7: (491,262),
+#     8: (426,276),
+#     9: (426,216),
+#     10: (426,128),
+#     11: (460,128),
+#     12: (338,128),
+#     13: (240,127),
+#     14: (240,216),
+#     15: (337,216),
+#     16: (337,276),
+#     17: (240,276),
+#     18: (240,325),
+#     19: (240,409),
+#     20: (198,409),
+#     21: (122,448),
+#     22: (58,448),
+#     23: (58,409),
+#     24: (540,128),
+# }
 
 def initialize_map(filename):
     f = open(filename)
@@ -132,19 +129,49 @@ class Graph():
         for i in range(1, len(path)):
             ## case 1: for first node - only parent is considered
             if i==1:
-                curr = path[i]
-                prev = path[i-1]
-                if self.nodes[curr].x > self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
-                    directions.append('Right')
-                elif self.nodes[curr].x < self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
-                    directions.append('Left')
-                elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y > self.nodes[prev].y:
-                    directions.append('Straight')
-                elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
-                    directions.append('Back')
-                else:
+                if path[0]== 16: #Mech Gate
+                    curr = path[i]
+                    prev = path[i - 1]
+                    if self.nodes[curr].x > self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Right')
+                    elif self.nodes[curr].x < self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Left')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y > self.nodes[prev].y:
+                        directions.append('Back')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
+                        directions.append('Straight')
+                    else:
+                        directions.append("check em")
+                elif path[0]==5:  # Girls Hostel
+                    curr = path[i]
+                    prev = path[i - 1]
+                    if self.nodes[curr].x > self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Straight')
+                    elif self.nodes[curr].x < self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Back')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y > self.nodes[prev].y:
+                        directions.append('Right')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
+                        directions.append('Left')
+                    else:
+                        directions.append("check em")
 
-                    directions.append("check em")
+                else: #Main Gate and default case (shouldnt be called for default!)
+                    curr = path[i]
+                    prev = path[i-1]
+                    if self.nodes[curr].x > self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Right')
+                    elif self.nodes[curr].x < self.nodes[prev].x and self.nodes[curr].y == self.nodes[prev].y:
+                        directions.append('Left')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y > self.nodes[prev].y:
+                        directions.append('Straight')
+                    elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
+                        directions.append('Back')
+                    else:
+                        directions.append("check em")
+
+
+
                 if(directions[-1]!='Straight'):
                     directions_text = "First turn {} and keep walking".format(directions[-1])
                 else:
@@ -169,22 +196,37 @@ class Graph():
                     else:
                         directions.append('Straight')
 
-                elif nodes[path[i-1]].name=='staircase' and nodes[path[i]].name == 'staircase' and nodes[path[i]].floor != nodes[path[i-1]].floor:
+                elif self.nodes[path[i-1]].name=='staircase' and self.nodes[path[i]].name == 'staircase' and self.nodes[path[i]].floor != self.nodes[path[i-1]].floor:
                     floor = ""
-                    if(nodes[path[i]].floor==1):
+                    if(self.nodes[path[i]].floor==1):
                         floor = "first"
-                    elif nodes[path[i]].floor==2:
+                    elif self.nodes[path[i]].floor==2:
                         floor = "second"
-                    elif nodes[path[i]].floor==3:
+                    elif self.nodes[path[i]].floor==3:
                         floor = "third"
-                    elif nodes[path[i]].floor==0:
+                    elif self.nodes[path[i]].floor==0:
                         floor = "ground"
                     directions_text += f' Now, use the staircase to go to the {floor} floor.'
+
+                    if i == len(path) - 1:
+                        if ('washroom' in self.nodes[dest].name):
+                            directions_text += " You have reached the washroom."
+                        else:
+                            directions_text += f"You have arrived at {nodes[path[i]].name}"
                     continue
 
-                elif nodes[path[i - 2]].name == 'staircase' and nodes[path[i-1]].name == 'staircase' and nodes[path[i-1]].floor != nodes[path[i - 2]].floor:
+                elif self.nodes[path[i - 2]].name == 'staircase' and self.nodes[path[i-1]].name == 'staircase' and self.nodes[path[i-1]].floor != self.nodes[path[i - 2]].floor:
                     directions_text += " Walk straight."
+                    if i == len(path) - 1:
+                        if ('washroom' in self.nodes[dest].name):
+                            directions_text += " You have reached the washroom."
+                        else:
+                            directions_text += f"You have arrived at {self.nodes[path[i]].name}"
                     continue
+
+                # Map Connectors
+                elif path[i-2]==0 or path[i-1] == 0 or path[i-2]==90 or path[i-1]==90 or path[i-2]==92 or path[i-1]==92 or path[i-2]==13 or path[i-1]==13:
+                    directions.append("Straight")
 
                 elif(x2>x1 and y1==y2):
                     if(y3>y2 and x2==x3):
@@ -245,11 +287,13 @@ class Graph():
                         directions_text+=" Now at {} turn {}.".format(self.nodes[path[i-1]].name, directions[-1])
                     else:
                         directions_text+=" Take the next "+ directions[-1] + "."
-            if i==len(path)-1:
-                if('washroom' in self.nodes[dest].name):
-                    directions_text+=" You have reached the washroom."
-                else:
-                    directions_text+=f"You have arrived at {nodes[path[i]].name}"
+
+                if i == len(path) - 1:
+                    if ('washroom' in self.nodes[dest].name):
+                        directions_text += " You have reached the washroom."
+                    else:
+                        directions_text += f"You have arrived at {self.nodes[path[i]].name}"
+
 
         return directions, directions_text
 
@@ -311,10 +355,6 @@ def findDestination(src, dest, gender):
 
 
 def getPath(destination,source, gender="null"):
-    if source in main_building_nodes and destination in main_building_nodes:
-        # TODO: logic for different map -- not needed
-        pass
-
     print(source + " -->" + str(destination))
     src_number = map_node[source]
     dest_number = findDestination(source, destination, gender)
@@ -428,7 +468,12 @@ def getPath(destination,source, gender="null"):
             print(name)
             count +=1
             output_images.append(name)
-        save_image(output_images, count, src_number, dest_number)
+
+        ## for alignment of maps 2-0 2-1 special cases
+        case2 = True
+        if src_map==2 and dest_map==2 and src_floor==1 and dest_floor==0:
+            case2 = False
+        save_image(output_images, count, src_number, dest_number, case2)
         return directions_text
     return ""
 
@@ -452,19 +497,18 @@ graph.addAllEdges('edges-rev.csv')
 # plt.show()
 
 # TESTCASES FOR MAP #2
-print(getPath("BCT Lab","statue"))
-print(getPath("Xerox Center","statue"))
+# print(getPath("BCT Lab","statue"))
+# print(getPath("Xerox Center","statue"))
 
 # # TESTCASES FOR MAP #1
 # print(getPath( "Girls hostel", "Football Field"))
 # print(getPath("Girls hostel", "Boys hostel 1"))
-# print(getPath("Boys hostel 2", "Cricket Ground"))
 
 # TESTCASES FOR MAP #3
 # print(getPath( "Xerox Center","Mech Gate"))
 # print(getPath("Inside workshop #1", "Mech Building Entrance"))
-print(getPath( "director office", "Main Seminar Hall"))
-print(getPath( "Quad", "Main Seminar Hall"))
+# print(getPath( "director office", "Main Seminar Hall"))
+# print(getPath( "Quad", "Main Seminar Hall"))
 
 # TESTCASES FOR MAP #4
 # print(getPath("Main Seminar Hall", "Mech Gate"))
