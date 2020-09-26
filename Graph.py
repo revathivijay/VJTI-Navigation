@@ -391,8 +391,8 @@ def getPath(destination,source, gender="null"):
 
             if (curr_map!=p1.map or curr_floor!=p1.floor):
                 img = np.array(img_temp)
-                plt.imshow(img)
-                plt.show()
+                # plt.imshow(img)
+                # plt.show()
                 # cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
                 cv2.imwrite(f"temp-output/{src_number}-{dest_number}-{curr_map}-{curr_floor}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
                 counter+=1
@@ -446,14 +446,12 @@ def getPath(destination,source, gender="null"):
             paste_dest_y = nodes[dest_number].y - h + 2
             img_temp.paste(dest_img, (paste_dest_x, paste_dest_y))
 
-
-
         print(src_number, " ", dest_number, " ", counter)
 
         # display image
         img = np.array(img_temp)
-        plt.imshow(img)
-        plt.show()
+        # plt.imshow(img)
+        # plt.show()
         # cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
         cv2.imwrite(f"temp-output/{src_number}-{dest_number}-{curr_map}-{curr_floor}-{counter}.jpg",
                     cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
@@ -479,7 +477,7 @@ def getPath(destination,source, gender="null"):
 
 
 
-nodes,map_node = initialize_map('nodes.json')
+nodes, map_node = initialize_map('nodes.json')
 graph = Graph(len(nodes), nodes)
 graph.addAllEdges('edges-rev.csv')
 
@@ -499,6 +497,7 @@ graph.addAllEdges('edges-rev.csv')
 # TESTCASES FOR MAP #2
 # print(getPath("BCT Lab","statue"))
 # print(getPath("Xerox Center","statue"))
+# print(getPath("girls washroom","director office"))
 
 # # TESTCASES FOR MAP #1
 # print(getPath( "Girls hostel", "Football Field"))
@@ -517,13 +516,26 @@ graph.addAllEdges('edges-rev.csv')
 # print(getPath("Girls hostel", "canteen"))
 
 # # TESTCASES FOR MULTIPLE MAPS
-# print(getPath("Cricket Ground", "Main Seminar Hall"))
+# print(getPath("Cricket Ground", "main gate"))
 # print(getPath("Main Seminar Hall", "Cricket Ground"))
+import time
+## generating all output maps
+with open('locations.csv', 'r') as read_obj:
+    # pass the file object to reader() to get the reader object
+    csv_reader = csv.reader(read_obj)
+    # Pass reader object to list() to get a list of lists
+    loc = list(csv_reader)
+    for i in range(len(loc)):
+        loc[i]= "".join(loc[i])
+    print(loc)
+    st = time.time()
+    for i in range(len(loc)):
+        for j in range(len(loc)):
+            getPath(loc[i], loc[j])
+            getPath(loc[j], loc[i])
 
-
-
-
-
+    end = time.time()
+    print("Time taken: ", str(end-st), "s")
 
 
 
