@@ -13,7 +13,8 @@ import matplotlib.image as mpimg
 import cv2
 import PIL
 from PIL import Image
-
+import glob
+from save_image import save_image
 """
 {0: Main Gate , 1: , 2: Main Building Entrace, 3: , 4: Main Building Staircase, 5: Director's Office,
 6: Lab 3, 7: Dep1 , 8: Dep2 , 9: , 10: Computer Department, 11: Study Space , 12: , 13: AL004 ,
@@ -50,7 +51,6 @@ from PIL import Image
 #     23: (58,409),
 #     24: (540,128),
 # }
-#
 
 def initialize_map(filename):
     f = open(filename)
@@ -59,7 +59,7 @@ def initialize_map(filename):
     map_node = {}
     for key, node in data.items():
         temp_node = Node(
-            number=node["Node number"], ## dont change this to -1
+            number=int(node["Node number"]), ## dont change this to -1
             name=node["Node Name"],
             x=int(node["x_pos"]),
             y=int(node["y_pos"]),
@@ -308,7 +308,7 @@ class Graph():
         path.append(src)
         for v in range(V):
             dist.append(sys.maxsize)
-            minHeap.array.append( minHeap.newMinHeapNode(v, dist[v]))
+            minHeap.array.append(minHeap.newMinHeapNode(v, dist[v]))
             minHeap.pos.append(v)
 
         minHeap.pos[src] = src
@@ -353,6 +353,7 @@ def findDestination(src, dest, gender):
     return dest.number
 
 
+
 def getPath(destination,source, gender="null"):
     print(source + " -->" + str(destination))
     src_number = map_node[source]
@@ -374,7 +375,7 @@ def getPath(destination,source, gender="null"):
         dest_map = nodes[dest_number].map
         src_floor = nodes[src_number].floor
         dest_floor = nodes[dest_number].floor
-
+        print("PATH: ", path)
         for i in range(len(path)-1):
             p1 = nodes[path[i]]
             p2 = nodes[path[i+1]]
@@ -390,9 +391,10 @@ def getPath(destination,source, gender="null"):
 
             if (curr_map!=p1.map or curr_floor!=p1.floor):
                 img = np.array(img_temp)
-                plt.imshow(img)
-                plt.show()
-                cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+                # plt.imshow(img)
+                # plt.show()
+                # cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+                cv2.imwrite(f"temp-output/{src_number}-{dest_number}-{curr_map}-{curr_floor}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
                 counter+=1
                 curr_map = p1.map
                 curr_floor = p1.floor
@@ -407,12 +409,11 @@ def getPath(destination,source, gender="null"):
 
             if i==len(path)-2:
                 # arrow in middle
-                mid_point = ((p1.x + p2.x) // 2, (p1.y + p2.y) // 2)
+                mid_point = ((p1.x + p2.x)//2, (p1.y + p2.y)//2)
                 ## two lines
-                cv2.arrowedLine(img, (p1.x, p1.y), mid_point, color=path_color, thickness=line_thickness,
-                                tipLength=13 * 2 / len_line)
+                cv2.arrowedLine(img, (p1.x, p1.y), mid_point, color=path_color, thickness=line_thickness, tipLength=13 * 2/ len_line)
                 cv2.line(img, mid_point, (p2.x, p2.y), path_color, thickness=line_thickness, lineType=cv2.LINE_AA)
-                if src_map != dest_map or src_floor != dest_floor:
+                if src_map!=dest_map or src_floor!=dest_floor:
                     img_temp = PIL.Image.fromarray(img)
                     dest_img = PIL.Image.open('src.png')
                     dest_img.thumbnail(MAX_SIZE)
@@ -428,6 +429,7 @@ def getPath(destination,source, gender="null"):
         ## if both dest and source are on same map
         if src_map==dest_map and src_floor==dest_floor:
             img_temp = PIL.Image.fromarray(img)
+
             ## adding source marker
             src_img = PIL.Image.open('dest.png')
             src_img.thumbnail((28, 28))
@@ -444,73 +446,96 @@ def getPath(destination,source, gender="null"):
             paste_dest_y = nodes[dest_number].y - h + 2
             img_temp.paste(dest_img, (paste_dest_x, paste_dest_y))
 
-
-
         print(src_number, " ", dest_number, " ", counter)
 
         # display image
         img = np.array(img_temp)
-        plt.imshow(img)
-        plt.show()
-        cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+        # plt.imshow(img)
+        # plt.show()
+        # cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+        cv2.imwrite(f"temp-output/{src_number}-{dest_number}-{curr_map}-{curr_floor}-{counter}.jpg",
+                    cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
         print(distance)
-        print(f"all-dest/{src_number}-{dest_number}-{counter}.jpg")
+
+        # for saving final image
+        count = 0
+        output_images = []
+
+        ## TODO: change to whatever path we're reading from in actual appln
+        for name in glob.glob(f'C:\\Users\\rohan\\Desktop\\Revathi\\VJTI-Navigation-master\\VJTI-Navigation-master\\temp-output\\{src_number}-{dest_number}-*'):
+            print(name)
+            count +=1
+            output_images.append(name)
+
+        ## for alignment of maps 2-0 2-1 special cases
+        case2 = True
+        if src_map==2 and dest_map==2 and src_floor==1 and dest_floor==0:
+            case2 = False
+        save_image(output_images, count, src_number, dest_number, case2)
         return directions_text
     return ""
 
 
-nodes,map_node = initialize_map('nodes.json')
+
+nodes, map_node = initialize_map('nodes.json')
 graph = Graph(len(nodes), nodes)
-graph.addAllEdges('edges.csv')
+graph.addAllEdges('edges-rev.csv')
 
 
-img = Image.open('resized-new/2-1.jpg')
-plt.imshow(img)
-for i in range(len(nodes)):
-    for j in graph.graph[i]:
-        v = j[0]
-        if(nodes[i].map==2 and nodes[v].map ==2 and nodes[i].floor==1 and nodes[v].floor==1):
-            plt.plot(nodes[i].x, nodes[i].y, 'o')
-            plt.plot(nodes[v].x, nodes[v].y, 'o')
-            plt.plot([nodes[i].x, nodes[v].x], [nodes[i].y, nodes[v].y])
-            plt.text(nodes[i].x + 10, nodes[i].y, i+ 1)
+# img = Image.open('resized-new/2-1.jpg')
+# plt.imshow(img)
+# for i in range(len(nodes)):
+#     for j in graph.graph[i]:
+#         v = j[0]
+#         if(nodes[i].map==2 and nodes[v].map == 2  and nodes[i].floor==1 and nodes[v].floor==1):
+#             plt.plot(nodes[i].x, nodes[i].y, 'o')
+#             plt.plot(nodes[v].x, nodes[v].y, 'o')
+#             plt.plot([nodes[i].x, nodes[v].x], [nodes[i].y, nodes[v].y])
+#             plt.text(nodes[i].x + 10, nodes[i].y, i+ 1)
+# plt.show()
 
-plt.show()
+# TESTCASES FOR MAP #2
+# print(getPath("BCT Lab","statue"))
+# print(getPath("Xerox Center","statue"))
+# print(getPath("girls washroom","director office"))
 
-
-# TESTCASES FOR MAP #1
+# # TESTCASES FOR MAP #1
 # print(getPath( "Girls hostel", "Football Field"))
 # print(getPath("Girls hostel", "Boys hostel 1"))
-# print(getPath("Boys hostel 2", "Cricket Ground"))
-
-# TESTCASES FOR MAP #2 ground floor
-# print(getPath("BCT Lab","statue"))
-# print(getPath("AL 004","main gate"))
-# print(getPath("Quad steps", "main gate"))
-
-
-# TESTCASES FOR MAP#2 FLOOR #0 #1
-# print(getPath("director office", "main gate"))
-# print(getPath("Library", "main gate"))
 
 # TESTCASES FOR MAP #3
 # print(getPath( "Xerox Center","Mech Gate"))
 # print(getPath("Inside workshop #1", "Mech Building Entrance"))
-# print(getPath( "DL002", "Mech Gate"))
+# print(getPath( "director office", "Main Seminar Hall"))
+# print(getPath( "Quad", "Main Seminar Hall"))
 
 # TESTCASES FOR MAP #4
-# print(getPath("washroom","Main Seminar Hall",  "girls"))
+# print(getPath("Main Seminar Hall", "Mech Gate"))
 
 # TESTCASES FOR WASHROOM
 # print(getPath("Girls hostel", "canteen"))
 
-#print(getPath("washroom","statue",  "girls"))
+# # TESTCASES FOR MULTIPLE MAPS
+# print(getPath("Cricket Ground", "main gate"))
+# print(getPath("Main Seminar Hall", "Cricket Ground"))
+import time
+## generating all output maps
+with open('locations.csv', 'r') as read_obj:
+    # pass the file object to reader() to get the reader object
+    csv_reader = csv.reader(read_obj)
+    # Pass reader object to list() to get a list of lists
+    loc = list(csv_reader)
+    for i in range(len(loc)):
+        loc[i]= "".join(loc[i])
+    print(loc)
+    st = time.time()
+    for i in range(len(loc)):
+        for j in range(len(loc)):
+            getPath(loc[i], loc[j])
+            getPath(loc[j], loc[i])
 
-# TESTCASES FOR MULTIPLE MAPS
-# print(getPath("Cricket Ground", "Main Seminar Hall")) #All maps
-#print(getPath("Cricket Ground", "statue")) #2 maps
-# print(getPath("main gate","Cricket Ground")) #2 maps
+    end = time.time()
+    print("Time taken: ", str(end-st), "s")
 
-# TESTCASES FOR MECH BUILD FLOOR #0 #1
-print(getPath("Main Seminar Hall", "Mech Gate"))
-# print(getPath("TPO", "Mech Gate"))
+
+

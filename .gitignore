@@ -1,5 +1,7 @@
 .*
 /__pycache__
 /all-dest
+/resized
+/new-ss
 
 !.gitignore
