@@ -7,11 +7,15 @@ import re
 from Node import Node
 from math import sqrt
 from time import sleep
-import numpy as np
+from google_drive_util import create_file
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import cv2
+from googletrans import Translator
+translator = Translator()
+import numpy as np
 import PIL
+import requests
 from PIL import Image
 import glob
 from save_image import save_image
@@ -72,15 +76,14 @@ def initialize_map(filename):
         map_node[node["Node Name"]] = int(node["Node number"])-1
     return nodes,map_node
 
-"""
-def get_node_mapping(filename):
-    with open(filename, 'r') as csv_file:
-        csv_reader = csv.DictReader(csv_file)
-        map_nodes = {}
-        for row in csv_reader:
-            map_nodes[row['Node']]  = int(row['Node Number'])-1
-    return map_nodes
-"""
+def get_image_mapping(filename):
+    f = open(filename)
+    data = json.load(f)
+    images = {}
+    for key, value in data.items():
+        images[key] = value
+    return images
+
 
 class Graph():
 
@@ -452,11 +455,23 @@ def getPath(destination,source, gender="null"):
 
         # display image
         img = np.array(img_temp)
+<<<<<<< HEAD
+        plt.imshow(img)
+        plt.show()
+        #filename_on_drive = str(src_number) + "_" + str(dest_number) + ".jpg"
+        #id = create_file(filename="display_image.jpg",filename_on_drive=filename_on_drive)
+        #data[filename_on_drive] = id
+        #print(distance)
+
+        cv2.imwrite("display_image.jpg", img)
+        cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+=======
         # plt.imshow(img)
         # plt.show()
         # cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
         cv2.imwrite(f"temp-output/{src_number}-{dest_number}-{curr_map}-{curr_floor}-{counter}.jpg",
                     cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+>>>>>>> master
         print(distance)
 
         # for saving final image
@@ -478,6 +493,126 @@ def getPath(destination,source, gender="null"):
     return ""
 
 
+<<<<<<< HEAD
+""" Library Path Test
+getPath("Comps dept","Staircase main bldg/statue")
+getPath("BEE Lab","Comps dept")
+getPath("library staircase","BEE Lab")
+getPath("library staircase","Staircase main bldg/statue")
+"""
+
+"""
+Hindi Skill Code
+text = getPath("Library","Staircase main bldg/statue")
+print(text)
+text = text.replace("Take the next Left","Take the next left turn")
+text = text.replace("Take the next Right","Take the next right turn")
+print(text)
+result = translator.translate(text,src='en', dest='hi')
+print(result.text)
+"""
+# sleep(2)
+# getPath("Library","Staircase main bldg/statue")
+# sleep(2)
+# getPath("Lab3","Canteen")
+
+# with open("image_file_mapping.json", 'w') as json_file:
+#     json_file.write(json.dumps(data, indent=4))
+
+#print(get_image_mapping('image_file_mapping.json'))
+
+def uploadImage(src_number,dest_number):
+
+    if dest_number:
+        distance, path, directions, directions_text = graph.dijkstra(src_number, dest_number)
+        im = cv2.imread('MAP.jpeg')
+        im_resized = cv2.resize(im, (610, 454), interpolation=cv2.INTER_LINEAR) ##do not change size
+        line_thickness = 3
+
+        ## color in opencv -- BGR
+        path_color = (0, 0, 0)
+        src_color = (13,64,0)
+        dest_color = (255,0,0)
+        circle_thickness = 12
+
+        ## legends
+        cv2.circle(im_resized, (25, 25), 10, src_color, thickness=circle_thickness)
+        cv2.putText(im_resized, f'{nodes[src_number].name} (you are here)', (50,27), cv2.FONT_HERSHEY_SIMPLEX , 0.7, path_color, 2, cv2.LINE_AA)
+
+        cv2.circle(im_resized, (25,67), 10, dest_color, thickness=circle_thickness)
+        cv2.putText(im_resized, f'{nodes[dest_number].name} (destination)', (50,71), cv2.FONT_HERSHEY_SIMPLEX , 0.7, path_color, 2, cv2.LINE_AA)
+
+        ## source and dest markers
+        cv2.circle(im_resized, (pixel_mapping[src_number][0], pixel_mapping[src_number][1]), 10, src_color, thickness=circle_thickness)
+        cv2.circle(im_resized, (pixel_mapping[dest_number][0], pixel_mapping[dest_number][1]), 10, dest_color, thickness=circle_thickness)
+
+        for i in range(len(path)-1):
+            p1 = pixel_mapping[path[i]]
+            p2 = pixel_mapping[path[i+1]]
+            len_line = abs(p1[0]-p2[0]) + abs(p1[1]-p2[1])
+            if len_line==0:
+                len_line=1
+            cv2.arrowedLine(im_resized, p1, p2, color=path_color, thickness=line_thickness, tipLength=13/len_line)
+        #plt.imshow(cv2.cvtColor(im_resized, cv2.COLOR_BGR2RGB))
+        #plt.show()
+        cv2.imwrite("display_image.jpg", im_resized)
+        filename_on_drive =  str(src_number) + "_" + str(dest_number) + ".jpg"
+        id = create_file(filename="display_image.jpg",filename_on_drive=filename_on_drive)
+        return id,filename_on_drive
+
+## Add images to drive
+## vidhi - Added images with source 1 
+def populateImages():
+    data = {}
+    for i in range(0,25):
+        for j in range(0,25):
+            if nodes[i].name !="" and i!=j:
+                id,filename_on_drive = uploadImage(i,j)
+                data[filename_on_drive] = id
+
+    with open("image_file_mapping.json", 'wb') as json_file:
+        json_file.write(json.dumps(data, indent=4))
+
+
+
+def populateImageMapping():
+    data = {}
+    page_token = None
+    service = build('drive', 'v3', credentials=creds)
+    folder_id = "1asVdT2WEOcCYkVqbaFlT_zs0r2hJ97Fb"
+    file_metadata = {'parents': [folder_id]}
+    response = service.files().list(q="mimeType='image/jpeg'",
+                                            spaces='drive',
+                                            fields='nextPageToken, files(id, name)',
+                                            body=file_metadata,
+                                            pageToken=page_token).execute()
+    for file in response.get('files', []):
+        data[file.get('name')] = file.get('id')
+    with open("image_file_mapping.json", 'wb') as json_file:
+        json_file.write(json.dumps(data, indent=4))
+
+print(requests.head('https://drive.google.com/uc?export=view&id=1F5uazb9JEJCEIo6qjhZdmxPZnZlZ9jXcnkwejfiejfl').status_code)
+populateImageMapping()
+
+nodes,map_node = initialize_map('nodes.json')
+graph = Graph(len(nodes), nodes)
+graph.addAllEdges('edges.csv')
+
+
+# img = Image.open('new-ss/FINISHED/2-0.PNG')
+# plt.imshow(img)
+# for i in range(len(nodes)):
+#     for j in graph.graph[i]:
+#         v = j[0]
+#         if(nodes[i].map==2 and nodes[v].map ==2 and nodes[i].floor==0 and nodes[v].floor==0):
+#             plt.plot(nodes[i].x, nodes[i].y, 'o')
+#             plt.plot(nodes[v].x, nodes[v].y, 'o')
+#             plt.plot([nodes[i].x, nodes[v].x], [nodes[i].y, nodes[v].y])
+#             plt.text(nodes[i].x + 10, nodes[i].y, i+ 1)
+
+# plt.show()
+=======
+>>>>>>> master
 
 nodes, map_node = initialize_map('nodes.json')
 graph = Graph(len(nodes), nodes)

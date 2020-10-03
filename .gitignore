@@ -3,5 +3,6 @@
 /all-dest
 /resized
 /new-ss
+token.pickle
 
 !.gitignore
