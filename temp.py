@@ -26,7 +26,7 @@ def initialize_map(filename):
     return nodes,map_node
 
 nodes, _ = initialize_map("nodes.json")
-img = Image.open('new-ss/FINISHED/1-0.PNG')
+img = Image.open('resized-new/1-0.jpg')
 fig,a = plt.subplots(2,2)
 a[0][0].imshow(img)
 for i in range(len(nodes)):
@@ -34,21 +34,21 @@ for i in range(len(nodes)):
         a[0][0].plot(nodes[i].x, nodes[i].y, 'o')
         a[0][0].text(nodes[i].x+20, nodes[i].y, i
                  +1)
-img = Image.open('new-ss/FINISHED/2-0.PNG')
+img = Image.open('resized-new/2-0.jpg')
 a[0][1].imshow(img)
 for i in range(len(nodes)):
     if(nodes[i].map==2 and nodes[i].floor==0):
         a[0][1].plot(nodes[i].x, nodes[i].y, 'o')
         a[0][1].text(nodes[i].x+20, nodes[i].y, i
                  +1)
-img = Image.open('new-ss/FINISHED/3-0.PNG')
+img = Image.open('resized-new/3-0.jpg')
 a[1][0].imshow(img)
 for i in range(len(nodes)):
     if(nodes[i].map==3 and nodes[i].floor==0):
         a[1][0].plot(nodes[i].x, nodes[i].y, 'o')
         a[1][0].text(nodes[i].x+20, nodes[i].y, i
                  +1)
-img = Image.open('new-ss/FINISHED/3-1.PNG')
+img = Image.open('resized-new/3-1.jpg')
 a[1][1].imshow(img)
 for i in range(len(nodes)):
     if(nodes[i].map==3 and nodes[i].floor==1):
