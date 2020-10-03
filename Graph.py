@@ -15,12 +15,9 @@ from googletrans import Translator
 translator = Translator()
 import numpy as np
 import PIL
-<<<<<<< HEAD
 import requests
-=======
 from PIL import Image
 
->>>>>>> master
 """
 {0: Main Gate , 1: , 2: Main Building Entrace, 3: , 4: Main Building Staircase, 5: Director's Office,
 6: Lab 3, 7: Dep1 , 8: Dep2 , 9: , 10: Computer Department, 11: Study Space , 12: , 13: AL004 ,
@@ -339,16 +336,6 @@ class Graph():
         return round(dist[dest], 2), path, directions, directions_text
 
 
-<<<<<<< HEAD
-
-nodes,map_node = initialize_map('nodes.json')
-graph = Graph(25, nodes)
-graph.addAllEdges('edges.csv')
-
-
-def getPath(destination,source):
-    print(source + " -->" + destination)
-=======
 # This function is created to find washroom closest washroom
 def findDestination(src, dest, gender):
     #Repromt to ask girls/boys washroom
@@ -371,7 +358,6 @@ def findDestination(src, dest, gender):
 
 def getPath(destination,source, gender="null"):
     print(source + " -->" + str(destination))
->>>>>>> master
     src_number = map_node[source]
     dest_number = findDestination(source, destination, gender)
     if dest_number:
@@ -469,23 +455,18 @@ def getPath(destination,source, gender="null"):
         img = np.array(img_temp)
         plt.imshow(img)
         plt.show()
-<<<<<<< HEAD
         #filename_on_drive = str(src_number) + "_" + str(dest_number) + ".jpg"
         #id = create_file(filename="display_image.jpg",filename_on_drive=filename_on_drive)
         #data[filename_on_drive] = id
         #print(distance)
 
         cv2.imwrite("display_image.jpg", img)
-=======
         cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
->>>>>>> master
         print(distance)
         print(f"all-dest/{src_number}-{dest_number}-{counter}.jpg")
         return directions_text
     return ""
-<<<<<<< HEAD
-getPath("Canteen","Staircase main bldg/statue")
-getPath("Audi","Comps dept")
+
 
 """ Library Path Test
 getPath("Comps dept","Staircase main bldg/statue")
@@ -566,27 +547,44 @@ def populateImages():
     with open("image_file_mapping.json", 'wb') as json_file:
         json_file.write(json.dumps(data, indent=4))
 
-print(requests.head('https://drive.google.com/uc?export=view&id=1F5uazb9JEJCEIo6qjhZdmxPZnZlZ9jXcnkwejfiejfl').status_code)
-=======
 
+
+def populateImageMapping():
+    data = {}
+    page_token = None
+    service = build('drive', 'v3', credentials=creds)
+    folder_id = "1asVdT2WEOcCYkVqbaFlT_zs0r2hJ97Fb"
+    file_metadata = {'parents': [folder_id]}
+    response = service.files().list(q="mimeType='image/jpeg'",
+                                            spaces='drive',
+                                            fields='nextPageToken, files(id, name)',
+                                            body=file_metadata,
+                                            pageToken=page_token).execute()
+    for file in response.get('files', []):
+        data[file.get('name')] = file.get('id')
+    with open("image_file_mapping.json", 'wb') as json_file:
+        json_file.write(json.dumps(data, indent=4))
+
+print(requests.head('https://drive.google.com/uc?export=view&id=1F5uazb9JEJCEIo6qjhZdmxPZnZlZ9jXcnkwejfiejfl').status_code)
+populateImageMapping()
 
 nodes,map_node = initialize_map('nodes.json')
 graph = Graph(len(nodes), nodes)
 graph.addAllEdges('edges.csv')
 
 
-img = Image.open('new-ss/FINISHED/2-0.PNG')
-plt.imshow(img)
-for i in range(len(nodes)):
-    for j in graph.graph[i]:
-        v = j[0]
-        if(nodes[i].map==2 and nodes[v].map ==2 and nodes[i].floor==0 and nodes[v].floor==0):
-            plt.plot(nodes[i].x, nodes[i].y, 'o')
-            plt.plot(nodes[v].x, nodes[v].y, 'o')
-            plt.plot([nodes[i].x, nodes[v].x], [nodes[i].y, nodes[v].y])
-            plt.text(nodes[i].x + 10, nodes[i].y, i+ 1)
+# img = Image.open('new-ss/FINISHED/2-0.PNG')
+# plt.imshow(img)
+# for i in range(len(nodes)):
+#     for j in graph.graph[i]:
+#         v = j[0]
+#         if(nodes[i].map==2 and nodes[v].map ==2 and nodes[i].floor==0 and nodes[v].floor==0):
+#             plt.plot(nodes[i].x, nodes[i].y, 'o')
+#             plt.plot(nodes[v].x, nodes[v].y, 'o')
+#             plt.plot([nodes[i].x, nodes[v].x], [nodes[i].y, nodes[v].y])
+#             plt.text(nodes[i].x + 10, nodes[i].y, i+ 1)
 
-plt.show()
+# plt.show()
 
 
 # TESTCASES FOR MAP #1
@@ -625,4 +623,3 @@ print(getPath("Cricket Ground", "statue")) #2 maps
 # TESTCASES FOR MECH BUILD FLOOR #0 #1
 # print(getPath("Main Seminar Hall", "Mech Gate"))
 # print(getPath("TPO", "Mech Gate"))
->>>>>>> master
