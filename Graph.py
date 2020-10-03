@@ -167,8 +167,10 @@ class Graph():
                         directions.append('Straight')
                     elif self.nodes[curr].x == self.nodes[prev].x and self.nodes[curr].y < self.nodes[prev].y:
                         directions.append('Back')
+                    elif path[0] in (33, 41) or path[0] in (48, 52):
+                        directions.append("Straight")
                     else:
-                        directions.append("check em")
+                        directions.append("Check em")
 
 
 
@@ -531,8 +533,10 @@ with open('locations.csv', 'r') as read_obj:
     st = time.time()
     for i in range(len(loc)):
         for j in range(len(loc)):
-            getPath(loc[i], loc[j])
-            getPath(loc[j], loc[i])
+            if(map_node[loc[i]] not in range(34, 41)):
+                print(getPath(loc[i], loc[j]))
+            if (map_node[loc[j]] not in range(34, 41)):
+                print(getPath(loc[j], loc[i]))
 
     end = time.time()
     print("Time taken: ", str(end-st), "s")
