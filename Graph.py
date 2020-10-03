@@ -455,23 +455,13 @@ def getPath(destination,source, gender="null"):
 
         # display image
         img = np.array(img_temp)
-<<<<<<< HEAD
-        plt.imshow(img)
-        plt.show()
-        #filename_on_drive = str(src_number) + "_" + str(dest_number) + ".jpg"
-        #id = create_file(filename="display_image.jpg",filename_on_drive=filename_on_drive)
-        #data[filename_on_drive] = id
-        #print(distance)
 
-        cv2.imwrite("display_image.jpg", img)
-        cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-=======
         # plt.imshow(img)
         # plt.show()
         # cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
         cv2.imwrite(f"temp-output/{src_number}-{dest_number}-{curr_map}-{curr_floor}-{counter}.jpg",
                     cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
->>>>>>> master
+
         print(distance)
 
         # for saving final image
@@ -493,7 +483,7 @@ def getPath(destination,source, gender="null"):
     return ""
 
 
-<<<<<<< HEAD
+
 """ Library Path Test
 getPath("Comps dept","Staircase main bldg/statue")
 getPath("BEE Lab","Comps dept")
@@ -511,15 +501,6 @@ print(text)
 result = translator.translate(text,src='en', dest='hi')
 print(result.text)
 """
-# sleep(2)
-# getPath("Library","Staircase main bldg/statue")
-# sleep(2)
-# getPath("Lab3","Canteen")
-
-# with open("image_file_mapping.json", 'w') as json_file:
-#     json_file.write(json.dumps(data, indent=4))
-
-#print(get_image_mapping('image_file_mapping.json'))
 
 def uploadImage(src_number,dest_number):
 
@@ -560,45 +541,6 @@ def uploadImage(src_number,dest_number):
         id = create_file(filename="display_image.jpg",filename_on_drive=filename_on_drive)
         return id,filename_on_drive
 
-## Add images to drive
-## vidhi - Added images with source 1 
-def populateImages():
-    data = {}
-    for i in range(0,25):
-        for j in range(0,25):
-            if nodes[i].name !="" and i!=j:
-                id,filename_on_drive = uploadImage(i,j)
-                data[filename_on_drive] = id
-
-    with open("image_file_mapping.json", 'wb') as json_file:
-        json_file.write(json.dumps(data, indent=4))
-
-
-
-def populateImageMapping():
-    data = {}
-    page_token = None
-    service = build('drive', 'v3', credentials=creds)
-    folder_id = "1asVdT2WEOcCYkVqbaFlT_zs0r2hJ97Fb"
-    file_metadata = {'parents': [folder_id]}
-    response = service.files().list(q="mimeType='image/jpeg'",
-                                            spaces='drive',
-                                            fields='nextPageToken, files(id, name)',
-                                            body=file_metadata,
-                                            pageToken=page_token).execute()
-    for file in response.get('files', []):
-        data[file.get('name')] = file.get('id')
-    with open("image_file_mapping.json", 'wb') as json_file:
-        json_file.write(json.dumps(data, indent=4))
-
-print(requests.head('https://drive.google.com/uc?export=view&id=1F5uazb9JEJCEIo6qjhZdmxPZnZlZ9jXcnkwejfiejfl').status_code)
-populateImageMapping()
-
-nodes,map_node = initialize_map('nodes.json')
-graph = Graph(len(nodes), nodes)
-graph.addAllEdges('edges.csv')
-
-
 # img = Image.open('new-ss/FINISHED/2-0.PNG')
 # plt.imshow(img)
 # for i in range(len(nodes)):
@@ -611,8 +553,6 @@ graph.addAllEdges('edges.csv')
 #             plt.text(nodes[i].x + 10, nodes[i].y, i+ 1)
 
 # plt.show()
-=======
->>>>>>> master
 
 nodes, map_node = initialize_map('nodes.json')
 graph = Graph(len(nodes), nodes)
