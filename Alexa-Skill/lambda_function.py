@@ -52,6 +52,8 @@ def intent_scheme(event):
         return stop_the_skill(event)
     elif intent_name == "AMAZON.HelpIntent":
         return assistance(event)
+    elif intent_name == "WhereAmI":
+        return where_am_i(event)
     
     return fallback_call(event)
     
@@ -72,6 +74,17 @@ def direction(event):
     else:
         speech_msg = "Set source location"
         reprompt_MSG = "Say Set source as to give a source location"
+        return output_json_builder_with_reprompt_and_card(speech_msg, reprompt_MSG, False)
+
+def where_am_i(event):
+    global SOURCE
+    if SOURCE:
+        speech_msg = "You are at " + SOURCE
+        reprompt_MSG = "Do you want to know where you are?"
+        return output_json_builder_with_reprompt_and_card(speech_msg, reprompt_MSG, False)
+    else:
+        speech_msg = "Source has not been set. Say Set source as to give a source location"
+        reprompt_MSG = "Would you like to set source location? Say Set source as to give a source location"
         return output_json_builder_with_reprompt_and_card(speech_msg, reprompt_MSG, False)
 
         
