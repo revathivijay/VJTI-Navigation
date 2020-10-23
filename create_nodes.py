@@ -32,4 +32,4 @@ def create_nodes(input_file, output_file):
 
 ## driver code
 if __name__=='__main__':
-    create_nodes('college-loc-new.csv', 'nodes.json')
+    create_nodes('colleg-loc-new.csv', 'nodes.json')

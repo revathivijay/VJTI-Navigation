@@ -4,1154 +4,1319 @@
         "Node Name": "",
         "x_pos": "600",
         "y_pos": "100",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "1",
-        "": ""
+        "Comments": ""
     },
     "2": {
         "Node number": "2",
         "Node Name": "",
         "x_pos": "505",
         "y_pos": "338",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "1",
-        "": ""
+        "Comments": ""
     },
     "3": {
         "Node number": "3",
-        "Node Name": "Boys Hostel 1",
+        "Node Name": "boys hostel c",
         "x_pos": "338",
         "y_pos": "338",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "1",
-        "": ""
+        "Comments": ""
     },
     "4": {
         "Node number": "4",
-        "Node Name": "Boys Hostel 2",
+        "Node Name": "boys hostel d",
         "x_pos": "163",
         "y_pos": "338",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "1",
-        "": ""
+        "Comments": ""
     },
     "5": {
         "Node number": "5",
         "Node Name": "",
         "x_pos": "163",
         "y_pos": "263",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "1",
-        "": ""
+        "Comments": ""
     },
     "6": {
         "Node number": "6",
-        "Node Name": "Cricket Ground",
+        "Node Name": "cricket ground",
         "x_pos": "31",
         "y_pos": "263",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "1",
-        "": ""
+        "Comments": ""
     },
     "7": {
         "Node number": "7",
-        "Node Name": "",
+        "Node Name": "girls hostel",
         "x_pos": "505",
         "y_pos": "495",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "1",
-        "": ""
+        "Comments": ""
     },
     "8": {
         "Node number": "8",
-        "Node Name": "Football ground",
+        "Node Name": "football ground",
         "x_pos": "505",
         "y_pos": "100",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "1",
-        "": ""
+        "Comments": ""
     },
     "9": {
         "Node number": "9",
         "Node Name": "",
         "x_pos": "456",
         "y_pos": "437",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "1",
-        "": "IGNORE"
+        "Comments": "IGNORE"
     },
     "10": {
         "Node number": "10",
         "Node Name": "",
         "x_pos": "159",
         "y_pos": "393",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "1",
-        "": "IGNORE"
+        "Comments": "IGNORE"
     },
     "11": {
         "Node number": "11",
         "Node Name": "",
         "x_pos": "159",
         "y_pos": "437",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "1",
-        "": "IGNORE"
+        "Comments": "IGNORE"
     },
     "12": {
         "Node number": "12",
         "Node Name": "",
         "x_pos": "15",
         "y_pos": "100",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "1",
-        "": "IGNORE"
+        "Comments": "IGNORE"
     },
     "13": {
         "Node number": "13",
         "Node Name": "",
         "x_pos": "15",
         "y_pos": "128",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "1",
-        "": "IGNORE"
+        "Comments": "IGNORE"
     },
     "14": {
         "Node number": "14",
         "Node Name": "",
         "x_pos": "0",
         "y_pos": "100",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "15": {
         "Node number": "15",
         "Node Name": "",
         "x_pos": "35",
         "y_pos": "100",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "16": {
         "Node number": "16",
         "Node Name": "",
         "x_pos": "35",
         "y_pos": "528",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "17": {
         "Node number": "17",
-        "Node Name": "Mech Gate",
+        "Node Name": "mechanical gate",
         "x_pos": "35",
         "y_pos": "572",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "18": {
         "Node number": "18",
         "Node Name": "",
         "x_pos": "90",
         "y_pos": "528",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "19": {
         "Node number": "19",
-        "Node Name": "Mech Building Entrance",
+        "Node Name": "mechanical building entrance",
         "x_pos": "90",
         "y_pos": "501",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "20": {
         "Node number": "20",
         "Node Name": "",
         "x_pos": "90",
         "y_pos": "472",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "21": {
         "Node number": "21",
         "Node Name": "",
         "x_pos": "90",
         "y_pos": "450",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "22": {
         "Node number": "22",
         "Node Name": "",
         "x_pos": "90",
         "y_pos": "426",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "23": {
         "Node number": "23",
-        "Node Name": "Xerox Center",
+        "Node Name": "xerox center",
         "x_pos": "74",
         "y_pos": "472",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "24": {
         "Node number": "24",
         "Node Name": "staircase",
         "x_pos": "74",
         "y_pos": "450",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "25": {
         "Node number": "25",
         "Node Name": "boys washroom",
         "x_pos": "74",
         "y_pos": "426",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "26": {
         "Node number": "26",
         "Node Name": "",
         "x_pos": "139",
         "y_pos": "426",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "27": {
         "Node number": "27",
-        "Node Name": "workshop #1",
+        "Node Name": "workshop 1",
         "x_pos": "90",
         "y_pos": "390",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "28": {
         "Node number": "28",
         "Node Name": "",
         "x_pos": "194",
         "y_pos": "458",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "29": {
         "Node number": "29",
         "Node Name": "",
         "x_pos": "194",
         "y_pos": "426",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "30": {
         "Node number": "30",
-        "Node Name": "workshop #2",
+        "Node Name": "workshop 2",
         "x_pos": "194",
         "y_pos": "390",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "31": {
         "Node number": "31",
         "Node Name": "",
         "x_pos": "306",
         "y_pos": "426",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "32": {
         "Node number": "32",
-        "Node Name": "Thermal Engineering Lab",
+        "Node Name": "thermal engineering lab",
         "x_pos": "306",
         "y_pos": "390",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "33": {
         "Node number": "33",
         "Node Name": "",
         "x_pos": "447",
         "y_pos": "435",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "34": {
         "Node number": "34",
         "Node Name": "",
         "x_pos": "407",
         "y_pos": "426",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "35": {
         "Node number": "35",
         "Node Name": "staircase",
         "x_pos": "407",
         "y_pos": "465",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "36": {
         "Node number": "36",
         "Node Name": "girls boys washroom",
         "x_pos": "424",
         "y_pos": "438",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "37": {
         "Node number": "37",
-        "Node Name": "DL001",
+        "Node Name": "dl001",
         "x_pos": "453",
         "y_pos": "422",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "38": {
         "Node number": "38",
-        "Node Name": "DL002",
+        "Node Name": "dl002",
         "x_pos": "490",
         "y_pos": "404",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "39": {
         "Node number": "39",
         "Node Name": "",
         "x_pos": "516",
         "y_pos": "389",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "40": {
         "Node number": "40",
         "Node Name": "staircase",
         "x_pos": "504",
         "y_pos": "362",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "41": {
         "Node number": "41",
         "Node Name": "staircase",
         "x_pos": "74",
         "y_pos": "476",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "42": {
         "Node number": "42",
         "Node Name": "",
         "x_pos": "111",
         "y_pos": "476",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "43": {
         "Node number": "43",
         "Node Name": "",
         "x_pos": "111",
         "y_pos": "432",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "44": {
         "Node number": "44",
         "Node Name": "girls washroom",
         "x_pos": "74",
         "y_pos": "432",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "45": {
         "Node number": "45",
         "Node Name": "",
         "x_pos": "181",
         "y_pos": "432",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "46": {
         "Node number": "46",
         "Node Name": "",
         "x_pos": "181",
         "y_pos": "300",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "47": {
         "Node number": "47",
-        "Node Name": "Main Seminar Hall",
+        "Node Name": "main seminar hall",
         "x_pos": "206",
         "y_pos": "300",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "48": {
         "Node number": "48",
         "Node Name": "staircase",
         "x_pos": "412",
         "y_pos": "432",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "49": {
         "Node number": "49",
         "Node Name": "staircase",
         "x_pos": "419",
         "y_pos": "452",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "50": {
         "Node number": "50",
         "Node Name": "girls washroom",
         "x_pos": "433",
         "y_pos": "452",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "51": {
         "Node number": "51",
-        "Node Name": "TPO",
+        "Node Name": "t.p.o",
         "x_pos": "522",
         "y_pos": "404",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "52": {
         "Node number": "52",
         "Node Name": "staircase",
         "x_pos": "508",
         "y_pos": "363",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "3",
-        "": ""
+        "Comments": ""
     },
     "53": {
         "Node number": "53",
         "Node Name": "main gate",
         "x_pos": "270",
         "y_pos": "66",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "54": {
         "Node number": "54",
         "Node Name": "",
         "x_pos": "270",
         "y_pos": "100",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "55": {
         "Node number": "55",
         "Node Name": "",
         "x_pos": "177",
         "y_pos": "100",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "56": {
         "Node number": "56",
         "Node Name": "statue",
         "x_pos": "177",
         "y_pos": "162",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "57": {
         "Node number": "57",
         "Node Name": "dep1",
         "x_pos": "128",
         "y_pos": "162",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "58": {
         "Node number": "58",
         "Node Name": "",
         "x_pos": "7",
         "y_pos": "162",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "59": {
         "Node number": "59",
-        "Node Name": "Comps dept",
+        "Node Name": "computer i.t and m.c.a department",
         "x_pos": "7",
         "y_pos": "222",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "60": {
         "Node number": "60",
         "Node Name": "",
         "x_pos": "7",
         "y_pos": "287",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "61": {
         "Node number": "61",
-        "Node Name": "Study Space",
+        "Node Name": "study space",
         "x_pos": "33",
         "y_pos": "287",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "62": {
         "Node number": "62",
         "Node Name": "",
         "x_pos": "7",
         "y_pos": "451",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "63": {
         "Node number": "63",
         "Node Name": "girls washroom",
         "x_pos": "90",
         "y_pos": "451",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "64": {
         "Node number": "64",
         "Node Name": "",
         "x_pos": "104",
         "y_pos": "451",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "65": {
         "Node number": "65",
         "Node Name": "",
         "x_pos": "251",
         "y_pos": "451",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "66": {
         "Node number": "66",
-        "Node Name": "COE",
-        "x_pos": "64",
+        "Node Name": "center of excellence",
+        "x_pos": "26",
         "y_pos": "451",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "67": {
         "Node number": "67",
-        "Node Name": "CCF 1",
+        "Node Name": "c.c.f 1",
         "x_pos": "104",
         "y_pos": "371",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "68": {
         "Node number": "68",
         "Node Name": "canteen",
         "x_pos": "251",
         "y_pos": "371",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "69": {
         "Node number": "69",
-        "Node Name": "Quad",
+        "Node Name": "quad",
         "x_pos": "172",
         "y_pos": "371",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "70": {
         "Node number": "70",
-        "Node Name": "Quad steps",
+        "Node Name": "quad steps",
         "x_pos": "172",
         "y_pos": "403",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "71": {
         "Node number": "71",
-        "Node Name": "Stage",
+        "Node Name": "stage",
         "x_pos": "172",
         "y_pos": "287",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "72": {
         "Node number": "72",
         "Node Name": "",
         "x_pos": "251",
         "y_pos": "234",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "73": {
         "Node number": "73",
         "Node Name": "girls washroom",
         "x_pos": "193",
         "y_pos": "234",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "74": {
         "Node number": "74",
         "Node Name": "",
         "x_pos": "346",
         "y_pos": "451",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "75": {
         "Node number": "75",
         "Node Name": "",
         "x_pos": "346",
         "y_pos": "371",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "76": {
         "Node number": "76",
-        "Node Name": "canteen ",
+        "Node Name": "canteen",
         "x_pos": "306",
         "y_pos": "371",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "77": {
         "Node number": "77",
         "Node Name": "",
         "x_pos": "346",
         "y_pos": "162",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "78": {
         "Node number": "78",
         "Node Name": "",
         "x_pos": "251",
         "y_pos": "197",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "79": {
         "Node number": "79",
         "Node Name": "",
         "x_pos": "251",
         "y_pos": "162",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "80": {
         "Node number": "80",
         "Node Name": "",
         "x_pos": "452",
         "y_pos": "100",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "81": {
         "Node number": "81",
-        "Node Name": "BCT Lab",
+        "Node Name": "blockchain lab",
         "x_pos": "394",
         "y_pos": "154",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "82": {
         "Node number": "82",
         "Node Name": "",
         "x_pos": "104",
         "y_pos": "287",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "83": {
         "Node number": "83",
         "Node Name": "boys washroom",
         "x_pos": "251",
         "y_pos": "416",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "84": {
         "Node number": "84",
         "Node Name": "staircase",
         "x_pos": "177",
         "y_pos": "202",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "85": {
         "Node number": "85",
         "Node Name": "",
         "x_pos": "258",
         "y_pos": "202",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "86": {
         "Node number": "86",
         "Node Name": "",
         "x_pos": "258",
         "y_pos": "244",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "87": {
         "Node number": "87",
         "Node Name": "",
         "x_pos": "258",
         "y_pos": "324",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "88": {
         "Node number": "88",
         "Node Name": "",
         "x_pos": "68",
         "y_pos": "416",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "89": {
         "Node number": "89",
         "Node Name": "staircase",
         "x_pos": "92",
         "y_pos": "416",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "90": {
         "Node number": "90",
         "Node Name": "staircase",
         "x_pos": "177",
         "y_pos": "202",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "91": {
         "Node number": "91",
         "Node Name": "",
         "x_pos": "0",
         "y_pos": "100",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "92": {
         "Node number": "92",
         "Node Name": "staircase",
         "x_pos": "104",
         "y_pos": "416",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "93": {
         "Node number": "93",
         "Node Name": "",
         "x_pos": "599",
         "y_pos": "100",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "94": {
         "Node number": "94",
         "Node Name": "dep2",
-        "x_pos": "227",
+        "x_pos": "214",
         "y_pos": "162",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "95": {
         "Node number": "95",
-        "Node Name": "Audi",
+        "Node Name": "audi",
         "x_pos": "276",
         "y_pos": "162",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "96": {
         "Node number": "96",
-        "Node Name": "BEE Lab",
+        "Node Name": "b.e.e lab",
         "x_pos": "7",
         "y_pos": "421",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "97": {
         "Node number": "97",
-        "Node Name": "AL 004",
+        "Node Name": "a.l. 004",
         "x_pos": "58",
         "y_pos": "287",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "98": {
         "Node number": "98",
-        "Node Name": "Lab3",
+        "Node Name": "lab3",
         "x_pos": "74",
         "y_pos": "162",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "99": {
         "Node number": "99",
         "Node Name": "",
         "x_pos": "64",
         "y_pos": "482",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": "IGNORE"
+        "Comments": "IGNORE"
     },
     "100": {
         "Node number": "100",
-        "Node Name": "Garden",
+        "Node Name": "garden",
         "x_pos": "500",
         "y_pos": "100",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "101": {
         "Node number": "101",
-        "Node Name": "Library",
+        "Node Name": "library",
         "x_pos": "68",
         "y_pos": "363",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "102": {
         "Node number": "102",
         "Node Name": "director office",
         "x_pos": "281",
         "y_pos": "202",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "103": {
         "Node number": "103",
-        "Node Name": "Railway Concession Office",
+        "Node Name": "railway concession office",
         "x_pos": "281",
         "y_pos": "244",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "104": {
         "Node number": "104",
-        "Node Name": "Civil Classroom",
+        "Node Name": "civil classroom",
         "x_pos": "281",
         "y_pos": "324",
-        "Type ": "",
+        "Type": "",
         "Floor": "1",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
     },
     "105": {
         "Node number": "105",
         "Node Name": "",
         "x_pos": "452",
         "y_pos": "154",
-        "Type ": "",
+        "Type": "",
         "Floor": "0",
         "Building": "",
         "Map Number": "2",
-        "": ""
+        "Comments": ""
+    },
+    "106": {
+        "Node number": "106",
+        "Node Name": "",
+        "x_pos": "35",
+        "y_pos": "502",
+        "Type": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": "3",
+        "Comments": ""
+    },
+    "107": {
+        "Node number": "107",
+        "Node Name": "s.b.i bank",
+        "x_pos": "61",
+        "y_pos": "502",
+        "Type": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": "3",
+        "Comments": ""
+    },
+    "108": {
+        "Node number": "108",
+        "Node Name": "gymkhana",
+        "x_pos": "9",
+        "y_pos": "528",
+        "Type": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": "3",
+        "Comments": "//add synonym indoor gym"
+    },
+    "109": {
+        "Node number": "109",
+        "Node Name": "i.d card office",
+        "x_pos": "234",
+        "y_pos": "162",
+        "Type": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": "2",
+        "Comments": ""
+    },
+    "110": {
+        "Node number": "110",
+        "Node Name": "t.b.i",
+        "x_pos": "49",
+        "y_pos": "451",
+        "Type": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": "2",
+        "Comments": ""
+    },
+    "111": {
+        "Node number": "111",
+        "Node Name": "",
+        "x_pos": "177",
+        "y_pos": "161",
+        "Type": "",
+        "Floor": "1",
+        "Building": "",
+        "Map Number": "2",
+        "Comments": ""
+    },
+    "112": {
+        "Node number": "112",
+        "Node Name": "scholarship office",
+        "x_pos": "213",
+        "y_pos": "161",
+        "Type": "",
+        "Floor": "1",
+        "Building": "",
+        "Map Number": "2",
+        "Comments": ""
+    },
+    "113": {
+        "Node number": "113",
+        "Node Name": "registrar office",
+        "x_pos": "240",
+        "y_pos": "161",
+        "Type": "",
+        "Floor": "1",
+        "Building": "",
+        "Map Number": "2",
+        "Comments": ""
+    },
+    "114": {
+        "Node number": "114",
+        "Node Name": "",
+        "x_pos": "258",
+        "y_pos": "161",
+        "Type": "",
+        "Floor": "1",
+        "Building": "",
+        "Map Number": "2",
+        "Comments": ""
+    },
+    "115": {
+        "Node number": "115",
+        "Node Name": "",
+        "x_pos": "258",
+        "y_pos": "445",
+        "Type": "",
+        "Floor": "1",
+        "Building": "",
+        "Map Number": "2",
+        "Comments": ""
+    },
+    "116": {
+        "Node number": "116",
+        "Node Name": "exam section",
+        "x_pos": "340",
+        "y_pos": "445",
+        "Type": "",
+        "Floor": "1",
+        "Building": "",
+        "Map Number": "2",
+        "Comments": ""
+    },
+    "117": {
+        "Node number": "117",
+        "Node Name": "",
+        "x_pos": "68",
+        "y_pos": "445",
+        "Type": "",
+        "Floor": "1",
+        "Building": "",
+        "Map Number": "2",
+        "Comments": ""
+    },
+    "118": {
+        "Node number": "118",
+        "Node Name": "",
+        "x_pos": "92",
+        "y_pos": "445",
+        "Type": "",
+        "Floor": "1",
+        "Building": "",
+        "Map Number": "2",
+        "Comments": ""
+    },
+    "119": {
+        "Node number": "119",
+        "Node Name": "electrical department",
+        "x_pos": "174",
+        "y_pos": "445",
+        "Type": "",
+        "Floor": "1",
+        "Building": "",
+        "Map Number": "2",
+        "Comments": ""
+    },
+    "120": {
+        "Node number": "120",
+        "Node Name": "structural department",
+        "x_pos": "346",
+        "y_pos": "313",
+        "Type": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": "2",
+        "Comments": ""
     }
 }
