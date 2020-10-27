@@ -3,19 +3,14 @@ import sys
 from Heap import Heap
 import csv
 import json
-import re
 from Node import Node
 from math import sqrt
-from time import sleep
-from google_drive_util import create_file
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
+# from google_drive_util import create_file
 import cv2
 from googletrans import Translator
 translator = Translator()
 import numpy as np
 import PIL
-import requests
 from PIL import Image
 import glob
 from save_image import save_image
@@ -49,7 +44,7 @@ def get_image_mapping(filename):
     return images
 
 
-class Graph():
+class Graph:
 
     def __init__(self, V, nodes):
         self.V = V
@@ -57,7 +52,7 @@ class Graph():
         self.nodes = nodes
 
     def calculateDistance(self, src, dest):
-        return sqrt(pow(self.nodes[src].x - self.nodes[dest].x + abs(self.nodes[src].map - self.nodes[dest].map)*639, 2)+pow(self.nodes[src].y-self.nodes[dest].y + abs(self.nodes[src].map - self.nodes[dest].map)*540, 2))
+        return sqrt(pow(self.nodes[src].x - self.nodes[dest].x , 2)+pow(self.nodes[src].y-self.nodes[dest].y , 2))
 
     def addEdge(self, src, dest):
         weight = self.calculateDistance(src, dest)
@@ -292,43 +287,49 @@ class Graph():
             u = newHeapNode[0]
 
             for pCrawl in self.graph[(u)]:
+
                 v = pCrawl[0]
+
                 if minHeap.isInMinHeap(v) and dist[u] != sys.maxsize and pCrawl[1] + dist[u] < dist[v]:
                         dist[v] = pCrawl[1] + dist[u]
                         parents[v] = u
                         minHeap.decreaseKey(v, dist[v])
         path = self.getSolution(dist, parents, src, dest)
+        print(dist)
         directions, directions_text = self.getDirections(path, dest)
         return round(dist[dest], 2), path, directions, directions_text
 
 
 # This function is created to find washroom closest washroom
-def findDestination(src, dest, gender):
-    #Repromt to ask girls/boys washroom
-    all_dests = []
-    dist = []
-    if(dest=="washroom"):
-        for i in range(len(nodes)):
-            if "washroom" in nodes[i].name and gender in nodes[i].name:
-                all_dests.append(nodes[i])
-                dist.append(graph.calculateDistance(map_node[src], nodes[i].number))
-    else:
-        for i in range(len(nodes)):
-            if dest in nodes[i].name :
-                all_dests.append(nodes[i])
-                dist.append(graph.calculateDistance(map_node[src], nodes[i].number))
+    def findDestination(self, src, dest, gender):
+        #Repromt to ask girls/boys washroom
+        all_dests = []
+        dist = []
+        if(dest=="washroom"):
+            for i in range(len(nodes)):
+                if "washroom" in nodes[i].name and gender in nodes[i].name:
+                    all_dests.append(nodes[i])
+                    distance, _, _, _ = self.dijkstra(map_node[src], nodes[i].number)
+                    dist.append(distance)
+        else:
+            for i in range(len(nodes)):
+                if dest in nodes[i].name :
+                    all_dests.append(nodes[i])
+                    distance, _, _, _ = self.dijkstra(map_node[src], nodes[i].number)
+                    dist.append(distance)
 
-    dest = all_dests[dist.index(min(dist))]
-    return dest.number
+        dest = all_dests[dist.index(min(dist))]
+        return dest.number
 
 
 
 def getPath(destination,source, gender="null"):
     print(source + " -->" + str(destination))
     src_number = map_node[source]
-    dest_number = findDestination(source, destination, gender)
+    dest_number = graph.findDestination(source, destination, gender)
     if dest_number:
         distance, path, directions, directions_text = graph.dijkstra(src_number, dest_number)
+        directions_text +=("You have walked a total of "+str(int(distance*650/1800))+"meters") #convert pixel to meters => length of college in px to meteres
 
         MAX_SIZE = (24, 24) ## for thumbnail
         path_color = (0, 0, 0, 255) ##black path
@@ -510,7 +511,7 @@ graph.addAllEdges('edges-rev.csv')
 # print(getPath( "Quad", "Main Seminar Hall"))
 
 # TESTCASES FOR MAP #4
-# print(getPath("Main Seminar Hall", "Mech Gate"))
+print(getPath("main gate", "dep1"))
 
 # TESTCASES FOR WASHROOM
 # print(getPath("Girls hostel", "canteen"))
@@ -520,24 +521,24 @@ graph.addAllEdges('edges-rev.csv')
 # print(getPath("Main Seminar Hall", "Cricket Ground"))
 import time
 ## generating all output maps
-with open('locations.csv', 'r') as read_obj:
-    # pass the file object to reader() to get the reader object
-    csv_reader = csv.reader(read_obj)
-    # Pass reader object to list() to get a list of lists
-    loc = list(csv_reader)
-    for i in range(len(loc)):
-        loc[i]= "".join(loc[i])
-    print(loc)
-    st = time.time()
-    for i in range(len(loc)):
-        for j in range(len(loc)):
-            if(map_node[loc[i]] not in range(34, 41)):
-                print(getPath(loc[i], loc[j]))
-            if (map_node[loc[j]] not in range(34, 41)):
-                print(getPath(loc[j], loc[i]))
-
-    end = time.time()
-    print("Time taken: ", str(end-st), "s")
-
-
+# with open('locations.csv', 'r') as read_obj:
+#     # pass the file object to reader() to get the reader object
+#     csv_reader = csv.reader(read_obj)
+#     # Pass reader object to list() to get a list of lists
+#     loc = list(csv_reader)
+#     for i in range(len(loc)):
+#         loc[i]= "".join(loc[i])
+#     print(loc)
+#     st = time.time()
+#     for i in range(len(loc)):
+#         for j in range(len(loc)):
+#             if(map_node[loc[i]] not in range(34, 41)):
+#                 print(getPath(loc[i], loc[j]))
+#             if (map_node[loc[j]] not in range(34, 41)):
+#                 print(getPath(loc[j], loc[i]))
+#
+#     end = time.time()
+#     print("Time taken: ", str(end-st), "s")
+#
+#
 
