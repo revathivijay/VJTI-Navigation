@@ -19,42 +19,6 @@ import requests
 from PIL import Image
 import glob
 from save_image import save_image
-"""
-{0: Main Gate , 1: , 2: Main Building Entrace, 3: , 4: Main Building Staircase, 5: Director's Office,
-6: Lab 3, 7: Dep1 , 8: Dep2 , 9: , 10: Computer Department, 11: Study Space , 12: , 13: AL004 ,
-14: , 15: Stage , 16: , 17: Audi Entrance, 18: Stage Washroom, 19: Canteen Quad Entrance,
-20: Quad , 21: Quad Steps, 22: , 23: , 24: , 25: , 26: CCF1, 27: Library,
-28: Library Staircase, 29: COE, 30: , 31: Electrical Dept/Staircase, 32: Statue, 33: Quad Entrance}
-"""
-
-## for viusalizing
-# pixel_mapping = {
-#     0: (337,448),
-#     1: (337,409),
-#     2: (395,409),
-#     3: (471,409),
-#     4: (540,409),
-#     5: (540,267),
-#     6: (491,276),
-#     7: (491,262),
-#     8: (426,276),
-#     9: (426,216),
-#     10: (426,128),
-#     11: (460,128),
-#     12: (338,128),
-#     13: (240,127),
-#     14: (240,216),
-#     15: (337,216),
-#     16: (337,276),
-#     17: (240,276),
-#     18: (240,325),
-#     19: (240,409),
-#     20: (198,409),
-#     21: (122,448),
-#     22: (58,448),
-#     23: (58,409),
-#     24: (540,128),
-# }
 
 def initialize_map(filename):
     f = open(filename)
@@ -501,46 +465,6 @@ print(text)
 result = translator.translate(text,src='en', dest='hi')
 print(result.text)
 """
-
-def uploadImage(src_number,dest_number):
-
-    if dest_number:
-        distance, path, directions, directions_text = graph.dijkstra(src_number, dest_number)
-        im = cv2.imread('MAP.jpeg')
-        im_resized = cv2.resize(im, (610, 454), interpolation=cv2.INTER_LINEAR) ##do not change size
-        line_thickness = 3
-
-        ## color in opencv -- BGR
-        path_color = (0, 0, 0)
-        src_color = (13,64,0)
-        dest_color = (255,0,0)
-        circle_thickness = 12
-
-        ## legends
-        cv2.circle(im_resized, (25, 25), 10, src_color, thickness=circle_thickness)
-        cv2.putText(im_resized, f'{nodes[src_number].name} (you are here)', (50,27), cv2.FONT_HERSHEY_SIMPLEX , 0.7, path_color, 2, cv2.LINE_AA)
-
-        cv2.circle(im_resized, (25,67), 10, dest_color, thickness=circle_thickness)
-        cv2.putText(im_resized, f'{nodes[dest_number].name} (destination)', (50,71), cv2.FONT_HERSHEY_SIMPLEX , 0.7, path_color, 2, cv2.LINE_AA)
-
-        ## source and dest markers
-        cv2.circle(im_resized, (pixel_mapping[src_number][0], pixel_mapping[src_number][1]), 10, src_color, thickness=circle_thickness)
-        cv2.circle(im_resized, (pixel_mapping[dest_number][0], pixel_mapping[dest_number][1]), 10, dest_color, thickness=circle_thickness)
-
-        for i in range(len(path)-1):
-            p1 = pixel_mapping[path[i]]
-            p2 = pixel_mapping[path[i+1]]
-            len_line = abs(p1[0]-p2[0]) + abs(p1[1]-p2[1])
-            if len_line==0:
-                len_line=1
-            cv2.arrowedLine(im_resized, p1, p2, color=path_color, thickness=line_thickness, tipLength=13/len_line)
-        #plt.imshow(cv2.cvtColor(im_resized, cv2.COLOR_BGR2RGB))
-        #plt.show()
-        cv2.imwrite("display_image.jpg", im_resized)
-        filename_on_drive =  str(src_number) + "_" + str(dest_number) + ".jpg"
-        id = create_file(filename="display_image.jpg",filename_on_drive=filename_on_drive)
-        return id,filename_on_drive
-
 # img = Image.open('new-ss/FINISHED/2-0.PNG')
 # plt.imshow(img)
 # for i in range(len(nodes)):
@@ -557,7 +481,6 @@ def uploadImage(src_number,dest_number):
 nodes, map_node = initialize_map('nodes.json')
 graph = Graph(len(nodes), nodes)
 graph.addAllEdges('edges-rev.csv')
-
 
 # img = Image.open('resized-new/2-1.jpg')
 # plt.imshow(img)
