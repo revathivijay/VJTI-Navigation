@@ -16,7 +16,7 @@ def initialize_map(filename):
             name=node["Node Name"],
             x=int(node["x_pos"]),
             y=int(node["y_pos"]),
-            node_type=node["Type "],
+            node_type=node["Type"],
             floor=int(node["Floor"]),
             building=node["Building"],
             map = int(node["Map Number"])

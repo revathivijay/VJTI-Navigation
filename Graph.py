@@ -30,6 +30,7 @@ def initialize_map(filename):
             floor=int(node["Floor"]),
             building=node["Building"],
             map = int(node["Map Number"])
+
         )
         nodes[int(key)-1] = temp_node
         map_node[node["Node Name"]] = int(node["Node number"])-1
@@ -52,7 +53,7 @@ class Graph:
         self.nodes = nodes
 
     def calculateDistance(self, src, dest):
-        return sqrt(pow(self.nodes[src].x - self.nodes[dest].x , 2)+pow(self.nodes[src].y-self.nodes[dest].y , 2))
+        return sqrt(pow(self.nodes[src].abs_x - self.nodes[dest].abs_x , 2)+pow(self.nodes[src].y-self.nodes[dest].y , 2))
 
     def addEdge(self, src, dest):
         weight = self.calculateDistance(src, dest)
@@ -424,7 +425,7 @@ def getPath(destination,source, gender="null"):
         # plt.imshow(img)
         # plt.show()
         # cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-        cv2.imwrite(f"temp-output/{src_number}-{dest_number}-{curr_map}-{curr_floor}-{counter}.jpg",
+        cv2.imwrite(f"temp1-output/{src_number}-{dest_number}-{curr_map}-{curr_floor}-{counter}.jpg",
                     cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 
         print(distance)
@@ -434,7 +435,7 @@ def getPath(destination,source, gender="null"):
         output_images = []
 
         ## TODO: change to whatever path we're reading from in actual appln
-        for name in glob.glob(f'C:\\Users\\rohan\\Desktop\\Revathi\\VJTI-Navigation-master\\VJTI-Navigation-master\\temp-output\\{src_number}-{dest_number}-*'):
+        for name in glob.glob(f'C:\\Users\\Ritu\\PycharmProjects\\VJTI-Navigation\\temp1-output\\{src_number}-{dest_number}-*'):
             print(name)
             count +=1
             output_images.append(name)
@@ -511,13 +512,13 @@ graph.addAllEdges('edges-rev.csv')
 # print(getPath( "Quad", "Main Seminar Hall"))
 
 # TESTCASES FOR MAP #4
-print(getPath("main gate", "dep1"))
+# print(getPath("main gate", "dep1"))
 
 # TESTCASES FOR WASHROOM
-# print(getPath("Girls hostel", "canteen"))
+# print(getPath("girls hostel", "canteen"))
 
 # # TESTCASES FOR MULTIPLE MAPS
-# print(getPath("Cricket Ground", "main gate"))
+print(getPath("cricket ground", "main gate"))
 # print(getPath("Main Seminar Hall", "Cricket Ground"))
 import time
 ## generating all output maps

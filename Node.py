@@ -3,11 +3,12 @@ class Node():
     self.number = int(number) - 1
     self.name = name
     self.map = map
-    self.x = x+(map-1)*600
+    self.abs_x = x+(map-1)*600
     self.y = y
     self.type = node_type
     self.building = building
     self.floor = floor
+    self.x = x
 
 
   def __repr__(self):
