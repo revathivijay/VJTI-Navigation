@@ -14,6 +14,7 @@ import PIL
 from PIL import Image
 import glob
 from save_image import save_image
+import matplotlib.pyplot as plt
 
 def initialize_map(filename):
     f = open(filename)
@@ -425,7 +426,7 @@ def getPath(destination,source, gender="null"):
         # plt.imshow(img)
         # plt.show()
         # cv2.imwrite(f"all-dest/{src_number}-{dest_number}-{counter}.jpg", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-        cv2.imwrite(f"temp1-output/{src_number}-{dest_number}-{curr_map}-{curr_floor}-{counter}.jpg",
+        cv2.imwrite(f"temp-output/{src_number}-{dest_number}-{curr_map}-{curr_floor}-{counter}.jpg",
                     cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 
         print(distance)
@@ -435,7 +436,7 @@ def getPath(destination,source, gender="null"):
         output_images = []
 
         ## TODO: change to whatever path we're reading from in actual appln
-        for name in glob.glob(f'C:\\Users\\Ritu\\PycharmProjects\\VJTI-Navigation\\temp1-output\\{src_number}-{dest_number}-*'):
+        for name in glob.glob(f'C:\\Users\\Ritu\\PycharmProjects\\VJTI-Navigation\\temp-output\\{src_number}-{dest_number}-*'):
             print(name)
             count +=1
             output_images.append(name)
@@ -482,19 +483,19 @@ print(result.text)
 
 nodes, map_node = initialize_map('nodes.json')
 graph = Graph(len(nodes), nodes)
-graph.addAllEdges('edges-rev.csv')
+graph.addAllEdges('edges.csv')
 
-# img = Image.open('resized-new/2-1.jpg')
-# plt.imshow(img)
-# for i in range(len(nodes)):
-#     for j in graph.graph[i]:
-#         v = j[0]
-#         if(nodes[i].map==2 and nodes[v].map == 2  and nodes[i].floor==1 and nodes[v].floor==1):
-#             plt.plot(nodes[i].x, nodes[i].y, 'o')
-#             plt.plot(nodes[v].x, nodes[v].y, 'o')
-#             plt.plot([nodes[i].x, nodes[v].x], [nodes[i].y, nodes[v].y])
-#             plt.text(nodes[i].x + 10, nodes[i].y, i+ 1)
-# plt.show()
+img = Image.open('resized-new/2-0.jpg')
+plt.imshow(img)
+for i in range(len(nodes)):
+    for j in graph.graph[i]:
+        v = j[0]
+        if(nodes[i].map==2 and nodes[v].map == 2  and nodes[i].floor==0 and nodes[v].floor==0):
+            plt.plot(nodes[i].x, nodes[i].y, 'o')
+            plt.plot(nodes[v].x, nodes[v].y, 'o')
+            plt.plot([nodes[i].x, nodes[v].x], [nodes[i].y, nodes[v].y])
+            plt.text(nodes[i].x + 10, nodes[i].y, i+ 1)
+plt.show()
 
 # TESTCASES FOR MAP #2
 # print(getPath("BCT Lab","statue"))
@@ -515,10 +516,10 @@ graph.addAllEdges('edges-rev.csv')
 # print(getPath("main gate", "dep1"))
 
 # TESTCASES FOR WASHROOM
-# print(getPath("girls hostel", "canteen"))
+print(getPath("washroom","main gate",  "girls"))
 
 # # TESTCASES FOR MULTIPLE MAPS
-print(getPath("cricket ground", "main gate"))
+# print(getPath("Cricket Ground", "main gate"))
 # print(getPath("Main Seminar Hall", "Cricket Ground"))
 import time
 ## generating all output maps
