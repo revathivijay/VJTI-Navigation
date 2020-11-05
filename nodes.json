@@ -1329,5 +1329,27 @@
         "Building": "",
         "Map Number": "2",
         "Comments": ""
+    },
+    "122": {
+        "Node number": "122",
+        "Node Name": "",
+        "x_pos": "61",
+        "y_pos": "528",
+        "Type": "",
+        "Floor": "0",
+        "Building": "\t",
+        "Map Number": "3",
+        "Comments": ""
+    },
+    "123": {
+        "Node number": "123",
+        "Node Name": " ",
+        "x_pos": "251",
+        "y_pos": "287",
+        "Type": "",
+        "Floor": "0",
+        "Building": "",
+        "Map Number": "2",
+        "Comments": ""
     }
 }

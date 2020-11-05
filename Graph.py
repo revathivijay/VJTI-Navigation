@@ -331,7 +331,7 @@ def getPath(destination,source, gender="null"):
     dest_number = graph.findDestination(source, destination, gender)
     if dest_number:
         distance, path, directions, directions_text = graph.dijkstra(src_number, dest_number)
-        directions_text +=("You have walked a total of "+str(int(distance*650/1800))+"meters") #convert pixel to meters => length of college in px to meteres
+        directions_text +=("You have walked a total of "+str(int(distance*650/2400))+"meters") #convert pixel to meters => length of college in px to meteres
 
         MAX_SIZE = (24, 24) ## for thumbnail
         path_color = (0, 0, 0, 255) ##black path
@@ -430,6 +430,7 @@ def getPath(destination,source, gender="null"):
                     cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 
         print(distance)
+        print(directions_text)
 
         # for saving final image
         count = 0
@@ -516,7 +517,7 @@ plt.show()
 # print(getPath("main gate", "dep1"))
 
 # TESTCASES FOR WASHROOM
-print(getPath("washroom","main gate",  "girls"))
+# print(getPath("washroom","main gate",  "girls"))
 
 # # TESTCASES FOR MULTIPLE MAPS
 # print(getPath("Cricket Ground", "main gate"))
@@ -544,3 +545,26 @@ import time
 #
 #
 
+# import time
+# logs = open('direction_logs.logs', 'w')
+# with open('locations.csv', 'r') as read_obj:
+#     # pass the file object to reader() to get the reader object
+#     csv_reader = csv.reader(read_obj)
+#     # Pass reader object to list() to get a list of lists
+#     loc = list(csv_reader)
+#     for i in range(len(loc)):
+#         loc[i]= "".join(loc[i])
+#     print(loc)
+#     st = time.time()
+#     for i in range(len(loc)):
+#         for j in range(len(loc)):
+#             if(map_node[loc[i]] not in range(34, 41)):
+#                 logs.write(f"Source: {loc[i]}, Destination: {loc[j]}, Path: {getPath(loc[i], loc[j])}\n\n")
+#             if (map_node[loc[j]] not in range(34, 41)):
+#                 logs.write(f"Source: {loc[j]}, Destination: {loc[i]}, Path: {getPath(loc[j], loc[i])}\n\n")
+#
+#     end = time.time()
+#     print("Time taken: ", str(end-st), "s")
+#
+
+getPath("washroom","blockchain lab", "girls")
