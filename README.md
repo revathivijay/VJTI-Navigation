@@ -26,7 +26,10 @@ Via Staircase: Source and Destination on different levels
 </p>
 
 ## Demo Video
-[![Link to Demo Here](https://github.com/revathivijay/VJTI-Navigation/blob/master/final-output-images/55-100.jpg)](https://www.youtube.com/watch?v=JU_tkCmx3dE "Click here for demo")
+[![Link to Demo Here](https://github.com/revathivijay/VJTI-Navigation/blob/master/final-output-images/demo-cover.png)](https://www.youtube.com/watch?v=JU_tkCmx3dE "Click here for demo")
 
 ## Future Directions
 Include Bluetooth 5.0/Beacons to enable on-the-go dynamic routing
+
+## Paper Link
+[Link to Paper](https://link.springer.com/chapter/10.1007/978-981-16-1685-3_4)
