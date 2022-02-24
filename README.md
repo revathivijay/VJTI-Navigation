@@ -5,8 +5,8 @@ VJTI Navigation is a campus navigation system for the VJTI Campus. Alexa devices
 Voice input to Alexa device with screen to show outputs.
 
 ## Output
-Voice based output from Alexa Device (in response to your query)
-Visual outputs that show routes on the display of the Alexa Devices
+-Voice based output from Alexa Device (in response to your query)
+-Visual outputs that show routes on the display of the Alexa Devices
 
 ### Example Input
 Alexa, Give me directions to the Library
