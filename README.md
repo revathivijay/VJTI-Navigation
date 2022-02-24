@@ -14,7 +14,11 @@ Voice based output from Alexa Device (in response to your query) <br>
 Visual outputs that show routes on the display of the Alexa Devices
 
 ### Sample Output
-![alt text](https://github.com/revathivijay/VJTI-Navigation/blob/master/temp-output/7-31-3-0-2.jpg?raw=true)
+<!-- ![alt text](https://github.com/revathivijay/VJTI-Navigation/blob/master/final-output-images/22-55.jpg?raw=true) -->
+
+<p align="center">
+  <img width="460" height="300" src="https://github.com/revathivijay/VJTI-Navigation/blob/master/final-output-images/22-55.jpg">
+</p>
 
 
 
