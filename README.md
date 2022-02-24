@@ -26,7 +26,6 @@ Via Staircase: Source and Destination on different levels
 </p>
 
 ## Demo Video
-<img src="https://github.com/revathivijay/VJTI-Navigation/blob/master/final-output-images/demo-cover.png" width="50%">
 [![Link to Demo Here](https://github.com/revathivijay/VJTI-Navigation/blob/master/final-output-images/demo-cover.png)](https://www.youtube.com/watch?v=JU_tkCmx3dE "Click here for demo")
 
 ## Future Directions
